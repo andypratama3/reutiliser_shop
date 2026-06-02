@@ -21,4 +21,11 @@ class ProductImage extends Model
     {
         return $this->belongsTo(Product::class);
     }
+
+    public function getUrlAttribute()
+    {
+        if (!$this->path) return 'https://placehold.co/600x800/e2e8f0/64748b?text=No+Image';
+        if (filter_var($this->path, FILTER_VALIDATE_URL)) return $this->path;
+        return \Illuminate\Support\Facades\Storage::url($this->path);
+    }
 }

@@ -109,6 +109,12 @@ class Product extends Model
         return (float) $this->price;
     }
 
+    public function getPrimaryImageUrlAttribute(): string
+    {
+        $image = $this->primaryImage ?: $this->images->first();
+        return $image ? $image->url : 'https://placehold.co/600x800/e2e8f0/64748b?text=No+Image';
+    }
+
     protected static function boot()
     {
         parent::boot();

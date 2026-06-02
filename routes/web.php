@@ -32,8 +32,11 @@ Route::get('/welcome', function () {
 // Landing Pages
 Route::get('/', [LandingController::class, 'home'])->name('home');
 Route::get('/about', [LandingController::class, 'about']);
-Route::get('/shop', [LandingController::class, 'shop']);
-Route::get('/product/{id}', [LandingController::class, 'product']);
+Route::get('/shop', [LandingController::class, 'shop'])->name('shop');
+Route::get('/product/{id}', [LandingController::class, 'product'])->name('product.show');
+// Public product listing and detail (kept for compatibility with existing views)
+// Route::get('/products', [ProductController::class, 'index'])->name('products.index');
+Route::get('/products/{slug}', [ProductController::class, 'show'])->name('products.show');
 Route::get('/search', [LandingController::class, 'search']);
 Route::get('/wishlist', [LandingController::class, 'wishlist']);
 Route::get('/journal', [LandingController::class, 'journal']);
@@ -57,9 +60,7 @@ Route::get('/legal/{type}', [LandingController::class, 'legal']);
  Route::post('/logout', [LoginController::class, 'destroy'])
      ->middleware('auth')
      ->name('logout');
- // Customer Products
- Route::get('/products', [ProductController::class, 'index'])->name('products.index');
- Route::get('/products/{slug}', [ProductController::class, 'show'])->name('products.show');
+// Customer Products (legacy /products routes removed; use /shop and /product/{id})
  // Cart
  Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
  Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
@@ -93,9 +94,9 @@ Route::get('/legal/{type}', [LandingController::class, 'legal']);
          Route::get('/products', [AdminProductController::class, 'index'])->name('products.index');
          Route::get('/products/create', [AdminProductController::class, 'create'])->name('products.create');
          Route::post('/products', [AdminProductController::class, 'store'])->name('products.store');
-         Route::get('/products/{product}/edit', [AdminProductController::class, 'edit'])->name('products.edit');
-         Route::put('/products/{product}', [AdminProductController::class, 'update'])->name('products.update');
-         Route::delete('/products/{product}', [AdminProductController::class, 'destroy'])->name('products.destroy');
+          Route::get('/products/{product}/edit', [AdminProductController::class, 'edit'])->name('products.edit');
+          Route::put('/products/{product}', [AdminProductController::class, 'update'])->name('products.update');
+          Route::delete('/products/{product}', [AdminProductController::class, 'destroy'])->name('products.destroy');
 
          Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
          Route::get('/categories/create', [CategoryController::class, 'create'])->name('categories.create');
@@ -117,4 +118,6 @@ Route::get('/legal/{type}', [LandingController::class, 'legal']);
          Route::get('/reports/export', [ReportController::class, 'export'])->name('reports.export');
          Route::get('/settings', [SettingController::class, 'index'])->name('settings.index');
          Route::put('/settings', [SettingController::class, 'update'])->name('settings.update');
-     });
+      });
+// Waitlist POST route for public product pages
+Route::post('/products/{product}/waitlist', [ProductController::class, 'joinWaitlist'])->name('products.waitlist');

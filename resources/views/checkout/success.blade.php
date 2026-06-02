@@ -1,75 +1,77 @@
-@extends('layouts.app')
-@section('title', 'Pesanan Berhasil')
+@extends('layouts.landing')
+
+@section('title', 'Order Confirmed | RÉUTILISER')
 
 @section('content')
-<div class="max-w-2xl mx-auto px-4 py-16 text-center">
-    <div class="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-6">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-on-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
-        </svg>
-    </div>
-
-    <h1 class="font-headline text-3xl text-primary mb-4">Pesanan Berhasil Dibuat!</h1>
-    <p class="font-body-lg text-body-lg text-on-surface-variant mb-8">
-        Terima kasih! Pesanan kamu telah berhasil dibuat.
-    </p>
-
-    <div class="bg-surface border border-outline-variant p-8 text-left mb-8">
-        <div class="mb-6">
-            <p class="font-label-caps text-label-caps text-on-surface-variant tracking-wider mb-1">NOMOR PESANAN</p>
-            <p class="font-headline text-2xl text-primary">{{ $order->order_number }}</p>
+<main class="max-w-2xl mx-auto px-8 py-32 text-center">
+    <div class="reveal-item">
+        <div class="w-24 h-24 bg-primary text-white rounded-full flex items-center justify-center mx-auto mb-12 shadow-2xl">
+            <span class="material-symbols-outlined text-4xl">check</span>
         </div>
+        <p class="font-label-caps text-primary tracking-[0.4em] mb-6 uppercase">Order Confirmed</p>
+        <h1 class="font-display-lg text-primary mb-8">Thank you for supporting the movement.</h1>
+        <p class="font-body-lg text-secondary leading-relaxed mb-12 opacity-60">
+            Your conscious purchase has been recorded. We are now preparing your archival piece for its next chapter.
+        </p>
+        
+        <div class="bg-surface-container-low p-10 rounded-[2rem] border border-primary/5 text-left mb-16 shadow-sm">
+            <p class="font-label-caps text-[10px] text-secondary tracking-widest uppercase mb-8 opacity-40">Order Summary</p>
+            
+            <div class="space-y-6">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <p class="font-label-caps text-[10px] text-secondary tracking-widest uppercase opacity-40 mb-1">Order Number</p>
+                        <p class="font-headline-md text-2xl text-primary">{{ $order->order_number }}</p>
+                    </div>
+                    <div class="text-right">
+                        <p class="font-label-caps text-[10px] text-secondary tracking-widest uppercase opacity-40 mb-1">Total Amount</p>
+                        <p class="font-headline-md text-2xl text-primary">Rp {{ number_format($order->total_amount, 0, ',', '.') }}</p>
+                    </div>
+                </div>
 
-        <div class="mb-6">
-            <p class="font-label-caps text-label-caps text-on-surface-variant tracking-wider mb-1">TOTAL PEMBAYARAN</p>
-            <p class="font-headline text-2xl text-on-surface">Rp {{ number_format($order->total_amount, 0, ',', '.') }}</p>
-        </div>
+                <div class="pt-6 border-t border-primary/5">
+                    <p class="font-label-caps text-[10px] text-secondary tracking-widest uppercase opacity-40 mb-2">Payment Method</p>
+                    <p class="font-body-md text-primary font-bold">
+                        @switch($order->payment_method)
+                            @case('va_bank')
+                                Virtual Account Transfer ({{ $order->payment_channel }})
+                                @if($order->payment && $order->payment->va_number)
+                                    <br><span class="text-lg tracking-widest mt-2 block">VA: {{ $order->payment->va_number }}</span>
+                                @endif
+                                @break
+                            @case('qris')
+                                QRIS Instant Payment
+                                @break
+                            @case('e_wallet')
+                                {{ $order->payment_channel }} Digital Wallet
+                                @break
+                            @default
+                                {{ strtoupper($order->payment_method) }}
+                        @endswitch
+                    </p>
+                </div>
 
-        <div class="mb-6">
-            <p class="font-label-caps text-label-caps text-on-surface-variant tracking-wider mb-2">METODE PEMBAYARAN</p>
-            <p class="font-body-md text-body-md text-on-surface">
-                @switch($order->payment_method)
-                    @case('va_bank')
-                        Transfer Virtual Account {{ $order->payment_channel }}
-                        @if($order->payment && $order->payment->va_number)
-                            <br><span class="font-semibold">No. VA: {{ $order->payment->va_number }}</span>
-                        @endif
-                        @break
-                    @case('qris')
-                        QRIS
-                        @break
-                    @case('e_wallet')
-                        {{ $order->payment_channel }}
-                        @break
-                @endswitch
-            </p>
-        </div>
+                @if($order->payment && $order->payment->expires_at)
+                <div class="pt-6 border-t border-primary/5">
+                    <p class="font-label-caps text-[10px] text-secondary tracking-widest uppercase opacity-40 mb-1">Payment Deadline</p>
+                    <p class="font-body-md text-red-500 font-bold italic">{{ $order->payment->expires_at->format('d M Y, H:i') }}</p>
+                </div>
+                @endif
 
-        <div>
-            <p class="font-label-caps text-label-caps text-on-surface-variant tracking-wider mb-2">INSTRUKSI PEMBAYARAN</p>
-            <p class="font-body-md text-body-md text-on-surface-variant">
-                Instruksi pembayaran telah dikirim melalui WhatsApp ke nomor <strong>{{ $order->recipient_phone }}</strong>.
-                Silakan lakukan pembayaran sebelum batas waktu yang ditentukan.
-            </p>
-        </div>
-
-        @if($order->payment && $order->payment->expires_at)
-            <div class="mt-6 p-4 bg-surface-container-low border border-outline-variant">
-                <p class="font-label-caps text-label-caps text-on-surface-variant tracking-wider mb-1">BATAS WAKTU PEMBAYARAN</p>
-                <p class="font-headline text-xl text-error">{{ $order->payment->expires_at->format('d M Y H:i') }}</p>
+                <div class="pt-6 border-t border-primary/5">
+                    <p class="font-label-caps text-[10px] text-secondary tracking-widest uppercase opacity-40 mb-2">Next Steps</p>
+                    <p class="font-body-md text-secondary text-sm leading-relaxed">
+                        Detailed payment instructions have been sent via WhatsApp to <span class="text-primary font-bold">{{ $order->recipient_phone }}</span>. 
+                        Please complete the transaction within the timeframe to secure your archival pieces.
+                    </p>
+                </div>
             </div>
-        @endif
-    </div>
+        </div>
 
-    <div class="space-y-3">
-        <a href="{{ route('products.index') }}"
-           class="inline-block w-full bg-primary text-on-primary py-4 font-label-caps text-label-caps tracking-wider hover:opacity-90 transition-opacity">
-            Lanjut Belanja
-        </a>
-        <a href="{{ route('account.orders.index') }}"
-           class="inline-block w-full py-4 font-label-caps text-label-caps text-on-surface-variant border border-outline-variant hover:bg-surface-variant transition-colors">
-            Lihat Pesanan Saya
-        </a>
+        <div class="flex flex-col md:flex-row gap-6 justify-center">
+            <a href="{{ route('shop') }}" class="bg-primary text-white px-12 py-6 rounded-full font-label-caps text-[11px] tracking-widest hover:bg-primary-container transition-all shadow-xl uppercase">Continue Browsing</a>
+            <a href="{{ route('account.orders.index') }}" class="border border-primary text-primary px-12 py-6 rounded-full font-label-caps text-[11px] tracking-widest hover:bg-primary hover:text-white transition-all uppercase">View My Archive</a>
+        </div>
     </div>
-</div>
+</main>
 @endsection

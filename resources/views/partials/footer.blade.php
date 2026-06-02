@@ -12,7 +12,7 @@
             <div>
                 <h4 class="font-label-caps text-label-caps text-on-surface mb-4">Shop</h4>
                 <ul class="space-y-2 font-body-md text-body-md">
-                    <li><a href="{{ route('products.index') }}" class="text-on-surface-variant hover:text-primary transition-colors">Semua Produk</a></li>
+                    <li><a href="{{ route('shop') }}" class="text-on-surface-variant hover:text-primary transition-colors">Semua Produk</a></li>
                 </ul>
             </div>
             <div>
