@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Shop All | RÉUTILISER Conscious Luxury</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&amp;family=Hanken+Grotesk:wght@300;400;600;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-high": "#eae7e7",
+                        "on-primary": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "on-background": "#1c1b1b",
+                        "tertiary": "#424444",
+                        "primary": "#2a4a38",
+                        "background": "#fcf9f8",
+                        "outline-variant": "#c1c8c1",
+                        "secondary-fixed": "#e6e2db",
+                        "surface-dim": "#dcd9d9",
+                        "surface": "#fcf9f8",
+                        "tertiary-fixed": "#e2e2e2",
+                        "on-tertiary-fixed-variant": "#454747",
+                        "surface-container": "#f0eded",
+                        "on-primary-container": "#b7dcc4",
+                        "on-secondary-container": "#66645f",
+                        "surface-container-lowest": "#ffffff",
+                        "outline": "#727973",
+                        "inverse-primary": "#abcfb8",
+                        "inverse-on-surface": "#f3f0ef",
+                        "surface-container-low": "#f6f3f2",
+                        "on-tertiary-container": "#d2d3d3",
+                        "surface-tint": "#446552",
+                        "on-secondary-fixed": "#1c1c18",
+                        "surface-variant": "#e5e2e1",
+                        "secondary-container": "#e6e2db",
+                        "primary-fixed": "#c6ebd3",
+                        "on-surface-variant": "#424843",
+                        "error": "#ba1a1a",
+                        "surface-container-highest": "#e5e2e1",
+                        "primary-container": "#41624f",
+                        "inverse-surface": "#313030",
+                        "on-tertiary-fixed": "#1a1c1c",
+                        "error-container": "#ffdad6",
+                        "tertiary-fixed-dim": "#c6c6c7",
+                        "on-secondary-fixed-variant": "#484742",
+                        "secondary": "#605e59",
+                        "on-tertiary": "#ffffff",
+                        "on-primary-fixed-variant": "#2d4d3b",
+                        "secondary-fixed-dim": "#cac6bf",
+                        "tertiary-container": "#595b5b",
+                        "on-error": "#ffffff",
+                        "primary-fixed-dim": "#abcfb8",
+                        "on-surface": "#1c1b1b",
+                        "surface-bright": "#fcf9f8",
+                        "on-primary-fixed": "#002112",
+                        "on-secondary": "#ffffff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0rem",
+                        "lg": "0rem",
+                        "xl": "0rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gutter": "24px",
+                        "margin-desktop": "64px",
+                        "unit": "8px",
+                        "margin-mobile": "20px",
+                        "container-max": "1440px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Libre Caslon Text"],
+                        "body-lg": ["Hanken Grotesk"],
+                        "body-md": ["Hanken Grotesk"],
+                        "label-caps": ["Hanken Grotesk"],
+                        "headline-md": ["Libre Caslon Text"],
+                        "headline-lg-mobile": ["Libre Caslon Text"],
+                        "display-lg": ["Libre Caslon Text"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["48px", {"lineHeight": "56px", "fontWeight": "400"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "600"}],
+                        "headline-md": ["32px", {"lineHeight": "40px", "fontWeight": "400"}],
+                        "headline-lg-mobile": ["32px", {"lineHeight": "40px", "fontWeight": "400"}],
+                        "display-lg": ["80px", {"lineHeight": "90px", "letterSpacing": "-0.02em", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            background-color: #fcf9f8;
+            color: #1c1b1b;
+            -webkit-font-smoothing: antialiased;
+        }
+        .stitch-border {
+            border-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' stroke='%232a4a38' stroke-width='1' stroke-dasharray='4%2c 4' stroke-dashoffset='0' stroke-linecap='square'/%3e%3c/svg%3e") 1;
+        }
+        .stitch-line-h {
+            background-image: linear-gradient(to right, #2a4a38 50%, rgba(255,255,255,0) 0%);
+            background-position: bottom;
+            background-size: 8px 1px;
+            background-repeat: repeat-x;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }
+        .product-card:hover .product-action {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    </style>
+</head>
+<body class="font-body-md text-on-surface selection:bg-primary-fixed selection:text-on-primary-fixed">
+<!-- Top Navigation Bar -->
+<header class="bg-surface dark:bg-inverse-surface border-b border-outline-variant sticky top-0 z-40">
+<nav class="flex justify-between items-center w-full px-margin-desktop py-4 max-w-container-max mx-auto">
+<div class="flex items-center gap-12">
+<a class="font-headline-md text-headline-md tracking-tighter text-primary dark:text-primary-fixed-dim" href="#">RÉUTILISER</a>
+<div class="hidden md:flex items-center gap-8">
+<a class="font-label-caps text-label-caps text-on-surface-variant dark:text-surface-variant hover:text-primary transition-colors duration-300" href="#">About</a>
+<a class="font-label-caps text-label-caps text-primary dark:text-primary-fixed-dim border-b-2 border-primary pb-1" href="#">Shop</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant dark:text-surface-variant hover:text-primary transition-colors duration-300" href="#">Journal</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant dark:text-surface-variant hover:text-primary transition-colors duration-300" href="#">Contact</a>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<button class="hover:opacity-70 transition-opacity scale-95 active:transition-transform text-primary">
+<span class="material-symbols-outlined">search</span>
+</button>
+<button class="hover:opacity-70 transition-opacity scale-95 active:transition-transform text-primary relative" onclick="toggleCart()">
+<span class="material-symbols-outlined">shopping_bag</span>
+<span class="absolute -top-1 -right-1 bg-primary text-white text-[10px] w-4 h-4 flex items-center justify-center rounded-full">2</span>
+</button>
+</div>
+</nav>
+</header>
+<!-- Side Cart Drawer (Hidden by default) -->
+<div class="fixed right-0 top-0 h-full w-96 z-50 bg-surface-container-low border-l border-outline-variant translate-x-full transition-transform duration-500 shadow-2xl flex flex-col" id="side-drawer">
+<div class="p-8 flex justify-between items-center">
+<div>
+<h2 class="font-headline-md text-headline-md text-primary">Your Cart</h2>
+<p class="font-label-caps text-[10px] text-on-surface-variant mt-1">Items are reserved for 30 minutes</p>
+</div>
+<button class="text-primary hover:rotate-90 transition-transform" onclick="toggleCart()">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<div class="flex-grow overflow-y-auto px-8 space-y-6">
+<div class="flex gap-4 pb-4 stitch-line-h">
+<img alt="Cart Item" class="w-20 h-24 object-cover" data-alt="A high-fashion editorial close-up of a structured upcycled denim jacket with visible white stitch detailing. The lighting is soft and natural, emphasizing the texture of the repurposed fabric against a clean, minimal cream background. The aesthetic is sophisticated and sustainable." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDvm6u64o-brzGHRK5dNPWoQgR-SVvIMxdgB0tPyxTiQF-8K-aN7JIDjjZv-Q7SrBFOivF2hbV3rq5kQzMFO3Cq4FXHt_ZmhScy1Yid1Ktbwh8I3aLNaNcm1Y2KZFOJLQaH5cAjJvwIfofzhebfzf5qSmuDBYPdlf2biJ-8JaBH8qc8r_C5H6vxcTY4eo5CwVp_E6t2UyCKRejYR8DiVrYOWBmkiyOiqwJhbyvkmTeHnrwnegBojvhrGOAmKRndbGiLWC8P84pRYUc"/>
+<div>
+<p class="font-label-caps text-primary">Upcycled Denim Blazer</p>
+<p class="font-body-md text-on-surface-variant">Size: M</p>
+<p class="font-body-md text-primary mt-2">$240.00</p>
+</div>
+</div>
+</div>
+<div class="p-8 space-y-4">
+<div class="flex justify-between font-label-caps text-primary">
+<span>Subtotal</span>
+<span>$240.00</span>
+</div>
+<button class="w-full bg-primary text-white py-4 font-label-caps tracking-widest hover:opacity-90 transition-opacity">CHECKOUT NOW</button>
+<div class="flex justify-center gap-8 pt-4">
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-sm">local_shipping</span>
+<span class="font-label-caps text-[10px]">Shipping Policy</span>
+</div>
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-sm">assignment_return</span>
+<span class="font-label-caps text-[10px]">Returns</span>
+</div>
+</div>
+</div>
+</div>
+<main class="max-w-container-max mx-auto px-margin-desktop py-16">
+<!-- Hero Section -->
+<section class="grid grid-cols-12 gap-gutter mb-24">
+<div class="col-span-12 md:col-span-5 flex flex-col justify-center order-2 md:order-1">
+<span class="font-label-caps text-primary mb-4">COLLECTION 004 / 2024</span>
+<h1 class="font-headline-lg text-headline-lg text-primary mb-6 leading-tight">Artisanal circularity, <br/>tailored for the future.</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant mb-8 max-w-sm">Every piece in our shop is uniquely reconstructed from premium archival textiles, ensuring no two garments are ever identical.</p>
+<div class="w-32 stitch-line-h h-1 mb-8"></div>
+</div>
+<div class="col-span-12 md:col-span-7 relative h-[500px] order-1 md:order-2 mb-12 md:mb-0">
+<img alt="Sustainable Fashion Hero" class="w-full h-full object-cover grayscale-[20%]" data-alt="A wide-angle editorial shot of a fashion model walking through an airy, minimalist concrete space. They are wearing a complex patchwork coat made of various shades of forest green and cream linens. High-contrast natural light spills across the scene, creating dramatic shadows and highlighting the artisanal textile textures." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD_lmYEem8fPcG8ong2xCoTkU4GVouJjVHgcYnVwVRDL3OWDV_14RILhEDdRZmbetiUnhEHR_HFuhZJb-Z96E37m-5OoRn1G4FbbYmlxtZSVSO4dGdMxCNbUlhgue7j3MOt1b8-9fOWUJHgy2FkLVyjxmojD1alhQxDQz0n-te4Cf1bsvm1xHCI4r1DPO5UVnvTz-RiBhtPLH8AfiifOhZZV8QRPzjvwetzIp9FZPllee1eW1CacwFYkxPK7zTlYUvfkiJO1qqFAkk"/>
+<div class="absolute -bottom-6 -left-6 bg-surface-container-low p-8 border border-outline-variant hidden md:block">
+<p class="font-label-caps text-primary text-[40px] leading-none">01/01</p>
+<p class="font-label-caps text-on-surface-variant mt-2">LIMITED DROP</p>
+</div>
+</div>
+</section>
+<!-- Filters & Category Navigation -->
+<section class="flex flex-col md:flex-row justify-between items-end mb-12 border-b border-outline-variant pb-6">
+<div class="flex gap-8 mb-6 md:mb-0">
+<button class="font-label-caps text-primary border-b border-primary pb-1">Shop All</button>
+<button class="font-label-caps text-on-surface-variant hover:text-primary transition-colors">Upcycled Denim</button>
+<button class="font-label-caps text-on-surface-variant hover:text-primary transition-colors">Archives</button>
+<button class="font-label-caps text-on-surface-variant hover:text-primary transition-colors">New Arrivals</button>
+</div>
+<div class="flex items-center gap-4">
+<span class="font-label-caps text-[10px] text-on-surface-variant">SORT BY:</span>
+<select class="bg-transparent border-none font-label-caps text-primary focus:ring-0 cursor-pointer">
+<option>Featured Items</option>
+<option>Price: Low to High</option>
+<option>Price: High to Low</option>
+</select>
+</div>
+</section>
+<!-- Product Grid -->
+<section class="grid grid-cols-1 md:grid-cols-3 gap-y-16 gap-x-gutter">
+<!-- Product Item 1 (From prompt image reference) -->
+<div class="product-card group cursor-pointer">
+<div class="relative overflow-hidden bg-secondary-container mb-4">
+<img alt="Patchwork Archive Jacket" class="w-full aspect-[3/4] object-cover group-hover:scale-105 transition-transform duration-700" data-alt="Detailed product shot of a unique patchwork jacket featuring multiple shades of denim and canvas in forest green and indigo. The jacket has exposed white stitching and a structured, oversized fit. Photographed in soft studio lighting on a neutral cream background with an editorial, high-fashion aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuClCY-ItuSpjRqAlivh_Evi4VzUzxizhLvvBaa1NOJiz11zHiF5eOLXfa_d6oz4-P8olf_0SgvKI_dsy_p1NN_oVirzOKNkBRkEilCda4x6smD5BbJ1VWjDP2RdsBvNAb2b7jiXPxRKVDhVg7y7E7lC42CeFxAHohpZ-ggy7H1_Z9q3MqZwZXN8gyJWHhcMCdyuDYy4k2mlseL55nHGmmvNxQsyvE40RpnjC4Rrv2-wZwYw9frpQF4GUaIwhIzEZerbLqae2teVjt0"/>
+<div class="absolute top-4 left-4 bg-primary text-white font-label-caps px-3 py-1">BEST SELLER</div>
+<div class="product-action absolute inset-0 bg-primary/10 flex items-end opacity-0 translate-y-4 transition-all duration-300">
+<button class="w-full bg-primary text-white py-4 font-label-caps tracking-widest">QUICK ADD</button>
+</div>
+</div>
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-headline-md text-[20px] text-primary">Patchwork Archive Jacket</h3>
+<p class="font-label-caps text-on-surface-variant mt-1">Upcycled Cotton &amp; Denim</p>
+</div>
+<span class="font-body-md text-primary">$385.00</span>
+</div>
+</div>
+<!-- Product Item 2 -->
+<div class="product-card group cursor-pointer md:mt-12">
+<div class="relative overflow-hidden bg-secondary-container mb-4">
+<img alt="Deconstructed Denim Trousers" class="w-full aspect-[3/4] object-cover group-hover:scale-105 transition-transform duration-700" data-alt="A pair of deconstructed wide-leg denim trousers with visible paneling and raw edges. The fabric shows a mix of vintage washes. Styled in a professional fashion shoot with soft side lighting that emphasizes the architectural silhouette against a minimalist warm-toned studio background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDabUy1aN7FiVgBai_q3ya8aVW0_37JYlNgSckIZGNYfyJIITFi0e0UUSrd7mMqOKJjarYm25oeo9abt-a3R5kq9q0-cg1V_i8SX1HvZJ5ogYE0pF9hqE8WfDNwcfTETyFUAHzbQQKkAVMW-pBqLuCxvQYvHTdDLL_TFtPvkPBdzSlsu7Ww-ureZwrRZnvrtSbJIP3usj9EuNhIRCYUX-5M0IfNl5YTit_qfIjrLpv0DGY9KDir2dbxqNb_KxXz1_vkd68L5y-Q0Io"/>
+<div class="absolute top-4 left-4 border border-primary text-primary bg-surface font-label-caps px-3 py-1">LIMITED</div>
+<div class="product-action absolute inset-0 bg-primary/10 flex items-end opacity-0 translate-y-4 transition-all duration-300">
+<button class="w-full bg-primary text-white py-4 font-label-caps tracking-widest">QUICK ADD</button>
+</div>
+</div>
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-headline-md text-[20px] text-primary">Panelled Denim Trouser</h3>
+<p class="font-label-caps text-on-surface-variant mt-1">Vintage Repurposed Levi's</p>
+</div>
+<span class="font-body-md text-primary">$210.00</span>
+</div>
+</div>
+<!-- Product Item 3 -->
+<div class="product-card group cursor-pointer">
+<div class="relative overflow-hidden bg-secondary-container mb-4">
+<img alt="Upcycled Linen Shirt" class="w-full aspect-[3/4] object-cover group-hover:scale-105 transition-transform duration-700" data-alt="An oversized button-up shirt made from crisp, heavy upcycled linen in a soft bone-white color. The shirt features deep cuffs and a refined classic collar. The photography is clean and bright, utilizing natural sunlight to create soft textures on the fabric, maintaining a luxury eco-conscious brand image." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCKspYZsRkR29ltHOSG9LQ7LDzXxkpkY98MiV-0HJoX0jNl5nJMiiB-Air0LhDCNwazvsVDHCE8p9OwyurasGs3dNBpshsARfBj7s7NbZFVypKX6RdS9ygp4FPlwiCO5rhK0qzxcnacfd5GiQgExUw3NJjmlf70lm9eVWftmlKdbUhDKlnLGuc-XgE45kin3JVU13XlDD0Ab7RKpRbmcOchoeggs1mRU6GDv9Gjj8vBHzk3hMyOT-_ZsV_o3x83BbfZU_wMxyFcnXs"/>
+<div class="product-action absolute inset-0 bg-primary/10 flex items-end opacity-0 translate-y-4 transition-all duration-300">
+<button class="w-full bg-primary text-white py-4 font-label-caps tracking-widest">QUICK ADD</button>
+</div>
+</div>
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-headline-md text-[20px] text-primary">Bone Linen Overshirt</h3>
+<p class="font-label-caps text-on-surface-variant mt-1">100% Deadstock Linen</p>
+</div>
+<span class="font-body-md text-primary">$175.00</span>
+</div>
+</div>
+<!-- Product Item 4 -->
+<div class="product-card group cursor-pointer">
+<div class="relative overflow-hidden bg-secondary-container mb-4">
+<img alt="Tailored Forest Blazer" class="w-full aspect-[3/4] object-cover group-hover:scale-105 transition-transform duration-700" data-alt="A tailored blazer in deep forest green wool, featuring asymmetric stitching and unique buttons sourced from antique archives. The blazer is captured in a minimalist, high-end editorial style with focus on the sharp silhouette and premium textile quality against a pale grey background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCEDRdP5OEv6BTAnCpeBy488LPOhfyDepTvggOuRcKYaO6OFJOwwFtfkEpuGaKlP8Y1W8vjcXtwh7XCthgnieeYUwpCI0qo8REgcMTqZeC3OKR3a6XzHg7FqVy6RPxvyX7VFpF434BbX6oIETnAwFehPr5mZluugzSzkVi7znr84Q7C3tFy5BbHvAYZtFYvZxN2ihz45Y0LcY86D3vWlKEW33YxesG56-4KkesXkUvlHPbvM1U0oQbexCBNfDJsxerYXNZXiSr5B18"/>
+<div class="absolute top-4 left-4 bg-primary text-white font-label-caps px-3 py-1">BEST SELLER</div>
+<div class="product-action absolute inset-0 bg-primary/10 flex items-end opacity-0 translate-y-4 transition-all duration-300">
+<button class="w-full bg-primary text-white py-4 font-label-caps tracking-widest">QUICK ADD</button>
+</div>
+</div>
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-headline-md text-[20px] text-primary">Archival Forest Blazer</h3>
+<p class="font-label-caps text-on-surface-variant mt-1">Vintage Wool Blend</p>
+</div>
+<span class="font-body-md text-primary">$420.00</span>
+</div>
+</div>
+<!-- Product Item 5 -->
+<div class="product-card group cursor-pointer md:-mt-12">
+<div class="relative overflow-hidden bg-secondary-container mb-4">
+<img alt="Circular Knit Vest" class="w-full aspect-[3/4] object-cover group-hover:scale-105 transition-transform duration-700" data-alt="A chunky knit vest created from recycled cotton yarn in shades of cream and earth-tones. The knit pattern is organic and slightly irregular, emphasizing the handmade nature. Photographed outdoors in soft morning light, creating a serene, natural mood consistent with the brand's sustainable ethos." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBZEpD_WSyRuVz0AyHFPqIdMGu-XZmr6ZGBLLuYJFoEYZJ3UB4O89GWt6Qy1OfYLX3koWCXGthTiHO0_p6vzLe_OZBI8gdbSOGuewMFxKJOV9hwzUbCIshM4JGxqYkbXUz8vKCf6NRuH3RRxXhbJEQttOwp5iWoxwnAWD3PxCOa3jj7srDC-0Scrn2MMwBxE-cZkwMBXHMH6jGpHCnLvaz4esxXGJEp9pD1yov_991zcMjy-gzjH7R6rH0-dQRwbADcbLbv1c4Ae5U"/>
+<div class="product-action absolute inset-0 bg-primary/10 flex items-end opacity-0 translate-y-4 transition-all duration-300">
+<button class="w-full bg-primary text-white py-4 font-label-caps tracking-widest">QUICK ADD</button>
+</div>
+</div>
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-headline-md text-[20px] text-primary">Recycled Cotton Vest</h3>
+<p class="font-label-caps text-on-surface-variant mt-1">Hand-knit / Circular Yarn</p>
+</div>
+<span class="font-body-md text-primary">$155.00</span>
+</div>
+</div>
+<!-- Product Item 6 -->
+<div class="product-card group cursor-pointer">
+<div class="relative overflow-hidden bg-secondary-container mb-4">
+<img alt="Upcycled Utility Tote" class="w-full aspect-[3/4] object-cover group-hover:scale-105 transition-transform duration-700" data-alt="A large, structured utility tote bag constructed from durable upcycled heavy canvas and leather scraps. The bag has visible industrial-style stitching and reinforced handles. Displayed in a stark, modern environment with sharp shadows, highlighting its functional yet luxury design language." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBces04yXpjuj6vBxIw2UmacG1fVOJ86_QjXhmMPZiQZokl9yD83sMXBLE9DmSUEyr5ThVjbC6A9lwx3ZN44oUfgvvyhiXOHobyayUAinZOzXxrjMT4tNHdRhP0BxF8Qx1oCqfaeVWqZKcLkzxadomCObC7ogpzm4mjXfX4vOfH2BD6Hxdu1oPp4Gn62sMV1IFSOYuAu4VnT_Q289KMoskyXtF5zB2YJ7-iQaQpxZSTPbOHkb2PO6DK7KwEMqGDpzOXc9M-M6lrjFU"/>
+<div class="absolute top-4 left-4 border border-primary text-primary bg-surface font-label-caps px-3 py-1">LIMITED</div>
+<div class="product-action absolute inset-0 bg-primary/10 flex items-end opacity-0 translate-y-4 transition-all duration-300">
+<button class="w-full bg-primary text-white py-4 font-label-caps tracking-widest">QUICK ADD</button>
+</div>
+</div>
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-headline-md text-[20px] text-primary">Studio Utility Tote</h3>
+<p class="font-label-caps text-on-surface-variant mt-1">Reinforced Canvas Scraps</p>
+</div>
+<span class="font-body-md text-primary">$130.00</span>
+</div>
+</div>
+</section>
+<!-- Newsletter / Editorial Section -->
+<section class="mt-32 border border-primary p-margin-desktop bg-surface-container-low grid grid-cols-1 md:grid-cols-2 gap-gutter items-center">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-primary mb-4">The Circular Journal</h2>
+<p class="font-body-lg text-on-surface-variant mb-8">Join our community for early access to limited archival drops and insights into our transparent manufacturing process.</p>
+<div class="flex border-b border-primary max-w-sm">
+<input class="bg-transparent border-none w-full focus:ring-0 font-label-caps text-primary placeholder:text-outline py-4" placeholder="Your Email Address" type="email"/>
+<button class="font-label-caps text-primary hover:tracking-widest transition-all">SIGN UP</button>
+</div>
+</div>
+<div class="hidden md:block">
+<div class="grid grid-cols-2 gap-4">
+<div class="h-64 bg-secondary-fixed">
+<img alt="Process 1" class="w-full h-full object-cover" data-alt="Close-up of a tailor's hands working with a vintage sewing machine on dark green linen fabric. The lighting is focused and warm, capturing the fine details of the thread and the texture of the material. The environment is a clean, organized artisanal workshop." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBiuoFDeLJ_5ZUWJs2TyiUbZBtiVwrdebbEYYsCbtcOTfP3PLPWgELSyMn4xEhR1SnrX8_MlM_9aitXR79NkB9abz-aUu8VfCLQV8TKrjRpXtdSKtNGVrMG6IXsgLXIz70XS8VRaiQyvuzgTBH6oNc7gvWAH85-Ob3J4OLD5xUepLNbCkDTqQ3t-WZtuwK3uI0UkbpEWWYBMPlvQ1JC8R17BqcGyOrdzyrloMukvKtHFaymqELKVAoD4pmqbubalZezpIcLWRFXuFo"/>
+</div>
+<div class="h-64 bg-secondary-fixed mt-8">
+<img alt="Process 2" class="w-full h-full object-cover" data-alt="A curated arrangement of various upcycled fabric swatches in a palette of cream, forest green, and indigo denim. The swatches are laid out on a light wood table alongside designer sketches and a metal ruler, representing the thoughtful design process of a sustainable fashion brand." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD23BOahhQycEtnCvbOYaRY6opUaqEvszVfuZrbWRRBvpGRIrtNl5QX7zQiqgbc5gA1wFmowy2YadG8D557trZ4_ctv0fnTlY17OhmMUxLlGMN_Og2u2vNT7l1QuoGEh0rgTUK-xLOFCZ4IlQpgszd5UIEH2B3r_9qM5jKFvaKTrzJiCr1dcY71tnegNG92FzHrlE_SqsqBoWUYjOUQuY1h1gAJ7XR0CZckeFVtpDsxGtRVSeaTdykBPZOglFP1K9FlhcjTHVEThPg"/>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-highest dark:bg-surface-container border-t border-dashed border-outline mt-32">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter px-margin-desktop py-16 max-w-container-max mx-auto">
+<div class="space-y-6">
+<a class="font-headline-md text-headline-md text-primary dark:text-primary-fixed-dim" href="#">RÉUTILISER</a>
+<p class="font-body-md text-on-surface-variant max-w-xs">Crafting a circular future through conscious luxury and radical transparency.</p>
+<div class="flex gap-4">
+<a class="text-primary hover:opacity-70 transition-opacity" href="#"><span class="material-symbols-outlined">camera_enhance</span></a>
+<a class="text-primary hover:opacity-70 transition-opacity" href="#"><span class="material-symbols-outlined">video_library</span></a>
+</div>
+</div>
+<div class="flex flex-col gap-4">
+<span class="font-label-caps text-primary mb-2">QUICK LINKS</span>
+<a class="font-body-md text-on-surface-variant hover:text-primary transition-colors" href="#">Shop All</a>
+<a class="font-body-md text-on-surface-variant hover:text-primary transition-colors" href="#">Sustainability Report</a>
+<a class="font-body-md text-on-surface-variant hover:text-primary transition-colors" href="#">Stockists</a>
+<a class="font-body-md text-on-surface-variant hover:text-primary transition-colors" href="#">Journal</a>
+</div>
+<div class="flex flex-col gap-4">
+<span class="font-label-caps text-primary mb-2">SUPPORT</span>
+<a class="font-body-md text-on-surface-variant hover:text-primary transition-colors" href="#">Shipping Policy</a>
+<a class="font-body-md text-on-surface-variant hover:text-primary transition-colors" href="#">Returns &amp; Exchanges</a>
+<a class="font-body-md text-on-surface-variant hover:text-primary transition-colors" href="#">Privacy Policy</a>
+<a class="font-body-md text-on-surface-variant hover:text-primary transition-colors" href="#">Terms of Service</a>
+</div>
+</div>
+<div class="px-margin-desktop pb-8 max-w-container-max mx-auto flex flex-col md:flex-row justify-between items-center opacity-60">
+<p class="font-label-caps text-[10px]">© 2024 RÉUTILISER. Conscious Luxury for a Circular Future.</p>
+<p class="font-label-caps text-[10px] mt-2 md:mt-0">DESIGNED IN PARIS — BUILT GLOBALLY</p>
+</div>
+</footer>
+<script>
+        function toggleCart() {
+            const drawer = document.getElementById('side-drawer');
+            const isClosed = drawer.classList.contains('translate-x-full');
+            if (isClosed) {
+                drawer.classList.remove('translate-x-full');
+                drawer.classList.add('translate-x-0');
+            } else {
+                drawer.classList.add('translate-x-full');
+                drawer.classList.remove('translate-x-0');
+            }
+        }
+
+        // Simple scroll parallax for hero image
+        window.addEventListener('scroll', () => {
+            const heroImage = document.querySelector('section img');
+            const scrollPos = window.pageYOffset;
+            if (heroImage) {
+                heroImage.style.transform = `translateY(${scrollPos * 0.05}px)`;
+            }
+        });
+    </script>
+</body></html>

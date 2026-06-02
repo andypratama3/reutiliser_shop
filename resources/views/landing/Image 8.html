@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>RÉUTILISER | Conscious Luxury for a Circular Future</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&amp;family=Hanken+Grotesk:wght@300;400;600;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-high": "#eae7e7",
+                        "on-primary": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "on-background": "#1c1b1b",
+                        "tertiary": "#424444",
+                        "primary": "#2a4a38",
+                        "background": "#fcf9f8",
+                        "outline-variant": "#c1c8c1",
+                        "secondary-fixed": "#e6e2db",
+                        "surface-dim": "#dcd9d9",
+                        "surface": "#fcf9f8",
+                        "tertiary-fixed": "#e2e2e2",
+                        "on-tertiary-fixed-variant": "#454747",
+                        "surface-container": "#f0eded",
+                        "on-primary-container": "#b7dcc4",
+                        "on-secondary-container": "#66645f",
+                        "surface-container-lowest": "#ffffff",
+                        "outline": "#727973",
+                        "inverse-primary": "#abcfb8",
+                        "inverse-on-surface": "#f3f0ef",
+                        "surface-container-low": "#f6f3f2",
+                        "on-tertiary-container": "#d2d3d3",
+                        "surface-tint": "#446552",
+                        "on-secondary-fixed": "#1c1c18",
+                        "surface-variant": "#e5e2e1",
+                        "secondary-container": "#e6e2db",
+                        "primary-fixed": "#c6ebd3",
+                        "on-surface-variant": "#424843",
+                        "error": "#ba1a1a",
+                        "surface-container-highest": "#e5e2e1",
+                        "primary-container": "#41624f",
+                        "inverse-surface": "#313030",
+                        "on-tertiary-fixed": "#1a1c1c",
+                        "error-container": "#ffdad6",
+                        "tertiary-fixed-dim": "#c6c6c7",
+                        "on-secondary-fixed-variant": "#484742",
+                        "secondary": "#605e59",
+                        "on-tertiary": "#ffffff",
+                        "on-primary-fixed-variant": "#2d4d3b",
+                        "secondary-fixed-dim": "#cac6bf",
+                        "tertiary-container": "#595b5b",
+                        "on-error": "#ffffff",
+                        "primary-fixed-dim": "#abcfb8",
+                        "on-surface": "#1c1b1b",
+                        "surface-bright": "#fcf9f8",
+                        "on-primary-fixed": "#002112",
+                        "on-secondary": "#ffffff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0",
+                        "lg": "0",
+                        "xl": "0",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gutter": "24px",
+                        "margin-desktop": "64px",
+                        "unit": "8px",
+                        "margin-mobile": "20px",
+                        "container-max": "1440px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Libre Caslon Text"],
+                        "body-lg": ["Hanken Grotesk"],
+                        "body-md": ["Hanken Grotesk"],
+                        "label-caps": ["Hanken Grotesk"],
+                        "headline-md": ["Libre Caslon Text"],
+                        "headline-lg-mobile": ["Libre Caslon Text"],
+                        "display-lg": ["Libre Caslon Text"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["48px", {"lineHeight": "56px", "fontWeight": "400"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "600"}],
+                        "headline-md": ["32px", {"lineHeight": "40px", "fontWeight": "400"}],
+                        "headline-lg-mobile": ["32px", {"lineHeight": "40px", "fontWeight": "400"}],
+                        "display-lg": ["80px", {"lineHeight": "90px", "letterSpacing": "-0.02em", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }
+        .stitch-border {
+            border: 1px dashed #727973;
+        }
+        .editorial-image-overlay {
+            mix-blend-mode: multiply;
+        }
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #fcf9f8;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #2a4a38;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background selection:bg-primary selection:text-on-primary">
+<!-- TopNavBar -->
+<header class="fixed top-0 left-0 right-0 z-50 bg-surface dark:bg-inverse-surface border-b border-outline-variant">
+<div class="flex justify-between items-center w-full px-margin-desktop py-4 max-w-container-max mx-auto">
+<div class="flex gap-8 items-center">
+<a class="font-headline-md text-headline-md tracking-tighter text-primary dark:text-primary-fixed-dim" href="#">RÉUTILISER</a>
+<nav class="hidden md:flex gap-6">
+<a class="font-label-caps text-label-caps text-primary dark:text-primary-fixed-dim border-b-2 border-primary pb-1" href="#">About</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant dark:text-surface-variant hover:text-primary transition-colors duration-300" href="#">Shop</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant dark:text-surface-variant hover:text-primary transition-colors duration-300" href="#">Journal</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant dark:text-surface-variant hover:text-primary transition-colors duration-300" href="#">Contact</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<button class="hover:opacity-70 transition-opacity p-2 scale-95 active:transition-transform">
+<span class="material-symbols-outlined text-primary">search</span>
+</button>
+<button class="hover:opacity-70 transition-opacity p-2 scale-95 active:transition-transform" id="cart-toggle">
+<span class="material-symbols-outlined text-primary">shopping_bag</span>
+</button>
+</div>
+</div>
+</header>
+<!-- SideNavBar (Drawer / Cart) -->
+<aside class="fixed right-0 top-0 h-full w-full md:w-96 z-[60] bg-surface-container-low dark:bg-surface-container-lowest border-l border-outline-variant translate-x-full transition-transform duration-500 shadow-2xl flex flex-col" id="side-nav">
+<div class="p-margin-desktop flex flex-col h-full">
+<div class="flex justify-between items-center mb-8">
+<h2 class="font-headline-md text-headline-md text-primary">Your Cart</h2>
+<button class="material-symbols-outlined text-on-surface-variant" id="cart-close">close</button>
+</div>
+<p class="font-label-caps text-label-caps text-on-surface-variant mb-12">Items are reserved for 30 minutes</p>
+<div class="flex-grow space-y-6 overflow-y-auto">
+<!-- Cart Items Placeholder -->
+<div class="flex gap-4 items-center p-4 border border-outline-variant">
+<div class="w-16 h-20 bg-secondary-container"></div>
+<div>
+<p class="font-headline-md text-body-md">Upcycled Denim Blazer</p>
+<p class="font-label-caps text-label-caps">SIZE M — $240.00</p>
+</div>
+</div>
+</div>
+<div class="mt-auto pt-8 border-t border-dashed border-outline">
+<button class="w-full bg-primary text-on-primary py-6 font-label-caps text-label-caps hover:opacity-90 transition-opacity">Checkout Now</button>
+<div class="grid grid-cols-2 mt-6 gap-2">
+<a class="flex items-center gap-2 p-4 text-on-surface-variant hover:bg-surface-variant text-label-caps font-label-caps" href="#">
+<span class="material-symbols-outlined">local_shipping</span> Shipping
+                    </a>
+<a class="flex items-center gap-2 p-4 text-on-surface-variant hover:bg-surface-variant text-label-caps font-label-caps" href="#">
+<span class="material-symbols-outlined">assignment_return</span> Returns
+                    </a>
+</div>
+</div>
+</div>
+</aside>
+<main class="pt-24">
+<!-- Hero Section -->
+<section class="relative min-h-[90vh] flex flex-col justify-center px-margin-desktop overflow-hidden">
+<div class="absolute inset-0 z-0 scale-105">
+<img alt="Hero Fashion" class="w-full h-full object-cover grayscale opacity-80" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCT0HfLxPye9rgbCKkQAQ24EHJm3npbGupYabQjMoMoGQEPo3w7AiJOpE9_taRjDWqGPD4rRL-LldkuvV3MyLLpzs8tabMcSnosuGjs_rzntrHwpHGYMBZWJxth46XVstouUlql89cNS-ypVulKFUaNWWIU34WECyHNrZl5T3hYergtqLYDpkp0EsvRF-tfw5EC8qmDrY6CUF-Wk94FK8tndjEfz38rIzcUlfwV0Fs5GP7f_q8zeTZKQ_AwYfVh0PvwSqL9xKHpyyk"/>
+</div>
+<div class="relative z-10 max-w-4xl">
+<p class="font-label-caps text-label-caps text-primary tracking-[0.4em] mb-6">ESTABLISHED 2024 — PARIS</p>
+<h1 class="font-display-lg text-display-lg text-primary leading-none mb-8">
+                    Sustainable Fashion<br/>
+<span class="italic text-on-background">Wear More, Waste Less</span>
+</h1>
+<div class="flex gap-8 items-center mt-12">
+<button class="bg-primary text-on-primary px-12 py-5 font-label-caps text-label-caps hover:bg-primary-container transition-all">Shop The Collection</button>
+<div class="h-px w-24 bg-primary hidden md:block"></div>
+<span class="font-label-caps text-label-caps text-primary hidden md:block">View Lookbook P.01</span>
+</div>
+</div>
+<!-- Branding Accent -->
+<div class="absolute bottom-12 right-margin-desktop flex flex-col items-end">
+<div class="flex items-center gap-4 mb-4">
+<span class="font-label-caps text-label-caps">MODERN</span>
+<span class="material-symbols-outlined text-primary">arrow_right_alt</span>
+<span class="font-label-caps text-label-caps">CLASSY</span>
+<span class="material-symbols-outlined text-primary">arrow_right_alt</span>
+<span class="font-label-caps text-label-caps">EXCLUSIVE</span>
+</div>
+<div class="stitch-border w-64 h-px mb-4"></div>
+<p class="font-body-md text-body-md italic opacity-60 max-w-xs text-right">"A narrative of circularity told through the lens of high-end tailoring."</p>
+</div>
+</section>
+<!-- Vision Section -->
+<section class="py-32 px-margin-desktop max-w-container-max mx-auto overflow-hidden">
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter items-center">
+<div class="md:col-span-5 bg-primary p-12 md:p-24 text-on-primary relative">
+<div class="absolute -top-4 -left-4 w-12 h-12 border-t-2 border-l-2 border-primary"></div>
+<h2 class="font-headline-lg text-headline-lg mb-8">Our Vision</h2>
+<p class="font-body-lg text-body-lg mb-8 leading-relaxed">
+                        Réutiliser hadir sebagai solusi atas banyaknya masalah pada limbah industri pakaian, dengan mengolah itu kembali dan menjadikannya <span class="italic underline decoration-dashed">"pembaruan"</span>.
+                    </p>
+<p class="font-body-md text-body-md opacity-80 mb-12">
+                        Réutiliser juga turut andil dalam mensejahterakan para Designer Lokal minim sekali highlight.
+                    </p>
+<div class="stitch-border p-8 inline-block">
+<span class="font-label-caps text-label-caps">P.4 COLLABORATION INDEX</span>
+</div>
+</div>
+<div class="md:col-span-7 relative group">
+<div class="absolute inset-0 bg-secondary-container -z-10 translate-x-8 translate-y-8 group-hover:translate-x-4 group-hover:translate-y-4 transition-transform duration-700"></div>
+<div class="stitch-border p-4">
+<img alt="Visionary Collaboration" class="w-full aspect-[4/3] object-cover filter grayscale-50 group-hover:grayscale-0 transition-all duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDSkugXUdxLIq05v9_hmmRXqhUDLEmJmQRGcdOz75_SGbv9VueCR2JBUXo4AFWqW5NFe56G5JiH_uo-eLBapky4XhQYL7UNpVym-4FTtvcIrqMEvvTG5SsLGRKpXtBxtRK9OX2B3CYJYiG2pAENKMPfs3G9X7rcrmzppj44YJt4_6LbRzIPE9Qw8KHV3qhS1SijvXUpuH1PxIvIV6fUFWOgLXKCiZu1Pg2ylmwop9ZL0KCvcPipodHm6crQeyPWJm_GZHXMW4nN_dM"/>
+</div>
+<div class="absolute -bottom-8 right-8 bg-surface p-6 shadow-xl border border-outline-variant">
+<p class="font-label-caps text-label-caps text-primary mb-2">LOCAL IMPACT</p>
+<p class="font-headline-md text-body-md">12+ Artisan Workshops</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Stitch Divider -->
+<div class="w-full h-px border-t border-dashed border-outline max-w-container-max mx-auto opacity-30 my-16"></div>
+<!-- Featured Products -->
+<section class="py-32 px-margin-desktop max-w-container-max mx-auto">
+<div class="flex justify-between items-end mb-24 border-b border-outline-variant pb-8">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-primary">Featured Selection</h2>
+<p class="font-label-caps text-label-caps tracking-[0.2em] mt-2">AUTUMN / WINTER 24</p>
+</div>
+<a class="font-label-caps text-label-caps border-b-2 border-primary pb-1 hover:opacity-60 transition-opacity" href="#">View All Archives</a>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+<!-- Product Card 1 -->
+<div class="group">
+<div class="bg-secondary-container relative aspect-[2/3] overflow-hidden mb-6">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" data-alt="High-end editorial fashion photography of a deconstructed blazer jacket made from different shades of upcycled denim, hanging in a bright minimalist concrete studio with sharp shadows. The mood is luxury sustainable and exclusive, using a palette of indigo, forest green, and cream." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBObiQjVoeO7LqvUrrv26lOfIVQstLSLoeIQLwOfTPYo-N9xf71w6WbZfWxVnHAXx-6qeoxq6FTHxRBHHCxm1SFHSllbZsrk4Fro6VsimaqN25MZG2FPUxq3e57AqONtf14vHhdzoSiVcgxPw4rcxhqLglWo7kpgv1_sWo_Gl49jyORNehYF2SLglADLxDSh9HFl2wdukZqNkEUcAMK9ivslHzNuGSexRSg0P-zDpWK_c8veinYOqlnQbDGzwP-CO7GMSGDpPHPx9w"/>
+<div class="absolute top-4 right-4 bg-surface px-4 py-2 text-label-caps font-label-caps text-primary border border-primary">NEW ARRIVAL</div>
+<button class="absolute bottom-0 left-0 w-full bg-primary text-on-primary py-6 font-label-caps text-label-caps translate-y-full group-hover:translate-y-0 transition-transform duration-500">Add to Cart — $280</button>
+</div>
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-headline-md text-body-lg">Denim Deconstructed Blazer</h3>
+<p class="font-label-caps text-label-caps text-on-surface-variant mt-1">UPCYCLED DENIM / ORGANIC COTTON</p>
+</div>
+<p class="font-headline-md text-body-lg">$280.00</p>
+</div>
+</div>
+<!-- Product Card 2 -->
+<div class="group">
+<div class="bg-secondary-container relative aspect-[2/3] overflow-hidden mb-6">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" data-alt="High-fashion product photography of a minimalist knit sweater made from organic wool, draped elegantly on a stone pedestal. Soft lighting, neutral cream background, high-key lighting, eco-minimalism aesthetic with a focus on fine texture and forest green accents." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBKgG80iCsDSuxiP4FeeOkPjo4F7yiJT0q-c0e7I2ChbSYaK2ybpr0UiwwJlW5uvrVNh8cM0t48ZXDNO1asDt9eEv6DkPqnNqhdnf8umfEdlH233WRAMzYGrSZqlGNderXKWQ3t_J05C9tEUaZvcFVY6U8jwEJ2r45dYn-7vR8qd0DdP6GtdEhTV0W3BHis30ruBemSAgjFha8gjuzbWQco_jIs_1k3ICXEgfDdZtiidZoXDFBm_NuWE8a_ifSDQjDaDns4vRxU6AQ"/>
+<button class="absolute bottom-0 left-0 w-full bg-primary text-on-primary py-6 font-label-caps text-label-caps translate-y-full group-hover:translate-y-0 transition-transform duration-500">Add to Cart — $195</button>
+</div>
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-headline-md text-body-lg">Organic Wool Archetype Sweater</h3>
+<p class="font-label-caps text-label-caps text-on-surface-variant mt-1">100% TRACEABLE ORGANIC WOOL</p>
+</div>
+<p class="font-headline-md text-body-lg">$195.00</p>
+</div>
+</div>
+<!-- Product Card 3 -->
+<div class="group">
+<div class="bg-secondary-container relative aspect-[2/3] overflow-hidden mb-6">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" data-alt="Luxury fashion editorial featuring a pair of tailored trousers made from recycled linen, styled with a leather belt. Natural daylight, warm tones, architectural background with classic columns, capturing a feeling of modern classy exclusive elegance. Colors: beige, sage green, dark wood." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBctsespTOp8J8x-1BqjWE7VmAEMBs3PG5kMw_UZtNwYVLvbO1bIUuxktNn0_0wwO0cG8JI8SrOnzVL_od-BH4O6RtXr7TOKSAjAvbts70GN7lzNcYa543KnoeTM_UzpilecVYnLva-y2rpNdO0kq-9SuXKPSU02v4ycNi8Y6I7iauYKQD6noUr6R8AU9yHn_Pbf1iSx_fZtV-OHd6Q_TzWfdLncKw8IEKnpuQCWoIv07eaUMCUDZWU0XCLslFMbqy67mSkVqLf0R8"/>
+<div class="absolute top-4 right-4 bg-surface px-4 py-2 text-label-caps font-label-caps text-primary border border-primary italic">LIMITED</div>
+<button class="absolute bottom-0 left-0 w-full bg-primary text-on-primary py-6 font-label-caps text-label-caps translate-y-full group-hover:translate-y-0 transition-transform duration-500">Add to Cart — $310</button>
+</div>
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-headline-md text-body-lg">Recycled Linen Studio Trousers</h3>
+<p class="font-label-caps text-label-caps text-on-surface-variant mt-1">HERITAGE WEAVE / BIODEGRADABLE</p>
+</div>
+<p class="font-headline-md text-body-lg">$310.00</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Brand DNA / Collaboration (Logo Focus) -->
+<section class="bg-surface-container-low py-32 px-margin-desktop overflow-hidden">
+<div class="max-w-container-max mx-auto grid grid-cols-1 md:grid-cols-2 gap-24 items-center">
+<div class="relative order-2 md:order-1 flex justify-center">
+<div class="w-80 h-80 md:w-[500px] md:h-[500px] border border-dashed border-primary rounded-full animate-[spin_20s_linear_infinite] opacity-30"></div>
+<div class="absolute inset-0 flex items-center justify-center">
+<img alt="Réutiliser Logo" class="w-48 h-48 md:w-64 md:h-64 opacity-80" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCfzhH_dGj53JBznVAnzFqymS7ZjOwRDHG18vWy8WAeAp-xzP7xdskg_iKwrFcHGPi_MYLuDCz5FbaCLGSrlMF6ZilO5VR2d0MWDkIhT7KNb1ZvgolC9ZQmXY5xRH3ZF4ojf2CSC3Qg3-cAeG0aUAXkFCeuUD8g5U0IraCte_xeELZKXlnk9pt84Fr_F5NbUhujTYV-1Th1aSJwF5j0Pn0Q0v5BFyoPBYMWHwmLFJI6cWvVY3E2lHNOitzuTRuwLG0qO57l5tm3kkY"/>
+</div>
+<div class="absolute bottom-12 right-12 bg-primary w-12 h-12 rounded-full flex items-center justify-center text-on-primary font-headline-md text-body-md">P.2</div>
+</div>
+<div class="order-1 md:order-2">
+<p class="font-label-caps text-label-caps text-primary mb-4">COLLABORATIVE ECO-SYSTEM</p>
+<h2 class="font-headline-lg text-headline-lg mb-8 text-primary leading-tight">About RÉUTILISER</h2>
+<p class="font-body-lg text-body-lg mb-8 leading-relaxed max-w-lg">
+                        Réutiliser merupakan hasil kolaborasi antara sebuah brand fashion dengan designer lokal yang kembali mengolah limbah industri fashion menjadi fashion item limited yang bernilai jual tinggi.
+                    </p>
+<div class="flex gap-4">
+<span class="w-12 h-px bg-primary self-center"></span>
+<a class="font-label-caps text-label-caps hover:text-primary transition-colors" href="http://www.réutiliser.com">www.réutiliser.com</a>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-highest dark:bg-surface-container border-t border-dashed border-outline">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter px-margin-desktop py-16 max-w-container-max mx-auto">
+<div class="flex flex-col gap-6">
+<a class="font-headline-md text-headline-md text-primary dark:text-primary-fixed-dim tracking-tighter" href="#">RÉUTILISER</a>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-xs">
+                    © 2024 RÉUTILISER. Conscious Luxury for a Circular Future.
+                </p>
+</div>
+<div class="grid grid-cols-2 gap-8">
+<div class="flex flex-col gap-4">
+<p class="font-label-caps text-label-caps text-primary font-bold">Discover</p>
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" href="#">Sustainability Report</a>
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" href="#">Stockists</a>
+</div>
+<div class="flex flex-col gap-4">
+<p class="font-label-caps text-label-caps text-primary font-bold">Legal</p>
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" href="#">Privacy Policy</a>
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" href="#">Terms of Service</a>
+</div>
+</div>
+<div class="flex flex-col gap-6 items-end">
+<p class="font-label-caps text-label-caps text-primary font-bold">Newsletter</p>
+<div class="w-full flex">
+<input class="w-full bg-transparent border-0 border-b border-primary p-2 focus:ring-0 font-body-md text-body-md italic" placeholder="Email Address" type="email"/>
+<button class="bg-primary text-on-primary px-6 py-2 font-label-caps text-label-caps">Join</button>
+</div>
+<div class="flex gap-4 mt-4">
+<span class="material-symbols-outlined text-primary hover:opacity-70 cursor-pointer">social_leaderboard</span>
+<span class="material-symbols-outlined text-primary hover:opacity-70 cursor-pointer">share</span>
+<span class="material-symbols-outlined text-primary hover:opacity-70 cursor-pointer">public</span>
+</div>
+</div>
+</div>
+</footer>
+<script>
+        // Cart Toggle Logic
+        const sideNav = document.getElementById('side-nav');
+        const cartToggle = document.getElementById('cart-toggle');
+        const cartClose = document.getElementById('cart-close');
+
+        cartToggle.addEventListener('click', () => {
+            sideNav.classList.remove('translate-x-full');
+        });
+
+        cartClose.addEventListener('click', () => {
+            sideNav.classList.add('translate-x-full');
+        });
+
+        // Simple Parallax / Reveal interaction
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const heroImg = document.querySelector('section img');
+            if (heroImg) {
+                heroImg.style.transform = `translateY(${scrolled * 0.15}px)`;
+            }
+        });
+
+        // Scroll Reveal effect for grid items
+        const observerOptions = {
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('opacity-100', 'translate-y-0');
+                    entry.target.classList.remove('opacity-0', 'translate-y-12');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.group, .md\\:col-span-5, .md\\:col-span-7').forEach(el => {
+            el.classList.add('transition-all', 'duration-1000', 'opacity-0', 'translate-y-12');
+            observer.observe(el);
+        });
+    </script>
+</body></html>

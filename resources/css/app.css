@@ -1,0 +1,36 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+@theme {
+    --font-sans: 'Hanken Grotesk', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-headline: 'Libre Caslon Text', serif;
+
+    --color-primary: #2a4a38;
+    --color-on-primary: #ffffff;
+    --color-primary-container: #41624f;
+    --color-primary-fixed-dim: #abcfb8;
+    --color-background: #fcf9f8;
+    --color-on-background: #1c1b1b;
+    --color-surface: #fcf9f8;
+    --color-surface-dim: #dcd9d9;
+    --color-surface-variant: #e5e2e1;
+    --color-surface-container: #f0eded;
+    --color-surface-container-high: #eae7e7;
+    --color-surface-container-highest: #e5e2e1;
+    --color-surface-container-low: #f6f3f2;
+    --color-surface-container-lowest: #ffffff;
+    --color-on-surface: #1c1b1b;
+    --color-on-surface-variant: #424843;
+    --color-secondary: #605e59;
+    --color-secondary-container: #e6e2db;
+    --color-tertiary: #424444;
+    --color-outline: #727973;
+    --color-outline-variant: #c1c8c1;
+    --color-error: #ba1a1a;
+    --color-error-container: #ffdad6;
+}

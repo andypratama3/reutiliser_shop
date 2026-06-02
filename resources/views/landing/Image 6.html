@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>RÉUTILISER | Conscious Checkout</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&amp;family=Hanken+Grotesk:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "surface-container-high": "#eae7e7",
+            "on-primary": "#ffffff",
+            "on-error-container": "#93000a",
+            "on-background": "#1c1b1b",
+            "tertiary": "#424444",
+            "primary": "#2a4a38",
+            "background": "#fcf9f8",
+            "outline-variant": "#c1c8c1",
+            "secondary-fixed": "#e6e2db",
+            "surface-dim": "#dcd9d9",
+            "surface": "#fcf9f8",
+            "tertiary-fixed": "#e2e2e2",
+            "on-tertiary-fixed-variant": "#454747",
+            "surface-container": "#f0eded",
+            "on-primary-container": "#b7dcc4",
+            "on-secondary-container": "#66645f",
+            "surface-container-lowest": "#ffffff",
+            "outline": "#727973",
+            "inverse-primary": "#abcfb8",
+            "inverse-on-surface": "#f3f0ef",
+            "surface-container-low": "#f6f3f2",
+            "on-tertiary-container": "#d2d3d3",
+            "surface-tint": "#446552",
+            "on-secondary-fixed": "#1c1c18",
+            "surface-variant": "#e5e2e1",
+            "secondary-container": "#e6e2db",
+            "primary-fixed": "#c6ebd3",
+            "on-surface-variant": "#424843",
+            "error": "#ba1a1a",
+            "surface-container-highest": "#e5e2e1",
+            "primary-container": "#41624f",
+            "inverse-surface": "#313030",
+            "on-tertiary-fixed": "#1a1c1c",
+            "error-container": "#ffdad6",
+            "tertiary-fixed-dim": "#c6c6c7",
+            "on-secondary-fixed-variant": "#484742",
+            "secondary": "#605e59",
+            "on-tertiary": "#ffffff",
+            "on-primary-fixed-variant": "#2d4d3b",
+            "secondary-fixed-dim": "#cac6bf",
+            "tertiary-container": "#595b5b",
+            "on-error": "#ffffff",
+            "primary-fixed-dim": "#abcfb8",
+            "on-surface": "#1c1b1b",
+            "surface-bright": "#fcf9f8",
+            "on-primary-fixed": "#002112",
+            "on-secondary": "#ffffff"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "gutter": "24px",
+            "margin-desktop": "64px",
+            "unit": "8px",
+            "margin-mobile": "20px",
+            "container-max": "1440px"
+          },
+          "fontFamily": {
+            "headline-lg": ["Libre Caslon Text"],
+            "body-lg": ["Hanken Grotesk"],
+            "body-md": ["Hanken Grotesk"],
+            "label-caps": ["Hanken Grotesk"],
+            "headline-md": ["Libre Caslon Text"],
+            "headline-lg-mobile": ["Libre Caslon Text"],
+            "display-lg": ["Libre Caslon Text"]
+          },
+          "fontSize": {
+            "headline-lg": ["48px", {"lineHeight": "56px", "fontWeight": "400"}],
+            "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+            "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+            "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "600"}],
+            "headline-md": ["32px", {"lineHeight": "40px", "fontWeight": "400"}],
+            "headline-lg-mobile": ["32px", {"lineHeight": "40px", "fontWeight": "400"}],
+            "display-lg": ["80px", {"lineHeight": "90px", "letterSpacing": "-0.02em", "fontWeight": "400"}]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    body {
+      background-color: #fcf9f8;
+      color: #1c1b1b;
+      -webkit-font-smoothing: antialiased;
+    }
+    .stitch-divider {
+      border-top: 1px dashed #727973;
+    }
+    .form-input-minimal {
+      border: none;
+      border-bottom: 1px solid #2a4a38;
+      background: transparent;
+      padding: 8px 0;
+      border-radius: 0;
+      width: 100%;
+    }
+    .form-input-minimal:focus {
+      outline: none;
+      border-bottom-width: 2px;
+      box-shadow: none;
+    }
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+    }
+  </style>
+</head>
+<body class="font-body-md text-on-background">
+<!-- Top Navigation -->
+<header class="bg-surface border-b border-outline-variant sticky top-0 z-50">
+<div class="flex justify-between items-center w-full px-margin-desktop py-4 max-w-container-max mx-auto">
+<div class="font-headline-md text-headline-md tracking-tighter text-primary">RÉUTILISER</div>
+<nav class="hidden md:flex gap-8 items-center">
+<a class="text-on-surface-variant hover:text-primary transition-colors duration-300 font-label-caps text-label-caps" href="#">About</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors duration-300 font-label-caps text-label-caps" href="#">Shop</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors duration-300 font-label-caps text-label-caps" href="#">Journal</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors duration-300 font-label-caps text-label-caps" href="#">Contact</a>
+</nav>
+<div class="flex gap-6 items-center">
+<span class="material-symbols-outlined cursor-pointer hover:opacity-70 transition-opacity" data-icon="search">search</span>
+<div class="relative cursor-pointer hover:opacity-70 transition-opacity">
+<span class="material-symbols-outlined" data-icon="shopping_bag">shopping_bag</span>
+<span class="absolute -top-1 -right-1 bg-primary text-white text-[10px] w-4 h-4 flex items-center justify-center rounded-full">2</span>
+</div>
+</div>
+</div>
+</header>
+<main class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-12">
+<!-- Page Header -->
+<div class="mb-16">
+<h1 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-primary mb-2">Checkout</h1>
+<p class="font-body-md text-on-surface-variant max-w-lg">Finalize your conscious purchase. Every item in your cart is a step toward a more circular future in high fashion.</p>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
+<!-- Left Column: Shipping & Payment -->
+<section class="lg:col-span-7 space-y-16">
+<!-- Contact Information -->
+<div>
+<div class="flex items-center gap-4 mb-8">
+<span class="font-label-caps text-label-caps bg-primary text-white px-2 py-1">01</span>
+<h2 class="font-headline-md text-headline-md">Contact Information</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<div class="flex flex-col gap-2">
+<label class="font-label-caps text-label-caps text-secondary uppercase">Email Address</label>
+<input class="form-input-minimal" placeholder="conscious.buyer@reutiliser.com" type="email"/>
+</div>
+<div class="flex flex-col gap-2">
+<label class="font-label-caps text-label-caps text-secondary uppercase">Phone Number</label>
+<input class="form-input-minimal" placeholder="+44 7700 900000" type="tel"/>
+</div>
+</div>
+</div>
+<!-- Shipping Address -->
+<div>
+<div class="flex items-center gap-4 mb-8">
+<span class="font-label-caps text-label-caps bg-primary text-white px-2 py-1">02</span>
+<h2 class="font-headline-md text-headline-md">Shipping Address</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<div class="flex flex-col gap-2 md:col-span-2">
+<label class="font-label-caps text-label-caps text-secondary uppercase">Full Name</label>
+<input class="form-input-minimal" placeholder="Alexandra Vauthier" type="text"/>
+</div>
+<div class="flex flex-col gap-2 md:col-span-2">
+<label class="font-label-caps text-label-caps text-secondary uppercase">Address Line 1</label>
+<input class="form-input-minimal" placeholder="12 Savile Row" type="text"/>
+</div>
+<div class="flex flex-col gap-2">
+<label class="font-label-caps text-label-caps text-secondary uppercase">City</label>
+<input class="form-input-minimal" placeholder="London" type="text"/>
+</div>
+<div class="flex flex-col gap-2">
+<label class="font-label-caps text-label-caps text-secondary uppercase">Postcode</label>
+<input class="form-input-minimal" placeholder="W1S 3PQ" type="text"/>
+</div>
+<div class="flex flex-col gap-2">
+<label class="font-label-caps text-label-caps text-secondary uppercase">Country</label>
+<select class="form-input-minimal appearance-none cursor-pointer">
+<option>United Kingdom</option>
+<option>France</option>
+<option>Germany</option>
+<option>Italy</option>
+</select>
+</div>
+</div>
+</div>
+<!-- Payment Method -->
+<div>
+<div class="flex items-center gap-4 mb-8">
+<span class="font-label-caps text-label-caps bg-primary text-white px-2 py-1">03</span>
+<h2 class="font-headline-md text-headline-md">Payment Method</h2>
+</div>
+<div class="space-y-4">
+<!-- Digital Wallet Option -->
+<label class="flex items-center p-6 bg-surface-container-low border border-outline-variant cursor-pointer hover:border-primary transition-all group">
+<input checked="" class="w-4 h-4 text-primary border-outline focus:ring-primary" name="payment" type="radio"/>
+<div class="ml-6 flex items-center gap-4">
+<span class="material-symbols-outlined text-primary" data-icon="account_balance_wallet">account_balance_wallet</span>
+<div>
+<div class="font-label-caps text-label-caps text-primary">Digital Wallet</div>
+<div class="text-sm text-secondary">Apple Pay, Google Pay, or PayPal</div>
+</div>
+</div>
+</label>
+<!-- Bank Transfer Option -->
+<label class="flex items-center p-6 bg-surface-container-low border border-outline-variant cursor-pointer hover:border-primary transition-all group">
+<input class="w-4 h-4 text-primary border-outline focus:ring-primary" name="payment" type="radio"/>
+<div class="ml-6 flex items-center gap-4">
+<span class="material-symbols-outlined text-primary" data-icon="account_balance">account_balance</span>
+<div>
+<div class="font-label-caps text-label-caps text-primary">Bank Transfer</div>
+<div class="text-sm text-secondary">Direct wire for exclusive archival pieces</div>
+</div>
+</div>
+</label>
+</div>
+</div>
+<!-- Action Button (Mobile Only visible here potentially) -->
+<div class="md:hidden pt-8">
+<button class="w-full bg-primary text-on-primary font-label-caps text-label-caps py-6 tracking-widest uppercase transition-opacity hover:opacity-90">
+            Complete Order
+          </button>
+</div>
+</section>
+<!-- Right Column: Order Summary -->
+<aside class="lg:col-span-5 bg-secondary-container p-8 md:p-12 sticky top-24">
+<h2 class="font-headline-md text-headline-md mb-8">Order Review</h2>
+<!-- Cart Items -->
+<div class="space-y-8 mb-12">
+<!-- Item 1 -->
+<div class="flex gap-6">
+<div class="w-24 h-32 bg-surface overflow-hidden flex-shrink-0">
+<img class="w-full h-full object-cover" data-alt="Close-up shot of a high-quality upcycled denim jacket with unique stitch patterns and distressed details. The lighting is soft and editorial, highlighting the raw texture of the sustainable fabric against a neutral cream background. The aesthetic is modern, minimalist, and luxury-focused, with a palette of forest green and deep indigo." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD5u8G3z5FaYba59x8JYZNoFpU89BUq5npBngzWIx9nfqK2qz-JQtYKbsdyNgAkgoqAvIzmr5EZA4Jjeudfo8q4eKmsgMycGWfomOK7lYxiiXq--EnhuxgZf6D8BbHVNp2Yo4rsAfsTVMuoAavnlH4_qpga_GD3sGUGRqrXyaA5u1M8INo_PFGAAKn025n6G3gg_NhFfgCDWc9P7_jVF9EQtuHZ2RGQxEAsC0n7IefcEMXvauEph4mz4pyeUg_j4b4kFgaQMvaVgoQ"/>
+</div>
+<div class="flex-grow flex flex-col justify-between py-1">
+<div>
+<div class="flex justify-between items-start">
+<h3 class="font-body-lg text-primary font-medium leading-tight">Upcycled Indigo Chore Jacket</h3>
+<span class="font-body-md">£245.00</span>
+</div>
+<p class="font-label-caps text-[10px] text-secondary mt-1">SIZE: MEDIUM / UNIQUE PIECE</p>
+</div>
+<div class="flex justify-between items-end">
+<div class="font-label-caps text-label-caps border border-primary px-2 py-1">QTY: 1</div>
+<button class="text-[10px] uppercase underline tracking-tighter hover:text-primary">Remove</button>
+</div>
+</div>
+</div>
+<div class="stitch-divider"></div>
+<!-- Item 2 -->
+<div class="flex gap-6">
+<div class="w-24 h-32 bg-surface overflow-hidden flex-shrink-0">
+<img class="w-full h-full object-cover" data-alt="A minimalist photograph of a pair of high-end organic cotton trousers in a soft bone-white color. The fabric shows elegant drapery and fine tailoring lines. The setting is an airy, bright fashion atelier with subtle natural lighting. The mood is sophisticated and conscious, following the brand's luxury eco-minimalism." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAPeSiNSN1PPC7QyvndwCadYKR5t4gy02ZtVU29hy9_ScXEnCVIBVlXiDK8BQT9JRm8oLqpRcqxm34jH-3atliTOu8yiERN6Pf8_fE0SHdz6RlOVzCTVu_RRwrTzWsNapVM2Dq24usFgXvwNmrOZ5Y3Ql32CLh_yAmIoGxGo0-HLTjf0GcKO7Q62OyeQTToBihdG_IE6N744MdDKH4s3DLYhOq2FDD0lYLuNwc2emHKUCZknLcxZeMBaFZ9DK7BtNgcYD0aM7HbvK4"/>
+</div>
+<div class="flex-grow flex flex-col justify-between py-1">
+<div>
+<div class="flex justify-between items-start">
+<h3 class="font-body-lg text-primary font-medium leading-tight">Bone Cotton Tailored Pant</h3>
+<span class="font-body-md">£180.00</span>
+</div>
+<p class="font-label-caps text-[10px] text-secondary mt-1">SIZE: 32 / ORGANIC CERTIFIED</p>
+</div>
+<div class="flex justify-between items-end">
+<div class="font-label-caps text-label-caps border border-primary px-2 py-1">QTY: 1</div>
+<button class="text-[10px] uppercase underline tracking-tighter hover:text-primary">Remove</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Sustainability Impact Note -->
+<div class="bg-primary text-on-primary-container p-6 mb-12 flex items-start gap-4">
+<span class="material-symbols-outlined text-white" data-icon="eco" style="font-variation-settings: 'FILL' 1;">eco</span>
+<div>
+<p class="font-label-caps text-label-caps tracking-widest text-white mb-1 uppercase">Sustainability Impact</p>
+<p class="font-body-md text-sm leading-relaxed text-surface-bright italic">
+              "By choosing these upcycled and organic pieces, you have saved <span class="font-bold underline">2.4kg of textile waste</span> and approximately 800 liters of water compared to traditional production."
+            </p>
+</div>
+</div>
+<!-- Totals -->
+<div class="space-y-4 font-body-md">
+<div class="flex justify-between">
+<span class="text-secondary uppercase text-[12px] tracking-widest">Subtotal</span>
+<span>£425.00</span>
+</div>
+<div class="flex justify-between">
+<span class="text-secondary uppercase text-[12px] tracking-widest">Conscious Shipping</span>
+<span>£0.00</span>
+</div>
+<div class="stitch-divider pt-4 mt-4"></div>
+<div class="flex justify-between items-end">
+<span class="font-headline-md text-headline-md">Total</span>
+<div class="text-right">
+<span class="font-headline-md text-headline-md">£425.00</span>
+<p class="text-[10px] text-secondary uppercase tracking-tighter">VAT included</p>
+</div>
+</div>
+</div>
+<!-- Checkout Button Desktop -->
+<button class="w-full mt-12 bg-primary text-on-primary font-label-caps text-label-caps py-6 tracking-widest uppercase transition-all duration-500 hover:bg-opacity-95 hover:tracking-[0.2em] transform active:scale-[0.98]">
+          Confirm Purchase
+        </button>
+<p class="mt-6 text-[11px] text-center text-secondary-fixed-dim leading-relaxed font-label-caps">
+          SECURE ENCRYPTED TRANSACTION • 14-DAY RETURNS POLICY • AUTHENTICITY GUARANTEED
+        </p>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-highest border-t border-dashed border-outline mt-24">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter px-margin-desktop py-16 max-w-container-max mx-auto">
+<div class="space-y-6">
+<div class="font-headline-md text-headline-md text-primary">RÉUTILISER</div>
+<p class="font-body-md text-on-surface-variant max-w-xs">
+          A design collective focused on the rebirth of luxury through circular design principles and archival restoration.
+        </p>
+</div>
+<div class="flex flex-col gap-4">
+<p class="font-label-caps text-label-caps text-primary mb-2">Legal &amp; Ethics</p>
+<a class="font-body-md text-on-surface-variant hover:text-primary transition-colors" href="#">Sustainability Report</a>
+<a class="font-body-md text-on-surface-variant hover:text-primary transition-colors" href="#">Privacy Policy</a>
+<a class="font-body-md text-on-surface-variant hover:text-primary transition-colors" href="#">Terms of Service</a>
+</div>
+<div class="flex flex-col gap-4">
+<p class="font-label-caps text-label-caps text-primary mb-2">Global Access</p>
+<a class="font-body-md text-on-surface-variant hover:text-primary transition-colors" href="#">Stockists</a>
+<a class="font-body-md text-on-surface-variant hover:text-primary transition-colors" href="#">Shipping &amp; Customs</a>
+<div class="flex gap-4 mt-4">
+<span class="material-symbols-outlined text-primary cursor-pointer" data-icon="share">share</span>
+<span class="material-symbols-outlined text-primary cursor-pointer" data-icon="mail">mail</span>
+</div>
+</div>
+</div>
+<div class="max-w-container-max mx-auto px-margin-desktop py-8 border-t border-outline-variant text-center">
+<p class="font-label-caps text-[10px] text-on-secondary-fixed-variant tracking-[0.2em] uppercase">
+        © 2024 RÉUTILISER. Conscious Luxury for a Circular Future.
+      </p>
+</div>
+</footer>
+<script>
+    // Micro-interactions for form focus
+    const inputs = document.querySelectorAll('.form-input-minimal');
+    inputs.forEach(input => {
+      input.addEventListener('focus', () => {
+        input.parentElement.querySelector('label').style.color = '#2a4a38';
+      });
+      input.addEventListener('blur', () => {
+        input.parentElement.querySelector('label').style.color = '#605e59';
+      });
+    });
+
+    // Simple interaction for payment methods
+    const paymentOptions = document.querySelectorAll('input[name="payment"]');
+    paymentOptions.forEach(option => {
+      option.addEventListener('change', () => {
+        paymentOptions.forEach(opt => {
+          opt.closest('label').classList.remove('border-primary', 'bg-white');
+        });
+        if (option.checked) {
+          option.closest('label').classList.add('border-primary', 'bg-white');
+        }
+      });
+    });
+  </script>
+</body></html>
