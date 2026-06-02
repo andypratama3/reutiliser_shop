@@ -5,7 +5,7 @@
         </a>
 
         <div class="flex items-center gap-6">
-            <a href="{{ route('products.index') }}" class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary transition-colors">
+            <a href="{{ route('shop') }}" class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary transition-colors">
                 Produk
             </a>
 

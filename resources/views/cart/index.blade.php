@@ -1,100 +1,135 @@
-@extends('layouts.app')
-@section('title', 'Keranjang Belanja')
+@extends('layouts.landing')
+
+@section('title', 'Your Collection | RÉUTILISER')
 
 @section('content')
-<div class="max-w-4xl mx-auto px-4 py-8" x-data>
-    <h1 class="font-headline text-3xl text-primary mb-8">Keranjang Belanja</h1>
+
+<main class="max-w-[1440px] mx-auto px-8 md:px-16 py-12">
+    <!-- Page Header -->
+    <div class="mb-20 reveal-item text-center md:text-left">
+        <h1 class="font-display-lg text-primary mb-4 uppercase tracking-tighter">Your Collection</h1>
+        <p class="font-body-md text-secondary max-w-lg mx-auto md:mx-0 text-lg opacity-60">Review your archival selections before they continue their journey with you.</p>
+    </div>
 
     @if($cart->items->isEmpty())
-        <div class="text-center py-20">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto text-outline mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
-            </svg>
-            <p class="font-body-lg text-body-lg text-on-surface-variant mb-6">Keranjang belanja kamu masih kosong.</p>
-            <a href="{{ route('products.index') }}"
-               class="inline-block bg-primary text-on-primary px-8 py-3 font-label-caps text-label-caps tracking-wider hover:opacity-90 transition-opacity">
-                Mulai Belanja
+        <div class="text-center py-32 reveal-item">
+            <span class="material-symbols-outlined text-6xl text-secondary opacity-20 mb-8">shopping_bag</span>
+            <p class="font-body-lg text-secondary italic mb-12">Your archive is currently empty.</p>
+            <a href="{{ route('shop') }}"
+               class="inline-block bg-primary text-white px-12 py-6 rounded-full font-label-caps text-[11px] tracking-widest hover:bg-primary-container transition-all shadow-xl uppercase">
+                Explore Archives
             </a>
         </div>
     @else
-        <div class="space-y-4">
-            @foreach($cart->items as $item)
-                <div class="flex gap-4 p-4 bg-surface border border-outline-variant">
-                    <div class="w-20 h-24 bg-surface-container flex-shrink-0 overflow-hidden">
-                        @if($item->product->primaryImage)
-                            <img src="{{ Storage::url($item->product->primaryImage->path) }}"
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-20 items-start">
+            <!-- Left Column: Items List -->
+            <div class="lg:col-span-8 space-y-12">
+                @foreach($cart->items as $item)
+                    <div class="flex flex-col md:flex-row gap-8 pb-12 border-b border-primary/5 group reveal-item">
+                        <!-- Product Image -->
+                        <div class="w-full md:w-48 h-64 bg-secondary-container rounded-3xl overflow-hidden flex-shrink-0 shadow-sm">
+                            <img src="{{ $item->product->primary_image_url }}"
                                  alt="{{ $item->product->name }}"
-                                 class="w-full h-full object-cover">
-                        @else
-                            <div class="w-full h-full flex items-center justify-center text-outline">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909M3.75 21h16.5A2.25 2.25 0 0022.5 18.75V5.25A2.25 2.25 0 0020.25 3H3.75A2.25 2.25 0 001.5 5.25v13.5A2.25 2.25 0 003.75 21z" />
-                                </svg>
-                            </div>
-                        @endif
-                    </div>
-
-                    <div class="flex-1 min-w-0">
-                        <h3 class="font-body-md text-body-md text-on-surface font-semibold truncate">{{ $item->product->name }}</h3>
-                        @if($item->variant)
-                            <p class="font-label-caps text-label-caps text-on-surface-variant mt-1">
-                                {{ $item->variant->size }} / {{ $item->variant->color }}
-                            </p>
-                        @endif
-                        <p class="font-semibold text-on-surface mt-2">Rp {{ number_format($item->price, 0, ',', '.') }}</p>
-                    </div>
-
-                    <div class="flex flex-col items-end justify-between">
-                        <form method="POST" action="{{ route('cart.remove', $item) }}" class="inline">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="text-on-surface-variant hover:text-error transition-colors">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
-                                </svg>
-                            </button>
-                        </form>
-
-                        <div class="flex items-center gap-2">
-                            <form method="POST" action="{{ route('cart.update', $item) }}" class="flex items-center gap-2">
-                                @csrf
-                                @method('PATCH')
-                                <button type="button"
-                                        @click="(function(){let i=$el.parentElement.querySelector('input[name=quantity]');i.value=Math.max(1,parseInt(i.value)-1);i.form.submit()})()"
-                                        class="w-8 h-8 border border-outline-variant flex items-center justify-center text-on-surface hover:bg-surface-variant transition-colors font-body-md">
-                                    -
-                                </button>
-                                <input type="number" name="quantity" value="{{ $item->quantity }}" min="1" max="10"
-                                       class="w-12 text-center border border-outline-variant py-1 font-body-md text-body-md bg-surface text-on-surface focus:outline-none focus:ring-1 focus:ring-primary"
-                                       @change="$el.form.submit()">
-                                <button type="button"
-                                        @click="(function(){let i=$el.parentElement.querySelector('input[name=quantity]');i.value=Math.min(10,parseInt(i.value)+1);i.form.submit()})()"
-                                        class="w-8 h-8 border border-outline-variant flex items-center justify-center text-on-surface hover:bg-surface-variant transition-colors font-body-md">
-                                    +
-                                </button>
-                            </form>
+                                 class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000">
                         </div>
 
-                        <p class="font-semibold text-on-surface">Rp {{ number_format($item->line_total, 0, ',', '.') }}</p>
+                        <!-- Product Info -->
+                        <div class="flex-grow flex flex-col justify-between py-2">
+                            <div>
+                                <div class="flex justify-between items-start mb-4">
+                                    <div>
+                                        <h3 class="font-headline-md text-3xl text-primary font-bold mb-2">{{ $item->product->name }}</h3>
+                                        <p class="font-label-caps text-[11px] text-secondary tracking-widest uppercase opacity-60">
+                                            @if($item->variant)
+                                                {{ $item->variant->size }} / {{ $item->variant->color }}
+                                            @else
+                                                Standard Edition
+                                            @endif
+                                        </p>
+                                    </div>
+                                    <p class="font-headline-md text-2xl text-primary">Rp {{ number_format($item->price, 0, ',', '.') }}</p>
+                                </div>
+                                <p class="font-body-md text-secondary text-sm leading-relaxed max-w-md opacity-80">
+                                    {{ $item->product->short_description ?? 'An archival piece reconstructed for a circular future.' }}
+                                </p>
+                            </div>
+
+                            <div class="flex flex-wrap items-center justify-between mt-8 gap-6">
+                                <div class="flex items-center gap-6 bg-surface-container-low p-2 rounded-2xl">
+                                    <form method="POST" action="{{ route('cart.update', $item) }}" class="flex items-center gap-4">
+                                        @csrf
+                                        @method('PATCH')
+                                        <button type="button"
+                                                @click="(function(){let i=$el.parentElement.querySelector('input[name=quantity]'); if(parseInt(i.value) > 1) { i.value=parseInt(i.value)-1; i.form.submit(); }})()"
+                                                class="w-10 h-10 flex items-center justify-center text-primary hover:bg-primary hover:text-white rounded-xl transition-all font-bold">
+                                            <span class="material-symbols-outlined text-sm">remove</span>
+                                        </button>
+                                        <input type="number" name="quantity" value="{{ $item->quantity }}" min="1" max="10"
+                                               class="w-8 text-center bg-transparent border-none font-body-md text-primary font-bold focus:ring-0 p-0"
+                                               @change="$el.form.submit()">
+                                        <button type="button"
+                                                @click="(function(){let i=$el.parentElement.querySelector('input[name=quantity]'); if(parseInt(i.value) < 10) { i.value=parseInt(i.value)+1; i.form.submit(); }})()"
+                                                class="w-10 h-10 flex items-center justify-center text-primary hover:bg-primary hover:text-white rounded-xl transition-all font-bold">
+                                            <span class="material-symbols-outlined text-sm">add</span>
+                                        </button>
+                                    </form>
+                                </div>
+
+                                <form method="POST" action="{{ route('cart.remove', $item) }}">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="font-label-caps text-[10px] text-red-400 hover:text-red-600 tracking-widest uppercase transition-colors flex items-center gap-2">
+                                        <span class="material-symbols-outlined text-sm">delete</span>
+                                        Remove from Collection
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+
+            <!-- Right Column: Summary -->
+            <aside class="lg:col-span-4 bg-white p-10 md:p-16 rounded-[3rem] shadow-2xl reveal-item lg:sticky lg:top-32">
+                <h2 class="font-headline-md text-3xl text-primary font-bold mb-12 border-b border-primary/5 pb-6">Summary</h2>
+                
+                <div class="space-y-6 mb-12">
+                    <div class="flex justify-between items-center">
+                        <span class="font-label-caps text-[12px] text-secondary tracking-widest uppercase opacity-40">Subtotal</span>
+                        <span class="font-body-md text-primary font-bold text-xl">Rp {{ number_format($cart->subtotal, 0, ',', '.') }}</span>
+                    </div>
+                    <p class="text-[10px] text-secondary tracking-widest leading-loose opacity-40 uppercase">
+                        Shipping and taxes calculated at checkout.
+                    </p>
+                </div>
+
+                <div class="space-y-6">
+                    <a href="{{ route('checkout.index') }}"
+                       class="block w-full text-center bg-primary text-white py-8 rounded-full font-label-caps tracking-[0.3em] text-[11px] font-bold hover:bg-primary-container transition-all shadow-2xl uppercase">
+                        Secure Checkout
+                    </a>
+                    <a href="{{ route('shop') }}"
+                       class="block w-full text-center py-6 rounded-full font-label-caps tracking-[0.2em] text-[10px] text-secondary border border-primary/10 hover:bg-primary/5 transition-all uppercase">
+                        Continue Browsing
+                    </a>
+                </div>
+
+                <div class="mt-16 flex justify-center gap-10 opacity-30">
+                    <div class="flex flex-col items-center gap-2 text-center">
+                        <span class="material-symbols-outlined text-lg">shield</span>
+                        <span class="text-[8px] uppercase tracking-widest">Secure</span>
+                    </div>
+                    <div class="flex flex-col items-center gap-2 text-center">
+                        <span class="material-symbols-outlined text-lg">eco</span>
+                        <span class="text-[8px] uppercase tracking-widest">Circular</span>
+                    </div>
+                    <div class="flex flex-col items-center gap-2 text-center">
+                        <span class="material-symbols-outlined text-lg">local_shipping</span>
+                        <span class="text-[8px] uppercase tracking-widest">Tracked</span>
                     </div>
                 </div>
-            @endforeach
-        </div>
-
-        <div class="mt-8 p-6 bg-surface border border-outline-variant">
-            <div class="flex justify-between items-center mb-6">
-                <span class="font-headline text-xl text-on-surface">Subtotal</span>
-                <span class="font-headline text-xl text-on-surface">Rp {{ number_format($cart->subtotal, 0, ',', '.') }}</span>
-            </div>
-            <a href="{{ route('checkout.index') }}"
-               class="block w-full text-center bg-primary text-on-primary py-4 font-label-caps text-label-caps tracking-wider hover:opacity-90 transition-opacity">
-                Lanjut ke Checkout
-            </a>
-            <a href="{{ route('products.index') }}"
-               class="block w-full text-center mt-3 py-3 font-label-caps text-label-caps text-on-surface-variant border border-outline-variant hover:bg-surface-variant transition-colors">
-                Lanjut Belanja
-            </a>
+            </aside>
         </div>
     @endif
-</div>
+</main>
 @endsection
