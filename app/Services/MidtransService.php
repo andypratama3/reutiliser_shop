@@ -4,27 +4,18 @@ namespace App\Services;
 
 use App\Models\Order;
 use App\Models\Payment;
-use Midtrans\Config;
-use Midtrans\Snap;
 
 class MidtransService
 {
     public function __construct()
     {
-        // Fail fast with a helpful message if the Midtrans SDK isn't available.
-        if (!class_exists(Config::class)) {
-            throw new \RuntimeException("Midtrans SDK not found. Please run: composer require midtrans/midtrans-php && composer dump-autoload");
-        }
-
         try {
-            // Read from the dedicated midtrans config file (config/midtrans.php)
-            Config::$serverKey    = config('midtrans.server_key') ?: config('services.midtrans.server_key');
-            Config::$clientKey    = config('midtrans.client_key') ?: config('services.midtrans.client_key');
-            Config::$isProduction = config('midtrans.is_production') ?: config('services.midtrans.is_production');
-            Config::$isSanitized  = true;
-            Config::$is3ds        = true;
+            \Midtrans\Config::$serverKey    = config('midtrans.server_key') ?: config('services.midtrans.server_key');
+            \Midtrans\Config::$clientKey    = config('midtrans.client_key') ?: config('services.midtrans.client_key');
+            \Midtrans\Config::$isProduction = config('midtrans.is_production') ?: config('services.midtrans.is_production');
+            \Midtrans\Config::$isSanitized  = true;
+            \Midtrans\Config::$is3ds        = true;
         } catch (\Throwable $e) {
-            // Wrap and rethrow with context so errors are easier to diagnose
             throw new \RuntimeException('Failed to initialize Midtrans SDK: ' . $e->getMessage(), 0, $e);
         }
     }
@@ -51,7 +42,7 @@ class MidtransService
 
         $params['enabled_payments'] = $this->resolvePaymentChannels($paymentMethod, $paymentChannel);
 
-        $response = Snap::createTransaction($params);
+        $response = \Midtrans\Snap::createTransaction($params);
 
         return Payment::create([
             'order_id'           => $order->id,
