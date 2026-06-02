@@ -11,11 +11,21 @@ class MidtransService
 {
     public function __construct()
     {
-        Config::$serverKey    = config('services.midtrans.server_key');
-        Config::$clientKey    = config('services.midtrans.client_key');
-        Config::$isProduction = config('services.midtrans.is_production');
-        Config::$isSanitized  = true;
-        Config::$is3ds        = true;
+        // Fail fast with a helpful message if the Midtrans SDK isn't available.
+        if (!class_exists(Config::class)) {
+            throw new \RuntimeException("Midtrans SDK not found. Please run: composer require midtrans/midtrans-php && composer dump-autoload");
+        }
+
+        try {
+            Config::$serverKey    = config('services.midtrans.server_key');
+            Config::$clientKey    = config('services.midtrans.client_key');
+            Config::$isProduction = config('services.midtrans.is_production');
+            Config::$isSanitized  = true;
+            Config::$is3ds        = true;
+        } catch (\Throwable $e) {
+            // Wrap and rethrow with context so errors are easier to diagnose
+            throw new \RuntimeException('Failed to initialize Midtrans SDK: ' . $e->getMessage(), 0, $e);
+        }
     }
 
     public function createTransaction(Order $order, string $paymentMethod, string $paymentChannel): Payment
