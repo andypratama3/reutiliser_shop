@@ -4,7 +4,7 @@
 
 @section('content')
 <div class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-8">
-    <a href="{{ route('account.orders') }}" class="inline-flex items-center gap-2 font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors mb-6">
+    <a href="{{ route('account.orders.index') }}" class="inline-flex items-center gap-2 font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors mb-6">
         <span class="material-symbols-outlined">arrow_back</span>
         Kembali ke Pesanan
     </a>

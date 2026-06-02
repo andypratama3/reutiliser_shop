@@ -31,6 +31,13 @@ class CartController extends Controller
             return back()->with('error', 'Produk sedang habis stok.');
         }
 
+        if ($request->product_variant_id) {
+            $variant = ProductVariant::find($request->product_variant_id);
+            if (!$variant || $variant->stock < 1) {
+                return back()->with('error', 'Varian yang dipilih sedang habis stok.');
+            }
+        }
+
         $cart  = $this->getOrCreateCart();
         $price = $request->product_variant_id
             ? (ProductVariant::find($request->product_variant_id)?->price ?? $product->price)
@@ -58,12 +65,23 @@ class CartController extends Controller
     public function update(Request $request, CartItem $item)
     {
         $request->validate(['quantity' => 'required|integer|min:1|max:10']);
+
+        $cart = $this->getOrCreateCart();
+        if ($item->cart_id !== $cart->id) {
+            abort(403);
+        }
+
         $item->update(['quantity' => $request->quantity]);
         return back()->with('success', 'Keranjang diperbarui.');
     }
 
     public function remove(CartItem $item)
     {
+        $cart = $this->getOrCreateCart();
+        if ($item->cart_id !== $cart->id) {
+            abort(403);
+        }
+
         $item->delete();
         return back()->with('success', 'Item dihapus dari keranjang.');
     }

@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Cart;
 use App\Models\Order;
+use App\Models\Product;
+use App\Models\ProductVariant;
+use App\Models\Payment;
 use App\Models\PromoCode;
 use App\Models\PromoUsage;
 use App\Services\MidtransService;
@@ -59,7 +62,7 @@ class CheckoutController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
+        $validated = $request->validate([
             'recipient_name'        => 'required|string|max:100',
             'recipient_phone'       => 'required|string|max:20',
             'shipping_address'      => 'required|string',
@@ -71,8 +74,12 @@ class CheckoutController extends Controller
         ]);
 
         $cart = Cart::where('user_id', auth()->id())
-            ->with('items.product', 'items.variant')
+            ->with('items.product.primaryImage', 'items.variant')
             ->firstOrFail();
+
+        if ($cart->items->isEmpty()) {
+            return redirect()->route('cart.index')->with('error', 'Keranjang kosong.');
+        }
 
         DB::beginTransaction();
         try {
@@ -109,21 +116,47 @@ class CheckoutController extends Controller
                 'payment_channel'       => $request->payment_channel,
             ]);
 
+            // Lock product and variant rows to avoid overselling in concurrent checkouts
             foreach ($cart->items as $item) {
+                // If a variant exists, lock it for update
+                $variant = null;
+                if ($item->product_variant_id) {
+                    $variant = ProductVariant::where('id', $item->product_variant_id)->lockForUpdate()->first();
+                    if (!$variant) {
+                        throw new \Exception('Varian produk tidak ditemukan.');
+                    }
+                    if ($variant->stock < $item->quantity) {
+                        throw new \Exception("Stok varian untuk {$item->product->name} tidak cukup.");
+                    }
+                }
+
+                // Lock product row as well
+                $product = Product::where('id', $item->product_id)->lockForUpdate()->first();
+                if (!$product) {
+                    throw new \Exception('Produk tidak ditemukan.');
+                }
+                if ($product->stock < $item->quantity) {
+                    throw new \Exception("Stok produk untuk {$product->name} tidak cukup.");
+                }
+
                 $order->items()->create([
                     'product_id'         => $item->product_id,
                     'product_variant_id' => $item->product_variant_id,
-                    'product_name'       => $item->product->name,
-                    'variant_info'       => $item->variant
-                        ? "{$item->variant->size} / {$item->variant->color}"
+                    'product_name'       => $product->name,
+                    'variant_info'       => $variant
+                        ? "{$variant->size} / {$variant->color}"
                         : null,
-                    'product_image'      => $item->product->primaryImage?->path,
+                    'product_image'      => $product->primaryImage?->path,
                     'quantity'           => $item->quantity,
                     'unit_price'         => $item->price,
                     'total_price'        => $item->line_total,
                 ]);
 
-                $item->product->decrement('stock', $item->quantity);
+                // decrement locked rows
+                $product->decrement('stock', $item->quantity);
+                if ($variant) {
+                    $variant->decrement('stock', $item->quantity);
+                }
             }
 
             if ($promoCode) {
@@ -137,7 +170,7 @@ class CheckoutController extends Controller
                 session()->forget('promo_code_id');
             }
 
-            $payment = $this->midtrans->createTransaction($order, $request->payment_method, $request->payment_channel);
+            $payment = $this->createPayment($order, $request->payment_method, $request->payment_channel);
 
             $this->whatsApp->sendPaymentInstruction($order, $payment);
 
@@ -150,6 +183,13 @@ class CheckoutController extends Controller
         } catch (\Exception $e) {
             DB::rollBack();
             logger()->error('Checkout failed: ' . $e->getMessage());
+
+            // If the exception indicates stock issues, return a validation-like error to the user
+            $msg = $e->getMessage();
+            if (str_contains(strtolower($msg), 'stok')) {
+                return back()->withErrors(['stock' => $msg])->withInput();
+            }
+
             return back()->with('error', 'Terjadi kesalahan. Silakan coba lagi.');
         }
     }
@@ -164,8 +204,176 @@ class CheckoutController extends Controller
         return view('checkout.success', compact('order'));
     }
 
+    private function createPayment(Order $order, string $paymentMethod, string $paymentChannel): Payment
+    {
+        $serverKey = config('services.midtrans.server_key');
+        if (!$serverKey) {
+            return Payment::create([
+                'order_id'           => $order->id,
+                'midtrans_order_id'  => $order->order_number,
+                'payment_type'       => $this->mapPaymentType($paymentMethod),
+                'payment_channel'    => $paymentChannel,
+                'gross_amount'       => $order->total_amount,
+                'status'             => 'pending',
+                'expires_at'         => now()->addHours(24),
+            ]);
+        }
+
+        return $this->midtrans->createTransaction($order, $paymentMethod, $paymentChannel);
+    }
+
+    private function mapPaymentType(string $method): string
+    {
+        return match ($method) {
+            'va_bank'  => 'bank_transfer',
+            'qris'     => 'qris',
+            'e_wallet' => 'gopay',
+            default    => 'bank_transfer',
+        };
+    }
+
     private function calculateShipping(string $city): float
     {
-        return 15000;
+        $cityLower = strtolower(trim($city));
+        $zones = config('shipping.zones', []);
+        foreach ($zones as $key => $cost) {
+            if (str_contains($cityLower, $key)) {
+                return (float) $cost;
+            }
+        }
+        return (float) config('shipping.default_cost', 20000);
+    }
+
+    
+
+    /**
+     * Alternative optimistic update-based checkout.
+     * Attempts to decrement stock using a single UPDATE ... WHERE stock >= :qty
+     * This demonstrates an alternative to row-level locking.
+     * Note: kept separate for review; does not replace store().
+     */
+    public function storeOptimistic(Request $request)
+    {
+        $validated = $request->validate([
+            'recipient_name'        => 'required|string|max:100',
+            'recipient_phone'       => 'required|string|max:20',
+            'shipping_address'      => 'required|string',
+            'shipping_city'         => 'required|string|max:100',
+            'shipping_province'     => 'required|string|max:100',
+            'shipping_postal_code'  => 'required|string|max:10',
+            'payment_method'        => 'required|in:va_bank,qris,e_wallet',
+            'payment_channel'       => 'required|string',
+        ]);
+
+        $cart = Cart::where('user_id', auth()->id())
+            ->with('items.product', 'items.variant')
+            ->firstOrFail();
+
+        if ($cart->items->isEmpty()) {
+            return redirect()->route('cart.index')->with('error', 'Keranjang kosong.');
+        }
+
+        // We'll attempt to build and run optimistic updates per item
+        DB::beginTransaction();
+        try {
+            $subtotal = $cart->subtotal;
+            $promoCode = null;
+            $discountAmount = 0;
+
+            if (session('promo_code_id')) {
+                $promoCode = PromoCode::find(session('promo_code_id'));
+                if ($promoCode?->isValid()) {
+                    $discountAmount = $promoCode->calculateDiscount($subtotal);
+                }
+            }
+
+            $shippingCost = $this->calculateShipping($request->shipping_city);
+            $totalAmount  = max(0, $subtotal - $discountAmount + $shippingCost);
+
+            $order = Order::create([
+                'order_number'          => Order::generateOrderNumber(),
+                'user_id'               => auth()->id(),
+                'promo_code_id'         => $promoCode?->id,
+                'recipient_name'        => $request->recipient_name,
+                'recipient_phone'       => $request->recipient_phone,
+                'shipping_address'      => $request->shipping_address,
+                'shipping_city'         => $request->shipping_city,
+                'shipping_province'     => $request->shipping_province,
+                'shipping_postal_code'  => $request->shipping_postal_code,
+                'subtotal'              => $subtotal,
+                'shipping_cost'         => $shippingCost,
+                'discount_amount'       => $discountAmount,
+                'total_amount'          => $totalAmount,
+                'status'                => 'awaiting_payment',
+                'payment_method'        => $request->payment_method,
+                'payment_channel'       => $request->payment_channel,
+            ]);
+
+            foreach ($cart->items as $item) {
+                $qty = (int)$item->quantity;
+
+                // If variant exists, attempt optimistic update on variant first
+                if ($item->product_variant_id) {
+                    $affected = DB::table('product_variants')
+                        ->where('id', $item->product_variant_id)
+                        ->where('stock', '>=', $qty)
+                        ->update(['stock' => DB::raw("stock - $qty")]);
+
+                    if ($affected === 0) {
+                        throw new \Exception("Stok varian untuk {$item->product->name} tidak cukup (optimistic).");
+                    }
+                }
+
+                // Attempt optimistic update on product
+                $affected = DB::table('products')
+                    ->where('id', $item->product_id)
+                    ->where('stock', '>=', $qty)
+                    ->update(['stock' => DB::raw("stock - $qty")]);
+
+                if ($affected === 0) {
+                    throw new \Exception("Stok produk untuk {$item->product->name} tidak cukup (optimistic).");
+                }
+
+                $order->items()->create([
+                    'product_id'         => $item->product_id,
+                    'product_variant_id' => $item->product_variant_id,
+                    'product_name'       => $item->product->name,
+                    'variant_info'       => $item->variant ? "{$item->variant->size} / {$item->variant->color}" : null,
+                    'product_image'      => $item->product->primaryImage?->path,
+                    'quantity'           => $qty,
+                    'unit_price'         => $item->price,
+                    'total_price'        => $item->line_total,
+                ]);
+            }
+
+            if ($promoCode) {
+                $promoCode->increment('usage_count');
+                PromoUsage::create([
+                    'promo_code_id'   => $promoCode->id,
+                    'user_id'         => auth()->id(),
+                    'order_id'        => $order->id,
+                    'discount_amount' => $discountAmount,
+                ]);
+                session()->forget('promo_code_id');
+            }
+
+            $payment = $this->createPayment($order, $request->payment_method, $request->payment_channel);
+            $this->whatsApp->sendPaymentInstruction($order, $payment);
+
+            $cart->items()->delete();
+
+            DB::commit();
+
+            return redirect()->route('checkout.success', $order->order_number);
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            logger()->error('Checkout optimistic failed: ' . $e->getMessage());
+            $msg = $e->getMessage();
+            if (str_contains(strtolower($msg), 'stok')) {
+                return back()->withErrors(['stock' => $msg])->withInput();
+            }
+            return back()->with('error', 'Terjadi kesalahan. Silakan coba lagi.');
+        }
     }
 }

@@ -90,7 +90,7 @@
                 <a href="{{ url('/wishlist') }}" class="p-2 text-primary hover:scale-110 transition-transform"><span class="material-symbols-outlined text-2xl">favorite</span></a>
                 <button class="p-2 text-primary relative hover:scale-110 transition-transform" id="cart-toggle">
                     <span class="material-symbols-outlined text-2xl">shopping_bag</span>
-                    <span class="absolute top-1 right-1 bg-primary text-white text-[9px] w-5 h-5 flex items-center justify-center rounded-full shadow-lg border border-white">1</span>
+                    <span class="absolute top-1 right-1 bg-primary text-white text-[9px] w-5 h-5 flex items-center justify-center rounded-full shadow-lg border border-white">{{ $landingCart->total_items }}</span>
                 </button>
                 <!-- HAMBURGER: hidden lg:flex ensures it only appears on screens smaller than 1024px -->
                 <button class="lg:hidden text-primary p-2 flex items-center justify-center" id="mobile-menu-toggle">
@@ -106,26 +106,50 @@
             <div class="flex justify-between items-center mb-12">
                 <div>
                     <h2 class="font-headline-md text-3xl text-primary font-bold">Collection</h2>
-                    <p class="font-label-caps text-[11px] text-secondary tracking-widest mt-1">1 ARCHIVAL PIECE RESERVED</p>
+                    <p class="font-label-caps text-[11px] text-secondary tracking-widest mt-1">{{ $landingCart->total_items }} ARCHIVAL PIECE(S) RESERVED</p>
                 </div>
                 <button class="material-symbols-outlined text-secondary hover:rotate-90 transition-transform text-3xl" id="cart-close">close</button>
             </div>
             <div class="flex-grow space-y-10">
+                @forelse($landingCart->items as $item)
                 <div class="flex gap-8 group">
                     <div class="w-24 h-32 bg-secondary-container rounded-xl overflow-hidden shadow-sm flex-shrink-0">
-                        <img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" src="https://images.unsplash.com/photo-1551028719-00167b16eac5?q=80&w=400&auto=format&fit=crop" alt="Item"/>
+                        <img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" src="{{ $item->product->primaryImage?->path ?? 'https://placehold.co/200x200/e2e8f0/64748b?text=Item' }}" alt="{{ $item->product->name }}"/>
                     </div>
                     <div class="flex-grow flex flex-col py-2">
                         <div class="flex justify-between items-start">
-                            <h3 class="font-body-md text-primary font-bold text-xl leading-tight">Patchwork Archive Jacket</h3>
-                            <span class="font-body-md text-primary font-bold text-lg">$385</span>
+                            <h3 class="font-body-md text-primary font-bold text-xl leading-tight">{{ $item->product->name }}</h3>
+                            <span class="font-body-md text-primary font-bold text-lg">Rp {{ number_format($item->price, 0, ',', '.') }}</span>
                         </div>
-                        <p class="font-label-caps text-[10px] text-secondary tracking-widest mt-2 uppercase">Size M / Archive</p>
+                        <p class="font-label-caps text-[10px] text-secondary tracking-widest mt-2 uppercase">
+                            @if($item->variant)
+                                {{ $item->variant->size }} / {{ $item->variant->color }}
+                            @else
+                                Qty: {{ $item->quantity }}
+                            @endif
+                        </p>
+                        <div class="mt-2 flex items-center gap-2">
+                            <span class="font-label-caps text-[10px] text-secondary">Qty: {{ $item->quantity }}</span>
+                            <form method="POST" action="{{ route('cart.remove', $item) }}" class="inline">
+                                @csrf @method('DELETE')
+                                <button type="submit" class="font-label-caps text-[10px] text-red-400 hover:text-red-600 transition-colors">REMOVE</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
+                @empty
+                <div class="text-center py-16">
+                    <span class="material-symbols-outlined text-5xl text-secondary opacity-30 mb-4">shopping_bag</span>
+                    <p class="font-body-md text-secondary opacity-60 italic">Your archive is empty.</p>
+                </div>
+                @endforelse
             </div>
             <div class="mt-auto pt-12 border-t">
-                <a href="{{ url('/checkout') }}" class="block w-full text-center bg-primary text-white py-6 rounded-3xl font-label-caps tracking-[0.2em] text-sm hover:bg-primary-container transition-all shadow-2xl">CHECKOUT NOW</a>
+                <div class="flex justify-between items-center mb-6 px-2">
+                    <span class="font-headline-md text-xl text-primary">Subtotal</span>
+                    <span class="font-headline-md text-xl text-primary">Rp {{ number_format($landingCart->subtotal, 0, ',', '.') }}</span>
+                </div>
+                <a href="{{ route('checkout.index') }}" class="block w-full text-center bg-primary text-white py-6 rounded-3xl font-label-caps tracking-[0.2em] text-sm hover:bg-primary-container transition-all shadow-2xl">CHECKOUT NOW</a>
             </div>
         </div>
     </aside>

@@ -21,6 +21,7 @@
                                 <label class="flex items-start gap-3 p-3 border border-outline-variant cursor-pointer hover:bg-surface-variant transition-colors">
                                     <input type="radio" name="saved_address" value="{{ $addr->id }}"
                                            class="mt-1 text-primary focus:ring-primary"
+                                           {{ old('saved_address') == $addr->id ? 'checked' : '' }}
                                            @change="fillAddress({{ $addr->toJson() }})">
                                     <div class="font-body-md text-body-md">
                                         <span class="font-semibold text-on-surface">{{ $addr->label }}</span> — {{ $addr->recipient_name }}<br>
@@ -44,26 +45,31 @@
                         <label class="font-label-caps text-label-caps text-on-surface mb-1 block">No. Telepon</label>
                         <input type="text" name="recipient_phone" x-model="form.recipient_phone"
                                class="w-full border border-outline-variant px-3 py-2 font-body-md text-body-md bg-surface text-on-surface focus:outline-none focus:ring-1 focus:ring-primary" required>
+                        @error('recipient_phone') <p class="text-error font-body-md text-body-md mt-1">{{ $message }}</p> @enderror
                     </div>
                     <div class="md:col-span-2">
                         <label class="font-label-caps text-label-caps text-on-surface mb-1 block">Alamat Lengkap</label>
                         <textarea name="shipping_address" x-model="form.shipping_address"
                                   class="w-full border border-outline-variant px-3 py-2 font-body-md text-body-md bg-surface text-on-surface focus:outline-none focus:ring-1 focus:ring-primary" rows="3" required></textarea>
+                        @error('shipping_address') <p class="text-error font-body-md text-body-md mt-1">{{ $message }}</p> @enderror
                     </div>
                     <div>
                         <label class="font-label-caps text-label-caps text-on-surface mb-1 block">Kota</label>
                         <input type="text" name="shipping_city" x-model="form.shipping_city"
                                class="w-full border border-outline-variant px-3 py-2 font-body-md text-body-md bg-surface text-on-surface focus:outline-none focus:ring-1 focus:ring-primary" required>
+                        @error('shipping_city') <p class="text-error font-body-md text-body-md mt-1">{{ $message }}</p> @enderror
                     </div>
                     <div>
                         <label class="font-label-caps text-label-caps text-on-surface mb-1 block">Provinsi</label>
                         <input type="text" name="shipping_province" x-model="form.shipping_province"
                                class="w-full border border-outline-variant px-3 py-2 font-body-md text-body-md bg-surface text-on-surface focus:outline-none focus:ring-1 focus:ring-primary" required>
+                        @error('shipping_province') <p class="text-error font-body-md text-body-md mt-1">{{ $message }}</p> @enderror
                     </div>
                     <div>
                         <label class="font-label-caps text-label-caps text-on-surface mb-1 block">Kode Pos</label>
                         <input type="text" name="shipping_postal_code" x-model="form.shipping_postal_code"
                                class="w-full border border-outline-variant px-3 py-2 font-body-md text-body-md bg-surface text-on-surface focus:outline-none focus:ring-1 focus:ring-primary" required>
+                        @error('shipping_postal_code') <p class="text-error font-body-md text-body-md mt-1">{{ $message }}</p> @enderror
                     </div>
                 </div>
             </div>
@@ -160,7 +166,7 @@
                     </div>
                     <div class="flex justify-between">
                         <span class="text-on-surface-variant">Ongkir</span>
-                        <span class="text-on-surface">Rp 15.000</span>
+                        <span class="text-on-surface">Rp {{ number_format(config('shipping.default_cost', 20000), 0, ',', '.') }}</span>
                     </div>
                     <div x-show="discount > 0" class="flex justify-between text-primary">
                         <span>Diskon</span>
@@ -188,21 +194,22 @@
 function checkoutApp() {
     return {
         form: {
-            recipient_name: '{{ auth()->user()->name }}',
-            recipient_phone: '{{ auth()->user()->phone ?? '' }}',
-            shipping_address: '',
-            shipping_city: '',
-            shipping_province: '',
-            shipping_postal_code: '',
-            payment_method: '',
-            payment_channel: '',
+            // initialize from old() if validation failed, otherwise use sensible defaults
+            recipient_name: @json(old('recipient_name', auth()->user()->name)),
+            recipient_phone: @json(old('recipient_phone', auth()->user()->phone ?? '')),
+            shipping_address: @json(old('shipping_address', '')),
+            shipping_city: @json(old('shipping_city', '')),
+            shipping_province: @json(old('shipping_province', '')),
+            shipping_postal_code: @json(old('shipping_postal_code', '')),
+            payment_method: @json(old('payment_method', '')),
+            payment_channel: @json(old('payment_channel', '')),
         },
         promoCode: '',
         promoMessage: '',
         promoSuccess: false,
         discount: 0,
         subtotal: {{ $cart->subtotal }},
-        shippingCost: 15000,
+        shippingCost: {{ config('shipping.default_cost', 20000) }},
         get total() {
             return Math.max(0, this.subtotal - this.discount + this.shippingCost);
         },
@@ -218,7 +225,7 @@ function checkoutApp() {
             this.form.shipping_postal_code = addr.postal_code;
         },
         async applyPromo() {
-            const res = await fetch('{{ route('checkout.apply-promo') }}', {
+            const res = await fetch('{{ route('checkout.promo') }}', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

@@ -123,4 +123,6 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
+    'shipping_default_cost' => env('SHIPPING_DEFAULT_COST', 20000),
+
 ];

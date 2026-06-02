@@ -10,6 +10,16 @@
         <p class="font-body-md text-secondary max-w-lg mx-auto md:mx-0 text-lg opacity-60">Finalize your conscious purchase. Every item in your collection is a step toward a more circular future.</p>
     </div>
 
+    <form method="POST" action="{{ route('checkout.store') }}">
+        @csrf
+
+        {{-- Display stock validation error from CheckoutController --}}
+        @if($errors->has('stock'))
+            <div class="mb-6 p-4 rounded-lg bg-red-50 border border-red-100 text-red-800">
+                {{ $errors->first('stock') }}
+            </div>
+        @endif
+
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-20 items-start">
         <!-- Left Column: Shipping & Payment -->
         <section class="lg:col-span-7 space-y-20">
@@ -22,11 +32,11 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
                     <div class="space-y-3">
                         <label class="font-label-caps text-[11px] text-secondary tracking-widest uppercase opacity-40">Email Address</label>
-                        <input class="w-full bg-surface-container-low p-4 rounded-xl focus:ring-2 focus:ring-primary/5 focus:outline-none transition-all text-primary font-body-md" placeholder="conscious.buyer@reutiliser.com" type="email"/>
+                        <input name="email" value="{{ old('email') }}" class="w-full bg-surface-container-low p-4 rounded-xl focus:ring-2 focus:ring-primary/5 focus:outline-none transition-all text-primary font-body-md" placeholder="conscious.buyer@reutiliser.com" type="email"/>
                     </div>
                     <div class="space-y-3">
                         <label class="font-label-caps text-[11px] text-secondary tracking-widest uppercase opacity-40">Phone Number</label>
-                        <input class="w-full bg-surface-container-low p-4 rounded-xl focus:ring-2 focus:ring-primary/5 focus:outline-none transition-all text-primary font-body-md" placeholder="+44 7700 900000" type="tel"/>
+                        <input name="recipient_phone" value="{{ old('recipient_phone') }}" class="w-full bg-surface-container-low p-4 rounded-xl focus:ring-2 focus:ring-primary/5 focus:outline-none transition-all text-primary font-body-md" placeholder="+44 7700 900000" type="tel"/>
                     </div>
                 </div>
             </div>
@@ -40,19 +50,19 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
                     <div class="space-y-3 md:col-span-2">
                         <label class="font-label-caps text-[11px] text-secondary tracking-widest uppercase opacity-40">Full Name</label>
-                        <input class="w-full bg-surface-container-low p-4 rounded-xl focus:ring-2 focus:ring-primary/5 focus:outline-none transition-all text-primary font-body-md" placeholder="Alexandra Vauthier" type="text"/>
+                        <input name="recipient_name" value="{{ old('recipient_name') }}" class="w-full bg-surface-container-low p-4 rounded-xl focus:ring-2 focus:ring-primary/5 focus:outline-none transition-all text-primary font-body-md" placeholder="Alexandra Vauthier" type="text"/>
                     </div>
                     <div class="space-y-3 md:col-span-2">
                         <label class="font-label-caps text-[11px] text-secondary tracking-widest uppercase opacity-40">Address Line 1</label>
-                        <input class="w-full bg-surface-container-low p-4 rounded-xl focus:ring-2 focus:ring-primary/5 focus:outline-none transition-all text-primary font-body-md" placeholder="12 Savile Row" type="text"/>
+                        <input name="shipping_address" value="{{ old('shipping_address') }}" class="w-full bg-surface-container-low p-4 rounded-xl focus:ring-2 focus:ring-primary/5 focus:outline-none transition-all text-primary font-body-md" placeholder="12 Savile Row" type="text"/>
                     </div>
                     <div class="space-y-3">
                         <label class="font-label-caps text-[11px] text-secondary tracking-widest uppercase opacity-40">City</label>
-                        <input class="w-full bg-surface-container-low p-4 rounded-xl focus:ring-2 focus:ring-primary/5 focus:outline-none transition-all text-primary font-body-md" placeholder="London" type="text"/>
+                        <input name="shipping_city" value="{{ old('shipping_city') }}" class="w-full bg-surface-container-low p-4 rounded-xl focus:ring-2 focus:ring-primary/5 focus:outline-none transition-all text-primary font-body-md" placeholder="London" type="text"/>
                     </div>
                     <div class="space-y-3">
                         <label class="font-label-caps text-[11px] text-secondary tracking-widest uppercase opacity-40">Postcode</label>
-                        <input class="w-full bg-surface-container-low p-4 rounded-xl focus:ring-2 focus:ring-primary/5 focus:outline-none transition-all text-primary font-body-md" placeholder="W1S 3PQ" type="text"/>
+                        <input name="shipping_postal_code" value="{{ old('shipping_postal_code') }}" class="w-full bg-surface-container-low p-4 rounded-xl focus:ring-2 focus:ring-primary/5 focus:outline-none transition-all text-primary font-body-md" placeholder="W1S 3PQ" type="text"/>
                     </div>
                 </div>
             </div>
@@ -76,7 +86,7 @@
                                 </div>
                             </div>
                         </div>
-                        <span class="font-body-md text-primary font-bold">{{ $method['price'] > 0 ? '£' . number_format($method['price'], 2) : 'FREE' }}</span>
+                        <span class="font-body-md text-primary font-bold">{{ $method['price'] > 0 ? 'Rp ' . number_format($method['price'], 0, ',', '.') : 'FREE' }}</span>
                     </label>
                     @endforeach
                 </div>
@@ -128,7 +138,7 @@
                         <div>
                             <div class="flex justify-between items-start mb-2">
                                 <h3 class="font-body-md text-primary font-bold text-xl leading-tight">{{ $item['name'] }}</h3>
-                                <span class="font-body-md text-primary font-bold text-lg">£{{ number_format($item['price'], 0) }}</span>
+                                    <span class="font-body-md text-primary font-bold text-lg">Rp {{ number_format($item['price'], 0, ',', '.') }}</span>
                             </div>
                             <p class="font-label-caps text-[10px] text-secondary tracking-widest">{{ $item['size'] }} / {{ $item['note'] }}</p>
                         </div>
@@ -145,7 +155,7 @@
             <div class="space-y-6 pt-10 border-t border-primary/5">
                 <div class="flex justify-between items-center">
                     <span class="font-label-caps text-[12px] text-secondary tracking-widest uppercase opacity-40">Subtotal</span>
-                    <span class="font-body-md text-primary font-bold text-lg">£{{ number_format($subtotal, 2) }}</span>
+                    <span class="font-body-md text-primary font-bold text-lg">Rp {{ number_format($subtotal, 0, ',', '.') }}</span>
                 </div>
                 <div class="flex justify-between items-center">
                     <span class="font-label-caps text-[12px] text-secondary tracking-widest uppercase opacity-40">Shipping</span>
@@ -155,15 +165,18 @@
                 <div class="flex justify-between items-end">
                     <div>
                         <span class="font-headline-md text-4xl text-primary font-bold">Total</span>
-                        <p class="text-[10px] text-secondary tracking-widest uppercase mt-1">VAT Included • GBP</p>
+                        <p class="text-[10px] text-secondary tracking-widest uppercase mt-1">PPN Termasuk • IDR</p>
                     </div>
-                    <span class="font-headline-md text-4xl text-primary font-bold">£{{ number_format($total, 2) }}</span>
+                    <span class="font-headline-md text-4xl text-primary font-bold">Rp {{ number_format($total, 0, ',', '.') }}</span>
                 </div>
             </div>
 
             <!-- Action -->
             <div class="mt-16 space-y-8">
-                <a href="{{ url('/success') }}" class="block w-full text-center bg-primary text-white py-8 rounded-full font-label-caps tracking-[0.3em] text-sm font-bold hover:bg-primary-container transition-all shadow-2xl">CONFIRM PURCHASE</a>
+                <input type="hidden" name="shipping_province" value="DKI Jakarta">
+                <input type="hidden" name="payment_method" value="va_bank">
+                <input type="hidden" name="payment_channel" value="BCA">
+                <button type="submit" class="block w-full text-center bg-primary text-white py-8 rounded-full font-label-caps tracking-[0.3em] text-sm font-bold hover:bg-primary-container transition-all shadow-2xl">CONFIRM PURCHASE</button>
                 
                 <div class="flex justify-center gap-10 opacity-30">
                     <div class="flex flex-col items-center gap-2 text-center">
@@ -186,5 +199,6 @@
             </div>
         </aside>
     </div>
+    </form>
 </main>
 @endsection

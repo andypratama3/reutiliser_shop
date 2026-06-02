@@ -21,14 +21,22 @@
         <div class="group reveal-item">
             <div class="aspect-[3/4] rounded-[2.5rem] overflow-hidden mb-10 shadow-2xl relative">
                 <img src="{{ $product['image'] }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" alt="{{ $product['name'] }}">
-                <div class="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                    <a href="{{ url('/product/' . $product['id']) }}" class="bg-white text-primary px-10 py-4 rounded-full font-label-caps text-[10px] tracking-widest shadow-2xl">VIEW PIECE</a>
+                <div class="absolute inset-0 bg-primary/10 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center gap-3 p-6">
+                    <a href="{{ $product['slug'] ? url('/products/' . $product['slug']) : url('/product/' . $product['id']) }}" class="bg-white text-primary px-10 py-4 rounded-full font-label-caps text-[10px] tracking-widest shadow-2xl hover:bg-primary hover:text-white transition-all border border-primary">VIEW PIECE</a>
+                    @if(!$product['is_out_of_stock'])
+                    <form method="POST" action="{{ route('cart.add') }}" class="w-full max-w-[200px]">
+                        @csrf
+                        <input type="hidden" name="product_id" value="{{ $product['id'] }}">
+                        <input type="hidden" name="quantity" value="1">
+                        <button type="submit" class="w-full bg-white/90 text-primary py-3 rounded-full font-label-caps text-[9px] tracking-widest shadow-lg hover:bg-white transition-all border border-primary">ADD TO ARCHIVE</button>
+                    </form>
+                    @endif
                 </div>
             </div>
             <div class="space-y-4">
                 <div class="flex justify-between items-start">
                     <h3 class="font-body-lg text-2xl text-primary font-bold">{{ $product['name'] }}</h3>
-                    <span class="font-headline-md text-2xl text-primary">${{ number_format($product['price'], 0) }}</span>
+                    <span class="font-headline-md text-2xl text-primary">Rp {{ number_format($product['price'], 0, ',', '.') }}</span>
                 </div>
                 <p class="font-label-caps text-[11px] text-secondary tracking-widest uppercase opacity-60">{{ $product['material'] }}</p>
             </div>

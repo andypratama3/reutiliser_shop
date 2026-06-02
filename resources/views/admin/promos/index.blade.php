@@ -2,93 +2,92 @@
 @section('title', 'Kode Promo')
 
 @section('content')
-<div class="container-fluid px-0">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1 class="h3 mb-0">Kode Promo</h1>
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createPromoModal">
-            <i class="ti ti-plus me-1"></i>Tambah Promo
-        </button>
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h1 class="fs-3 mb-1">Kode Promo</h1>
+        <p class="mb-0 text-muted small">Kelola kode promo dan diskon</p>
     </div>
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createPromoModal">
+        <i class="ti ti-plus me-1"></i>Tambah Promo
+    </button>
+</div>
 
-    <div class="card">
-        <div class="card-body p-0">
-            <div class="table-responsive">
-                <table class="table table-hover mb-0">
-                    <thead>
-                        <tr>
-                            <th>Kode</th>
-                            <th>Nama</th>
-                            <th>Tipe</th>
-                            <th>Nilai</th>
-                            <th>Pemakaian</th>
-                            <th>Status</th>
-                            <th>Berlaku</th>
-                            <th>Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @forelse($promos as $promo)
-                            <tr>
-                                <td class="fw-bold">{{ $promo->code }}</td>
-                                <td>{{ $promo->name }}</td>
-                                <td>
-                                    @php
-                                        $typeLabels = ['percentage' => 'Persen', 'fixed_amount' => 'Nominal', 'free_shipping' => 'Gratis Ongkir'];
-                                    @endphp
-                                    {{ $typeLabels[$promo->type] ?? $promo->type }}
-                                </td>
-                                <td>
-                                    @if($promo->type === 'percentage')
-                                        {{ $promo->value }}%
-                                    @elseif($promo->type === 'fixed_amount')
-                                        Rp {{ number_format($promo->value, 0, ',', '.') }}
-                                    @else
-                                        -
-                                    @endif
-                                </td>
-                                <td>
-                                    <span class="badge bg-light text-dark">{{ $promo->usages_count }}</span>
-                                    @if($promo->usage_limit)
-                                        / {{ $promo->usage_limit }}
-                                    @endif
-                                </td>
-                                <td>
-                                    @if($promo->is_active && $promo->isValid())
-                                        <span class="badge bg-success">Aktif</span>
-                                    @else
-                                        <span class="badge bg-danger">Tidak Aktif</span>
-                                    @endif
-                                </td>
-                                <td class="small text-muted">
-                                    @if($promo->starts_at && $promo->expires_at)
-                                        {{ $promo->starts_at->format('d/m/Y') }} - {{ $promo->expires_at->format('d/m/Y') }}
-                                    @elseif($promo->expires_at)
-                                        Sampai {{ $promo->expires_at->format('d/m/Y') }}
-                                    @else
-                                        Tanpa batas
-                                    @endif
-                                </td>
-                                <td>
-                                    <form method="POST" action="{{ route('admin.promos.destroy', $promo) }}" onsubmit="return confirm('Hapus promo ini?')">
-                                        @csrf @method('DELETE')
-                                        <button class="btn btn-sm btn-light text-danger" title="Hapus">
-                                            <i class="ti ti-trash"></i>
-                                        </button>
-                                    </form>
-                                </td>
-                            </tr>
-                        @empty
-                            <tr><td colspan="8" class="text-center py-4 text-muted">Belum ada kode promo</td></tr>
-                        @endforelse
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <div class="card-footer bg-white">
-            <div class="d-flex justify-content-between align-items-center">
-                <small class="text-muted">Menampilkan {{ $promos->firstItem() ?? 0 }} - {{ $promos->lastItem() ?? 0 }} dari {{ $promos->total() }} promo</small>
-                {{ $promos->links() }}
-            </div>
+<div class="card">
+    <div class="table-responsive">
+        <table class="table mb-0 text-nowrap table-hover">
+            <thead class="table-light border-light">
+                <tr>
+                    <th>Kode</th>
+                    <th>Nama</th>
+                    <th>Tipe</th>
+                    <th>Nilai</th>
+                    <th>Pemakaian</th>
+                    <th>Status</th>
+                    <th>Berlaku</th>
+                    <th>Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                @forelse($promos as $promo)
+                    <tr class="align-middle">
+                        <td class="fw-bold">{{ $promo->code }}</td>
+                        <td>{{ $promo->name }}</td>
+                        <td>
+                            @php
+                                $typeLabels = ['percentage' => 'Persen', 'fixed_amount' => 'Nominal', 'free_shipping' => 'Gratis Ongkir'];
+                            @endphp
+                            {{ $typeLabels[$promo->type] ?? $promo->type }}
+                        </td>
+                        <td>
+                            @if($promo->type === 'percentage')
+                                {{ $promo->value }}%
+                            @elseif($promo->type === 'fixed_amount')
+                                Rp {{ number_format($promo->value, 0, ',', '.') }}
+                            @else
+                                -
+                            @endif
+                        </td>
+                        <td>
+                            <span class="badge bg-light text-dark">{{ $promo->usages_count }}</span>
+                            @if($promo->usage_limit)
+                                / {{ $promo->usage_limit }}
+                            @endif
+                        </td>
+                        <td>
+                            @if($promo->is_active && $promo->isValid())
+                                <span class="badge bg-success">Aktif</span>
+                            @else
+                                <span class="badge bg-danger">Tidak Aktif</span>
+                            @endif
+                        </td>
+                        <td class="small text-muted">
+                            @if($promo->starts_at && $promo->expires_at)
+                                {{ $promo->starts_at->format('d/m/Y') }} - {{ $promo->expires_at->format('d/m/Y') }}
+                            @elseif($promo->expires_at)
+                                Sampai {{ $promo->expires_at->format('d/m/Y') }}
+                            @else
+                                Tanpa batas
+                            @endif
+                        </td>
+                        <td>
+                            <form method="POST" action="{{ route('admin.promos.destroy', $promo) }}" onsubmit="return confirm('Hapus promo ini?')">
+                                @csrf @method('DELETE')
+                                <button class="btn btn-sm btn-light text-danger" title="Hapus">
+                                    <i class="ti ti-trash"></i>
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                @empty
+                    <tr><td colspan="8" class="text-center py-4 text-muted">Belum ada kode promo</td></tr>
+                @endforelse
+            </tbody>
+        </table>
+    </div>
+    <div class="card-footer bg-white">
+        <div class="d-flex justify-content-between align-items-center">
+            <small class="text-muted">Menampilkan {{ $promos->firstItem() ?? 0 }} - {{ $promos->lastItem() ?? 0 }} dari {{ $promos->total() }} promo</small>
+            {{ $promos->links() }}
         </div>
     </div>
 </div>
