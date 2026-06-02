@@ -6,7 +6,7 @@
 <!-- Hero Section -->
 <section class="relative min-h-[90vh] flex flex-col justify-center px-12 md:px-24 overflow-hidden border border-primary bg-surface mx-4 md:mx-12 rounded-3xl reveal-item">
     <div class="absolute inset-0 z-0 opacity-40">
-        <img alt="Hero" class="w-full h-full object-cover grayscale parallax-img" src="{{ asset('réutiliser.png') }}"/>
+        <img alt="Hero" class="w-full h-full object-cover grayscale parallax-img" src="{{ asset('assets_landing/réutiliser.png') }}"/>
     </div>
     <div class="relative z-10 max-w-5xl">
         <p class="font-label-caps text-primary tracking-[0.5em] mb-8 uppercase text-[12px] opacity-70">ESTABLISHED 2024 — PARIS ARCHIVES</p>
@@ -41,7 +41,7 @@
         </div>
         <div class="lg:col-span-6 relative group reveal-item">
             <div class="border border-primary p-6 rounded-[3rem] overflow-hidden bg-white shadow-2xl">
-                <img alt="Vision" class="w-full aspect-[4/5] object-cover group-hover:scale-105 transition-transform duration-[3000ms]" src="{{ asset('logo_core.png') }}"/>
+                <img alt="Vision" class="w-full aspect-[4/5] object-cover group-hover:scale-105 transition-transform duration-[3000ms]" src="{{ asset('assets_landing/logo_core.png') }}"/>
             </div>
             <div class="absolute -bottom-12 -right-8 bg-primary text-white p-12 rounded-[2rem] shadow-2xl hidden md:block">
                 <p class="font-display-lg text-6xl leading-none mb-2">12+</p>

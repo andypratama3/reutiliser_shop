@@ -22,7 +22,7 @@
                 <div class="absolute inset-0 border-2 border-dashed border-primary/10 rounded-full animate-[spin_60s_linear_infinite]"></div>
                 <div class="absolute inset-12 rounded-full flex items-center justify-center p-16">
                     {{-- make background blend --}}
-                    <img src="{{ asset('logo_core.png') }}" class="w-full h-full object-cover" style="background-blend-mode: multiply !important;" alt="Logo">
+                    <img src="{{ asset('assets_landing/logo_core.png') }}" class="w-full h-full object-cover" style="background-blend-mode: multiply !important;" alt="Logo">
                 </div>
             </div>
         </div>
