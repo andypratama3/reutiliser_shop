@@ -206,7 +206,8 @@ class CheckoutController extends Controller
 
     private function createPayment(Order $order, string $paymentMethod, string $paymentChannel): Payment
     {
-        $serverKey = config('services.midtrans.server_key');
+        // prefer new config/midtrans.php values with fallback to services.midtrans
+        $serverKey = config('midtrans.server_key') ?: config('services.midtrans.server_key');
         if (!$serverKey) {
             return Payment::create([
                 'order_id'           => $order->id,

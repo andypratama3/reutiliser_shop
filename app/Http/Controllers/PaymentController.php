@@ -17,7 +17,7 @@ class PaymentController extends Controller
         $payload = $request->all();
         Log::info('Midtrans webhook received', $payload);
 
-        $serverKey    = config('services.midtrans.server_key');
+        $serverKey    = config('midtrans.server_key') ?: config('services.midtrans.server_key');
         $signatureKey = hash('sha512',
             $payload['order_id'] .
             $payload['status_code'] .

@@ -17,9 +17,10 @@ class MidtransService
         }
 
         try {
-            Config::$serverKey    = config('services.midtrans.server_key');
-            Config::$clientKey    = config('services.midtrans.client_key');
-            Config::$isProduction = config('services.midtrans.is_production');
+            // Read from the dedicated midtrans config file (config/midtrans.php)
+            Config::$serverKey    = config('midtrans.server_key') ?: config('services.midtrans.server_key');
+            Config::$clientKey    = config('midtrans.client_key') ?: config('services.midtrans.client_key');
+            Config::$isProduction = config('midtrans.is_production') ?: config('services.midtrans.is_production');
             Config::$isSanitized  = true;
             Config::$is3ds        = true;
         } catch (\Throwable $e) {
