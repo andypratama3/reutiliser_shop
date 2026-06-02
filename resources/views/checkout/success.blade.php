@@ -66,7 +66,7 @@
            class="inline-block w-full bg-primary text-on-primary py-4 font-label-caps text-label-caps tracking-wider hover:opacity-90 transition-opacity">
             Lanjut Belanja
         </a>
-        <a href="{{ route('account.orders') }}"
+        <a href="{{ route('account.orders.index') }}"
            class="inline-block w-full py-4 font-label-caps text-label-caps text-on-surface-variant border border-outline-variant hover:bg-surface-variant transition-colors">
             Lihat Pesanan Saya
         </a>

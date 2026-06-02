@@ -13,16 +13,14 @@ class Payment extends Model
         'midtrans_response', 'transaction_time', 'settlement_time', 'expires_at',
     ];
 
-    protected function casts(): array
-    {
-        return [
-            'gross_amount'      => 'decimal:2',
-            'midtrans_response' => 'array',
-            'transaction_time'  => 'datetime',
-            'settlement_time'   => 'datetime',
-            'expires_at'        => 'datetime',
-        ];
-    }
+    // Use the $casts property so Eloquent will correctly cast attributes.
+    protected $casts = [
+        'gross_amount'      => 'decimal:2',
+        'midtrans_response' => 'array',
+        'transaction_time'  => 'datetime',
+        'settlement_time'   => 'datetime',
+        'expires_at'        => 'datetime',
+    ];
 
     public function order()
     {
@@ -38,7 +36,7 @@ class Payment extends Model
     {
         $expected = hash('sha512',
             $this->midtrans_order_id .
-            $this->status_code .
+            $this->status .
             $this->gross_amount .
             $serverKey
         );

@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cart;
+use App\Models\Category;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class LandingController extends Controller
@@ -9,13 +12,13 @@ class LandingController extends Controller
     public function home()
     {
         $products = $this->getProductsData();
-        $featuredProducts = collect($products)->take(3);
+        $featuredProducts = $products->where('is_featured', true)->take(3)->values()->map(fn($p) => $this->mapProduct($p));
         $testimonials = [
             ['quote' => "The quality of the upcycled denim is unlike anything I've seen. It feels like wearing a piece of history.", 'author' => 'Elena Rodriguez', 'role' => 'Sustainable Stylist'],
             ['quote' => "Finally, a brand that marries luxury aesthetics with genuine environmental radicalism.", 'author' => 'Marcus Thorne', 'role' => 'Archival Collector']
         ];
         $journalPosts = collect($this->getJournalData())->take(2);
-        
+
         return view('landing.home', compact('featuredProducts', 'testimonials', 'journalPosts'));
     }
 
@@ -29,36 +32,88 @@ class LandingController extends Controller
         return view('landing.about', compact('teamMembers'));
     }
 
-    public function shop()
+    public function shop(Request $request)
     {
-        $products = $this->getProductsData();
-        return view('landing.shop', compact('products'));
+        $query = Product::with('primaryImage', 'category', 'tags')->active()->latest();
+
+        if ($request->filled('category')) {
+            $query->whereHas('category', fn($q) => $q->where('slug', $request->category));
+        }
+
+        if ($request->filled('q')) {
+            $query->where(function ($q) use ($request) {
+                $q->where('name', 'like', '%' . $request->q . '%')
+                  ->orWhere('short_description', 'like', '%' . $request->q . '%');
+            });
+        }
+
+        if ($request->filled('price_range')) {
+            $parts = explode('-', $request->price_range);
+            if (count($parts) === 2) {
+                $request->merge(['price_min' => $parts[0], 'price_max' => $parts[1]]);
+            }
+        }
+
+        if ($request->filled('price_min')) {
+            $query->where('price', '>=', (int) $request->price_min);
+        }
+        if ($request->filled('price_max')) {
+            $query->where('price', '<=', (int) $request->price_max);
+        }
+
+        if ($request->filled('sort')) {
+            match ($request->sort) {
+                'price_asc'  => $query->orderBy('price'),
+                'price_desc' => $query->orderByDesc('price'),
+                'newest'     => $query->orderByDesc('created_at'),
+                default      => null,
+            };
+        }
+
+        $paginator = $query->paginate(12)->withQueryString();
+        $products  = $paginator->map(fn($p) => $this->mapProduct($p));
+        $categories = Category::where('is_active', true)->get();
+        $selectedCategory = $request->category;
+
+        return view('landing.shop', compact('products', 'paginator', 'categories', 'selectedCategory'));
     }
 
     public function product($id)
     {
-        $products = $this->getProductsData();
-        $product = collect($products)->firstWhere('id', (int)$id);
-        if (!$product) abort(404);
-        $relatedProducts = collect($products)->where('id', '!=', (int)$id)->take(3);
-        return view('landing.product-detail', compact('product', 'relatedProducts'));
+        $productModel = Product::with('primaryImage', 'images', 'variants', 'category', 'tags')->active()->findOrFail($id);
+        $mapped = $this->mapProduct($productModel);
+        $relatedProducts = Product::with('primaryImage')
+            ->active()
+            ->where('id', '!=', $id)
+            ->inRandomOrder()
+            ->take(3)
+            ->get()
+            ->map(fn($p) => $this->mapProduct($p));
+        return view('landing.product-detail', [
+            'product' => $mapped,
+            'productModel' => $productModel,
+            'variants' => $productModel->variants,
+            'relatedProducts' => $relatedProducts,
+        ]);
     }
 
     public function search(Request $request)
     {
         $query = $request->input('q', '');
         $allProducts = $this->getProductsData();
-        $results = collect($allProducts)->filter(function($p) use ($query) {
-            return empty($query) || str_contains(strtolower($p['name']), strtolower($query)) || str_contains(strtolower($p['category']), strtolower($query));
-        });
-        
+        $results = $allProducts->filter(function ($p) use ($query) {
+            return empty($query)
+                || str_contains(strtolower($p->name), strtolower($query))
+                || str_contains(strtolower($p->category?->name ?? ''), strtolower($query));
+        })->values()->map(fn($p) => $this->mapProduct($p));
+
         return view('landing.search-results', compact('results', 'query'));
     }
 
     public function wishlist()
     {
         $allProducts = $this->getProductsData();
-        $wishlistItems = collect($allProducts)->take(2); // Dummy wishlist
+        $wishlistItems = $allProducts->take(2)->values()->map(fn($p) => $this->mapProduct($p));
         return view('landing.wishlist', compact('wishlistItems'));
     }
 
@@ -109,14 +164,14 @@ class LandingController extends Controller
 
     public function checkout()
     {
-        $cartItems = [['name' => 'Patchwork Archive Jacket', 'price' => 385, 'size' => 'MEDIUM', 'note' => 'UNIQUE PIECE', 'qty' => 1, 'image' => 'https://images.unsplash.com/photo-1551028719-00167b16eac5?q=80&w=400&auto=format&fit=crop']];
-        $shippingMethods = [
-            ['id' => 'standard', 'name' => 'Standard Carbon-Neutral', 'price' => 0, 'time' => '5-7 business days', 'icon' => 'local_shipping'],
-            ['id' => 'express', 'name' => 'Express Priority', 'price' => 25, 'time' => '1-2 business days', 'icon' => 'bolt'],
-            ['id' => 'global', 'name' => 'Global Concierge', 'price' => 50, 'time' => '3-5 business days', 'icon' => 'public']
-        ];
-        $subtotal = 385; $shipping = 0; $total = $subtotal + $shipping;
-        return view('landing.checkout', compact('cartItems', 'subtotal', 'shipping', 'total', 'shippingMethods'));
+        // If the user is not authenticated, send them to login
+        if (!auth()->check()) {
+            return redirect()->route('login');
+        }
+
+        // For authenticated users, redirect to the auth-protected checkout flow
+        // The dedicated CheckoutController@index is available at route named 'checkout.index'
+        return redirect()->route('checkout.index');
     }
 
     public function success()
@@ -132,13 +187,33 @@ class LandingController extends Controller
 
     private function getProductsData()
     {
+        return Product::with('primaryImage', 'category', 'tags')->active()->latest()->get();
+    }
+
+    private function mapProduct($product)
+    {
+        $firstTag = $product->tags?->first();
+        $tagNames = [
+            'best-seller' => 'BEST SELLER',
+            'limited-edition' => 'LIMITED',
+            'baru' => 'NEW',
+            'diskon' => 'SALE',
+        ];
+
         return [
-            ['id' => 1, 'name' => 'Patchwork Archive Jacket', 'material' => 'Upcycled Cotton & Denim', 'price' => 385, 'image' => 'https://images.unsplash.com/photo-1551028719-00167b16eac5?q=80&w=800&auto=format&fit=crop', 'tag' => 'BEST SELLER', 'category' => 'Jackets', 'description' => 'A singular masterpiece of circular design. Constructed from over 15 unique swatches of archival denim.'],
-            ['id' => 2, 'name' => 'Panelled Denim Trouser', 'material' => "Vintage Repurposed Levi's", 'price' => 210, 'image' => 'https://images.unsplash.com/photo-1542272604-787c3835535d?q=80&w=800&auto=format&fit=crop', 'tag' => 'LIMITED', 'category' => 'Trousers', 'description' => 'Reconstructed from vintage Levi\'s 501s with architectural paneling.'],
-            ['id' => 3, 'name' => 'Bone Linen Overshirt', 'material' => '100% Deadstock Linen', 'price' => 175, 'image' => 'https://images.unsplash.com/photo-1598033129183-c4f50c7176c8?q=80&w=800&auto=format&fit=crop', 'tag' => 'NEW', 'category' => 'Shirts', 'description' => 'Cut from premium deadstock Belgian linen for a soft, architectural silhouette.'],
-            ['id' => 4, 'name' => 'Archival Forest Blazer', 'material' => 'Vintage Wool Blend', 'price' => 420, 'image' => 'https://images.unsplash.com/photo-1591047139829-d91aecb6caea?q=80&w=800&auto=format&fit=crop', 'tag' => 'EXCLUSIVE', 'category' => 'Jackets', 'description' => 'Meticulously tailored from archival wool.'],
-            ['id' => 5, 'name' => 'Studio Utility Tote', 'material' => 'Reinforced Canvas Scraps', 'price' => 130, 'image' => 'https://images.unsplash.com/photo-1544816155-12df9643f363?q=80&w=800&auto=format&fit=crop', 'tag' => null, 'category' => 'Accessories', 'description' => 'A durable tote crafted from workshop remnants.'],
-            ['id' => 6, 'name' => 'Recycled Cotton Knit', 'material' => 'Hand-knit / Circular Yarn', 'price' => 155, 'image' => 'https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?q=80&w=800&auto=format&fit=crop', 'tag' => 'LIMITED', 'category' => 'Shirts', 'description' => 'Soft, breathable knit from circular fibers.']
+            'id' => $product->id,
+            'name' => $product->name,
+            'slug' => $product->slug,
+            'material' => $product->material ?? 'Mixed Materials',
+            'price' => (int) $product->price,
+            'compare_price' => $product->compare_price ? (int) $product->compare_price : null,
+            'image' => $product->primaryImage?->path ?? 'https://placehold.co/600x600/e2e8f0/64748b?text=No+Image',
+            'tag' => $firstTag ? ($tagNames[$firstTag->slug] ?? strtoupper($firstTag->name)) : null,
+            'category' => $product->category?->name ?? 'General',
+            'category_slug' => $product->category?->slug ?? '',
+            'description' => $product->short_description ?? $product->description ?? '',
+            'stock' => $product->stock,
+            'is_out_of_stock' => $product->isOutOfStock(),
         ];
     }
 

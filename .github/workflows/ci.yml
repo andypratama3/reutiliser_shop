@@ -1,0 +1,68 @@
+name: CI
+
+on:
+  push:
+    branches: [ '**' ]
+  pull_request:
+    branches: [ '**' ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        php: ['8.3']
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: mbstring, bcmath, xml, ctype, json
+
+      - name: Show PHP & Composer versions
+        run: |
+          php -v
+          composer --version
+          composer diagnose || true
+
+      - name: Install dependencies
+        run: composer install --no-progress --prefer-dist --no-interaction
+
+      - name: Prepare Laravel environment (generate APP_KEY)
+        run: |
+          if [ -f .env.example ]; then cp .env.example .env; fi
+          php artisan key:generate --ansi --force || true
+          php artisan config:clear || true
+
+      - name: Basic PHP lint (quick)
+        run: |
+          echo 'Checking PHP syntax for project files (excluding vendor)'
+          find . -name '*.php' -not -path './vendor/*' -print0 | xargs -0 -n1 -P4 php -l || true
+
+      - name: Run tests if available
+        run: |
+          if [ -f vendor/bin/phpunit ]; then
+            echo 'Running PHPUnit'
+            # Ensure .env exists
+            if [ -f .env.example ] && [ ! -f .env ]; then cp .env.example .env; fi
+            # Generate a base64 Laravel APP_KEY and write it to GITHUB_ENV and .env
+            KEY="base64:$(php -r 'echo base64_encode(random_bytes(32));')"
+            echo "APP_KEY=$KEY" >> $GITHUB_ENV
+            if [ -f .env ]; then
+              if grep -q '^APP_KEY=' .env; then
+                sed -i "s#^APP_KEY=.*#APP_KEY=$KEY#" .env || true
+              else
+                echo "APP_KEY=$KEY" >> .env
+              fi
+            else
+              echo "APP_KEY=$KEY" > .env
+            fi
+            # Run phpunit with APP_KEY provided in the same process (ensures immediate availability)
+            APP_KEY="$KEY" vendor/bin/phpunit --colors=always
+          else
+            echo 'No PHPUnit found, skipping tests'
+          fi

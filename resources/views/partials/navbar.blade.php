@@ -1,6 +1,6 @@
 <nav class="fixed top-0 left-0 right-0 z-40 bg-surface border-b border-outline-variant">
     <div class="max-w-7xl mx-auto px-4 flex items-center justify-between h-16">
-        <a href="{{ route('home') }}" class="font-headline text-xl text-primary tracking-tight">
+        <a href="/" class="font-headline text-xl text-primary tracking-tight">
             RÉUTILISER
         </a>
 
@@ -35,7 +35,7 @@
                         </svg>
                     </button>
                     <div x-show="open" @click.away="open = false" class="absolute right-0 mt-2 w-48 bg-surface shadow-lg border border-outline-variant py-1" x-cloak>
-                        <a href="{{ route('account.orders') }}" class="block px-4 py-2 text-sm font-body-md text-on-surface-variant hover:bg-surface-variant transition-colors">
+                        <a href="{{ route('account.orders.index') }}" class="block px-4 py-2 text-sm font-body-md text-on-surface-variant hover:bg-surface-variant transition-colors">
                             Pesanan Saya
                         </a>
                         @if(auth()->user()->isAdmin())

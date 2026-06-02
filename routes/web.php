@@ -1,9 +1,11 @@
 <?php
 
 use App\Http\Controllers\Account\AddressController;
+use App\Http\Controllers\Account\OrderController as AccountOrderController;
 use App\Http\Controllers\Account\ProfileController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\Admin\PromoCodeController;
 use App\Http\Controllers\Admin\ReportController;
@@ -28,7 +30,7 @@ Route::get('/welcome', function () {
 });
 
 // Landing Pages
-Route::get('/', [LandingController::class, 'home']);
+Route::get('/', [LandingController::class, 'home'])->name('home');
 Route::get('/about', [LandingController::class, 'about']);
 Route::get('/shop', [LandingController::class, 'shop']);
 Route::get('/product/{id}', [LandingController::class, 'product']);
@@ -39,6 +41,7 @@ Route::get('/journal/{slug}', [LandingController::class, 'journalSingle']);
 Route::get('/lookbook', [LandingController::class, 'lookbook']);
 Route::get('/faq', [LandingController::class, 'faq']);
 Route::get('/contact', [LandingController::class, 'contact']);
+Route::post('/contact', [App\Http\Controllers\ContactController::class, 'store'])->name('contact.store');
 Route::get('/sustainability', [LandingController::class, 'sustainability']);
 Route::get('/checkout', [LandingController::class, 'checkout']);
 Route::get('/success', [LandingController::class, 'success']);
@@ -58,17 +61,17 @@ Route::get('/legal/{type}', [LandingController::class, 'legal']);
  Route::get('/products', [ProductController::class, 'index'])->name('products.index');
  Route::get('/products/{slug}', [ProductController::class, 'show'])->name('products.show');
  // Cart
- Route::middleware('auth')->group(function () {
-     Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
-     Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
-     Route::patch('/cart/{item}', [CartController::class, 'update'])->name('cart.update');
-     Route::delete('/cart/{item}', [CartController::class, 'remove'])->name('cart.remove');
- });
+ Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+ Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
+ Route::patch('/cart/{item}', [CartController::class, 'update'])->name('cart.update');
+ Route::delete('/cart/{item}', [CartController::class, 'remove'])->name('cart.remove');
  // Checkout
  Route::middleware('auth')->group(function () {
      Route::get('/checkout/info', [CheckoutController::class, 'index'])->name('checkout.index');
      Route::post('/checkout/promo', [CheckoutController::class, 'applyPromo'])->name('checkout.promo');
-     Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.store');
+    Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.store');
+    // Optimistic variant for testing/demo purposes only
+    Route::post('/checkout/optimistic', [CheckoutController::class, 'storeOptimistic'])->name('checkout.store.optimistic');
      Route::get('/checkout/{orderNumber}/success', [CheckoutController::class, 'success'])->name('checkout.success');
  });
  // Account
@@ -111,8 +114,7 @@ Route::get('/legal/{type}', [LandingController::class, 'legal']);
          Route::post('/promos', [PromoCodeController::class, 'store'])->name('promos.store');
          Route::delete('/promos/{promoCode}', [PromoCodeController::class, 'destroy'])->name('promos.destroy');
          Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
-         Route::post('/reports/export', [ReportController::class, 'export'])->name('reports.export');
+         Route::get('/reports/export', [ReportController::class, 'export'])->name('reports.export');
          Route::get('/settings', [SettingController::class, 'index'])->name('settings.index');
          Route::put('/settings', [SettingController::class, 'update'])->name('settings.update');
      });
-

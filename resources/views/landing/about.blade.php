@@ -20,8 +20,9 @@
         <div class="lg:w-1/2 reveal-item">
             <div class="relative aspect-square max-w-xl mx-auto flex items-center justify-center">
                 <div class="absolute inset-0 border-2 border-dashed border-primary/10 rounded-full animate-[spin_60s_linear_infinite]"></div>
-                <div class="absolute inset-12 bg-white rounded-full flex items-center justify-center p-16 shadow-2xl">
-                    <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCfzhH_dGj53JBznVAnzFqymS7ZjOwRDHG18vWy8WAeAp-xzP7xdskg_iKwrFcHGPi_MYLuDCz5FbaCLGSrlMF6ZilO5VR2d0MWDkIhT7KNb1ZvgolC9ZQmXY5xRH3ZF4ojf2CSC3Qg3-cAeG0aUAXkFCeuUD8g5U0IraCte_xeELZKXlnk9pt84Fr_F5NbUhujTYV-1Th1aSJwF5j0Pn0Q0v5BFyoPBYMWHwmLFJI6cWvVY3E2lHNOitzuTRuwLG0qO57l5tm3kkY" class="w-full h-full object-contain opacity-80" alt="Logo">
+                <div class="absolute inset-12 rounded-full flex items-center justify-center p-16">
+                    {{-- make background blend --}}
+                    <img src="{{ asset('logo_core.png') }}" class="w-full h-full object-cover" style="background-blend-mode: multiply !important;" alt="Logo">
                 </div>
             </div>
         </div>

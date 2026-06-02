@@ -2,7 +2,7 @@
     <div class="max-w-7xl mx-auto px-4 py-12">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div>
-                <a href="{{ route('home') }}" class="font-headline text-xl text-primary tracking-tight">
+                <a href="/" class="font-headline text-xl text-primary tracking-tight">
                     RÉUTILISER
                 </a>
                 <p class="font-body-md text-body-md text-on-surface-variant mt-4 max-w-xs">

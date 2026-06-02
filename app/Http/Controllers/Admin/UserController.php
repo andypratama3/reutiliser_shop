@@ -36,7 +36,8 @@ class UserController extends Controller
     public function show(User $user)
     {
         $user->load(['orders' => fn($q) => $q->orderByDesc('created_at')->limit(10), 'roles']);
-        return view('admin.users.show', compact('user'));
+        $roles = \Spatie\Permission\Models\Role::all();
+        return view('admin.users.show', compact('user', 'roles'));
     }
 
     public function updateRole(Request $request, User $user)
