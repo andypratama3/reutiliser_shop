@@ -45,7 +45,7 @@
                 </div>
 
                 <div class="flex flex-col gap-4">
-                    <button class="w-full bg-primary text-on-primary py-6 rounded-full font-label-caps tracking-widest hover:bg-primary-container transition-all border border-primary">ADD TO ARCHIVE</button>
+                    <button class="w-full bg-primary text-white py-6 rounded-full font-label-caps tracking-widest hover:bg-primary-container transition-all shadow-lg border-0">ADD TO ARCHIVE</button>
                     <button class="w-full border border-primary py-4 rounded-full flex items-center justify-center gap-4 hover:bg-primary/5 transition-colors">
                         <span class="material-symbols-outlined scale-90">favorite</span>
                         <span class="font-label-caps text-[10px] tracking-widest">SAVE TO WISHLIST</span>

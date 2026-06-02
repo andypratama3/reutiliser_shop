@@ -8,11 +8,11 @@
         <!-- Sidebar Filters -->
         <aside class="lg:col-span-3 space-y-16 reveal-item lg:sticky lg:top-40 h-fit">
             <!-- Shop Internal Search -->
-            <div class="bg-surface-container-low p-8 rounded-[2rem] shadow-sm">
-                <h3 class="font-label-caps text-primary mb-6 text-[11px] tracking-[0.3em] uppercase opacity-40">Quick Find</h3>
+            <div class="bg-primary p-8 rounded-[2rem] shadow-xl">
+                <h3 class="font-label-caps text-white mb-6 text-[11px] tracking-[0.3em] uppercase opacity-60">Quick Find</h3>
                 <div class="relative group">
-                    <input type="text" class="w-full bg-white border-0 py-4 pl-12 pr-6 rounded-full text-sm font-body-md focus:ring-2 focus:ring-primary/10 placeholder:opacity-30 shadow-inner" placeholder="Search archives..."/>
-                    <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-primary opacity-40">search</span>
+                    <input type="text" class="w-full bg-white/10 border border-white/20 py-4 pl-12 pr-6 rounded-full text-sm font-body-md focus:bg-white focus:text-primary placeholder:text-white/30 text-white transition-all shadow-inner" placeholder="Search archives..."/>
+                    <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-white opacity-60">search</span>
                 </div>
             </div>
 
@@ -46,9 +46,9 @@
             </div>
 
             <!-- Sustainability Note -->
-            <div class="bg-primary text-on-primary p-8 rounded-[2.5rem] shadow-xl reveal-item">
-                <span class="material-symbols-outlined mb-6 text-3xl opacity-60">verified</span>
-                <p class="font-body-md italic text-lg leading-relaxed opacity-80">
+            <div class="bg-primary p-8 rounded-[2.5rem] shadow-xl reveal-item">
+                <span class="material-symbols-outlined mb-6 text-3xl text-white opacity-60">verified</span>
+                <p class="font-body-md italic text-lg leading-relaxed text-white opacity-90">
                     "Every piece is a singular artifact of our reconstruction process. Archive your selection before it returns to the void."
                 </p>
             </div>

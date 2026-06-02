@@ -15,7 +15,7 @@
             <span class="italic text-secondary font-light">Reconstructed.</span>
         </h1>
         <div class="flex flex-wrap gap-8 items-center mt-16">
-            <a href="{{ url('/shop') }}" class="bg-primary text-on-primary px-16 py-6 font-label-caps tracking-widest hover:bg-primary-container transition-all rounded-full border border-primary shadow-2xl">EXPLORE ARCHIVES</a>
+            <a href="{{ url('/shop') }}" class="bg-primary text-white px-16 py-6 font-label-caps tracking-widest hover:bg-primary-container transition-all rounded-full border border-primary shadow-2xl">EXPLORE ARCHIVES</a>
             <div class="h-px w-24 bg-primary/20 hidden md:block"></div>
             <a href="{{ url('/lookbook') }}" class="font-label-caps text-primary tracking-widest hover:italic transition-all">VIEW LOOKBOOK</a>
         </div>
@@ -47,6 +47,28 @@
                 <p class="font-display-lg text-6xl leading-none mb-2">12+</p>
                 <p class="font-label-caps text-[10px] tracking-widest opacity-70">ARTISAN ATELIERS</p>
             </div>
+        </div>
+    </div>
+</section>
+
+<!-- Sustainability Counter -->
+<section class="py-32 bg-primary text-white border-0 reveal-item">
+    <div class="max-w-[1440px] mx-auto px-12 grid grid-cols-2 lg:grid-cols-4 gap-12 text-center">
+        <div>
+            <p class="font-display-lg text-6xl mb-2 text-white">2.4k+</p>
+            <p class="font-label-caps text-[10px] tracking-widest uppercase opacity-60">KG Waste Diverted</p>
+        </div>
+        <div>
+            <p class="font-display-lg text-6xl mb-2 text-white">12</p>
+            <p class="font-label-caps text-[10px] tracking-widest uppercase opacity-60">Artisan Studios</p>
+        </div>
+        <div>
+            <p class="font-display-lg text-6xl mb-2 text-white">800k</p>
+            <p class="font-label-caps text-[10px] tracking-widest uppercase opacity-60">Liters Water Saved</p>
+        </div>
+        <div>
+            <p class="font-display-lg text-6xl mb-2 text-white">100%</p>
+            <p class="font-label-caps text-[10px] tracking-widest uppercase opacity-60">Circular Design</p>
         </div>
     </div>
 </section>

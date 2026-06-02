@@ -30,13 +30,13 @@
     </div>
 
     <!-- Impact Map Simulation -->
-    <div class="bg-primary text-on-primary p-12 md:p-24 reveal-item">
+    <div class="bg-primary p-12 md:p-24 reveal-item">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-24 items-center">
             <div class="space-y-12">
-                <h2 class="font-headline-lg text-headline-lg leading-tight">The 2024 Impact Dashboard</h2>
+                <h2 class="font-headline-lg text-white leading-tight">The 2024 Impact Dashboard</h2>
                 <div class="space-y-8">
                     <div class="reveal-item">
-                        <div class="flex justify-between font-label-caps text-[10px] mb-2">
+                        <div class="flex justify-between font-label-caps text-[10px] mb-2 text-white/60">
                             <span>TEXTILE WASTE DIVERTED</span>
                             <span>2,410 KG / 5,000 KG GOAL</span>
                         </div>
@@ -45,7 +45,7 @@
                         </div>
                     </div>
                     <div class="reveal-item">
-                        <div class="flex justify-between font-label-caps text-[10px] mb-2">
+                        <div class="flex justify-between font-label-caps text-[10px] mb-2 text-white/60">
                             <span>ARTISAN LABOR HOURS</span>
                             <span>12,800 HOURS</span>
                         </div>
@@ -54,12 +54,12 @@
                         </div>
                     </div>
                 </div>
-                <button class="border border-white px-12 py-5 font-label-caps text-label-caps hover:bg-white hover:text-primary transition-all">DOWNLOAD FULL REPORT (PDF)</button>
+                <button class="border border-white text-white px-12 py-5 font-label-caps text-label-caps hover:bg-white hover:text-primary transition-all">DOWNLOAD FULL REPORT (PDF)</button>
             </div>
-            <div class="aspect-square bg-white/5 stitch-border flex items-center justify-center p-12">
+            <div class="aspect-square bg-white/5 border border-white/20 rounded-[3rem] flex items-center justify-center p-12">
                 <div class="text-center">
-                    <p class="font-display-lg text-[120px] leading-none mb-4">42%</p>
-                    <p class="font-label-caps text-[12px] tracking-[0.3em]">REDUCTION IN WATER IMPACT<br/>COMPARED TO NEW DENIM</p>
+                    <p class="font-display-lg text-white text-[120px] leading-none mb-4">42%</p>
+                    <p class="font-label-caps text-white text-[12px] tracking-[0.3em]">REDUCTION IN WATER IMPACT<br/>COMPARED TO NEW DENIM</p>
                 </div>
             </div>
         </div>
@@ -69,8 +69,8 @@
     <div class="mt-48 text-center reveal-item">
         <h2 class="font-headline-lg text-headline-lg text-primary mb-12">Support the Circular Movement</h2>
         <div class="flex justify-center gap-8">
-            <a href="{{ url('/shop') }}" class="bg-primary text-on-primary px-12 py-5 font-label-caps text-label-caps hover:bg-primary-container transition-all">SHOP ARCHIVES</a>
-            <a href="{{ url('/journal') }}" class="border border-primary text-primary px-12 py-5 font-label-caps text-label-caps hover:bg-primary hover:text-white transition-all">READ STORIES</a>
+            <a href="{{ url('/shop') }}" class="bg-primary text-white px-12 py-5 font-label-caps text-label-caps hover:bg-primary-container transition-all rounded-full">SHOP ARCHIVES</a>
+            <a href="{{ url('/journal') }}" class="border border-primary text-primary px-12 py-5 font-label-caps text-label-caps hover:bg-primary hover:text-white transition-all rounded-full">READ STORIES</a>
         </div>
     </div>
 </main>
