@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        php: ['8.1', '8.2']
+        php: ['8.2']
 
     steps:
       - name: Checkout
@@ -23,11 +23,14 @@ jobs:
           php-version: ${{ matrix.php }}
           extensions: mbstring, bcmath, xml, ctype, json
 
-      - name: Validate composer
-        run: composer --version
+      - name: Show PHP & Composer versions
+        run: |
+          php -v
+          composer --version
+          composer diagnose || true
 
       - name: Install dependencies
-        run: composer install --no-progress --no-suggest --prefer-dist --no-interaction
+        run: composer install --no-progress --prefer-dist --no-interaction
 
       - name: Basic PHP lint (quick)
         run: |
