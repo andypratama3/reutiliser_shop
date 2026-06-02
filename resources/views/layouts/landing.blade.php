@@ -22,9 +22,9 @@
                         "surface-container-highest": "#e5e2e1",
                     },
                     "borderRadius": {
-                        "DEFAULT": "16px",
-                        "lg": "24px",
-                        "xl": "32px",
+                        "DEFAULT": "12px",
+                        "lg": "16px",
+                        "xl": "24px",
                         "full": "9999px"
                     },
                     "fontFamily": {
@@ -39,150 +39,213 @@
             },
         }
     </script>
+    <link rel="stylesheet" href="{{ asset('assets_landing/css/style.css') }}">
     <style>
         /* Modern Minimalist - Zero Visible Borders */
         * { border-width: 0 !important; }
         
-        .reveal-item { opacity: 0; transform: translateY(20px); transition: all 1s cubic-bezier(0.16, 1, 0.3, 1); }
+        .reveal-item { opacity: 0; transform: translateY(15px); transition: all 1s cubic-bezier(0.16, 1, 0.3, 1); }
         .reveal-item.active { opacity: 1; transform: translateY(0); }
         
         /* Soft Radius Utility */
-        img { border-radius: 24px !important; }
+        img { border-radius: 20px !important; }
         button, .btn { border-radius: 9999px !important; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
-        input, select, textarea { border-radius: 16px !important; background: #f0eded; padding: 1.25rem 2rem; }
+        input, select, textarea { border-radius: 12px !important; background: #f0eded; padding: 1rem 1.5rem; }
         
-        .product-card, .sidebar-card, aside { border-radius: 32px !important; overflow: hidden; background: #fff; box-shadow: 0 4px 20px rgba(0,0,0,0.02); }
-        .product-card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(42, 74, 56, 0.08); }
+        .product-card, .sidebar-card, aside { border-radius: 24px !important; overflow: hidden; background: #fff; box-shadow: 0 4px 15px rgba(0,0,0,0.02); }
+        .product-card:hover { transform: translateY(-6px); box-shadow: 0 15px 30px rgba(42, 74, 56, 0.06); }
 
         /* Custom Scrollbar */
         ::-webkit-scrollbar { width: 4px; }
         ::-webkit-scrollbar-track { background: #fcf9f8; }
         ::-webkit-scrollbar-thumb { background: #2a4a38; border-radius: 10px; }
 
-        /* Typography Enlargement */
-        .nav-link { font-size: 14px !important; letter-spacing: 0.3em !important; font-weight: 700 !important; }
-        h1, .font-display-lg { font-size: 4rem !important; line-height: 1 !important; }
+        /* Typography Scaling */
+        .nav-link { font-size: 13px !important; letter-spacing: 0.25em !important; font-weight: 600 !important; }
+        h1, .font-display-lg { font-size: 3rem !important; line-height: 1.1 !important; }
         @media (min-width: 1024px) {
-            h1, .font-display-lg { font-size: 7rem !important; }
-            h2, .font-headline-lg { font-size: 4.5rem !important; line-height: 1.1 !important; }
+            h1, .font-display-lg { font-size: 5rem !important; }
+            h2, .font-headline-lg { font-size: 3.5rem !important; line-height: 1.2 !important; }
         }
-        p, .font-body-md { font-size: 1.1rem !important; line-height: 1.6 !important; }
-        .font-body-lg { font-size: 1.3rem !important; }
+        p, .font-body-md { font-size: 1rem !important; line-height: 1.6 !important; }
+        .font-body-lg { font-size: 1.15rem !important; }
         
-        .header-scrolled { box-shadow: 0 10px 30px rgba(0,0,0,0.03); padding-top: 1rem !important; padding-bottom: 1rem !important; }
+        .header-scrolled { box-shadow: 0 10px 30px rgba(0,0,0,0.02); padding-top: 0.75rem !important; padding-bottom: 0.75rem !important; }
     </style>
     @stack('css')
 </head>
 <body class="bg-background text-on-background selection:bg-primary selection:text-on-primary font-body-md overflow-x-hidden">
     <!-- TopNavBar -->
-    <header id="main-header" class="fixed top-0 left-0 right-0 z-50 bg-surface/90 backdrop-blur-xl transition-all duration-500 py-6 md:py-10">
-        <div class="flex justify-between items-center w-full px-8 md:px-16 max-w-[1600px] mx-auto">
-            <div class="flex gap-20 items-center">
-                <a class="font-headline-md text-4xl md:text-5xl tracking-tighter text-primary" href="{{ url('/') }}">RÉUTILISER</a>
-                <nav class="hidden lg:flex gap-12">
-                    <a class="nav-link font-label-caps {{ Request::is('about') ? 'text-primary' : 'text-secondary opacity-60 hover:opacity-100' }} transition-all" href="{{ url('/about') }}">ABOUT</a>
-                    <a class="nav-link font-label-caps {{ Request::is('shop*') ? 'text-primary' : 'text-secondary opacity-60 hover:opacity-100' }} transition-all" href="{{ url('/shop') }}">SHOP</a>
-                    <a class="nav-link font-label-caps {{ Request::is('journal*') ? 'text-primary' : 'text-secondary opacity-60 hover:opacity-100' }} transition-all" href="{{ url('/journal') }}">JOURNAL</a>
-                    <a class="nav-link font-label-caps {{ Request::is('contact') ? 'text-primary' : 'text-secondary opacity-60 hover:opacity-100' }} transition-all" href="{{ url('/contact') }}">CONTACT</a>
+    <header id="main-header" class="fixed top-0 left-0 right-0 z-50 bg-surface/90 backdrop-blur-xl transition-all duration-500 py-5 md:py-8">
+        <div class="flex justify-between items-center w-full px-8 md:px-16 max-w-[1440px] mx-auto">
+            <div class="flex gap-16 items-center">
+                <a class="font-headline-md text-3xl md:text-4xl tracking-tighter text-primary" href="{{ url('/') }}">RÉUTILISER</a>
+                <nav class="hidden lg:flex gap-10">
+                    @foreach(['ABOUT' => '/about', 'SHOP' => '/shop', 'JOURNAL' => '/journal', 'CONTACT' => '/contact'] as $label => $link)
+                    <a class="nav-link font-label-caps {{ Request::is(trim($link, '/').'*') ? 'text-primary' : 'text-secondary opacity-60 hover:opacity-100' }} transition-all" href="{{ url($link) }}">{{ $label }}</a>
+                    @endforeach
                 </nav>
             </div>
-            <div class="flex items-center gap-10">
-                <button class="p-2 text-primary hover:scale-110 transition-transform"><span class="material-symbols-outlined text-3xl">search</span></button>
+            <div class="flex items-center gap-8">
+                <button class="p-2 text-primary hover:scale-110 transition-transform" id="search-toggle"><span class="material-symbols-outlined text-2xl">search</span></button>
+                <a href="{{ url('/wishlist') }}" class="p-2 text-primary hover:scale-110 transition-transform"><span class="material-symbols-outlined text-2xl">favorite</span></a>
                 <button class="p-2 text-primary relative hover:scale-110 transition-transform" id="cart-toggle">
-                    <span class="material-symbols-outlined text-3xl">shopping_bag</span>
-                    <span class="absolute -top-1 -right-1 bg-primary text-white text-[10px] w-6 h-6 flex items-center justify-center rounded-full shadow-lg">1</span>
+                    <span class="material-symbols-outlined text-2xl">shopping_bag</span>
+                    <span class="absolute top-1 right-1 bg-primary text-white text-[9px] w-5 h-5 flex items-center justify-center rounded-full shadow-lg">1</span>
                 </button>
-                <button class="lg:hidden text-primary" id="mobile-menu-toggle"><span class="material-symbols-outlined text-4xl">menu</span></button>
+                <button class="lg:hidden text-primary" id="mobile-menu-toggle"><span class="material-symbols-outlined text-3xl">menu</span></button>
             </div>
         </div>
     </header>
 
-    <!-- Side Cart -->
+    <!-- Maximized Side Cart -->
     <aside class="fixed right-0 top-0 h-full w-full md:w-[500px] z-[120] bg-surface translate-x-full transition-transform duration-700 shadow-2xl flex flex-col" id="side-nav">
-        <div class="p-12 flex flex-col h-full">
-            <div class="flex justify-between items-center mb-16">
-                <h2 class="font-headline-md text-4xl text-primary font-bold">Your Collection</h2>
-                <button class="material-symbols-outlined text-secondary text-4xl hover:rotate-90 transition-transform" id="cart-close">close</button>
+        <div class="p-8 md:p-12 flex flex-col h-full overflow-y-auto">
+            <div class="flex justify-between items-center mb-12">
+                <div>
+                    <h2 class="font-headline-md text-3xl text-primary font-bold">Collection</h2>
+                    <p class="font-label-caps text-[11px] text-secondary tracking-widest mt-1">1 ARCHIVAL PIECE RESERVED</p>
+                </div>
+                <button class="material-symbols-outlined text-secondary hover:rotate-90 transition-transform text-3xl" id="cart-close">close</button>
             </div>
-            <div class="flex-grow space-y-10 overflow-y-auto">
-                <div class="flex gap-8 p-6 bg-surface-container-low rounded-3xl">
-                    <div class="w-24 h-32 bg-secondary-container rounded-xl overflow-hidden">
-                        <img class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1551028719-00167b16eac5?q=80&w=400&auto=format&fit=crop" alt="Item"/>
+
+            <!-- Free Shipping Progress -->
+            <div class="mb-12 bg-surface-container-low p-6 rounded-2xl">
+                <div class="flex justify-between items-end mb-3">
+                    <p class="font-label-caps text-[10px] text-primary tracking-widest uppercase">Shipping Milestone</p>
+                    <p class="font-body-md text-[12px] text-primary font-bold">$115.00 away from Free Shipping</p>
+                </div>
+                <div class="h-1 bg-primary/10 rounded-full overflow-hidden">
+                    <div class="h-full bg-primary w-[70%] rounded-full"></div>
+                </div>
+            </div>
+            
+            <div class="space-y-10">
+                <!-- Cart Item -->
+                <div class="flex gap-8 group">
+                    <div class="w-28 h-36 bg-secondary-container rounded-2xl overflow-hidden shadow-sm flex-shrink-0">
+                        <img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" src="https://images.unsplash.com/photo-1551028719-00167b16eac5?q=80&w=400&auto=format&fit=crop" alt="Item"/>
                     </div>
-                    <div>
-                        <p class="font-body-md text-primary font-bold text-2xl">Patchwork Jacket</p>
-                        <p class="font-label-caps text-sm text-secondary tracking-widest mt-2">$385.00</p>
+                    <div class="flex-grow flex flex-col py-2">
+                        <div class="flex justify-between items-start">
+                            <h3 class="font-body-md text-primary font-bold text-xl leading-tight">Patchwork Archive Jacket</h3>
+                            <span class="font-body-md text-primary font-bold text-lg">$385</span>
+                        </div>
+                        <p class="font-label-caps text-[10px] text-secondary tracking-widest mt-2">SIZE: M / ARCHIVAL DENIM</p>
+                        
+                        <!-- Quantity Adjuster -->
+                        <div class="mt-auto flex items-center justify-between">
+                            <div class="flex items-center gap-4 bg-surface-container-low p-2 rounded-full qty-adjust border border-primary/5">
+                                <button class="w-8 h-8 flex items-center justify-center hover:bg-white rounded-full transition-colors qty-minus"><span class="material-symbols-outlined text-sm">remove</span></button>
+                                <input type="number" value="1" class="w-8 bg-transparent text-center font-body-md text-primary font-bold border-none p-0 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"/>
+                                <button class="w-8 h-8 flex items-center justify-center hover:bg-white rounded-full transition-colors qty-plus"><span class="material-symbols-outlined text-sm">add</span></button>
+                            </div>
+                            <button class="text-[10px] uppercase underline text-secondary hover:text-primary tracking-widest font-bold">Remove</button>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="mt-auto pt-12">
-                <a href="{{ url('/checkout') }}" class="block w-full text-center bg-primary text-on-primary py-8 rounded-3xl font-label-caps tracking-[0.2em] text-lg hover:bg-primary-container transition-all shadow-2xl">CHECKOUT NOW</a>
+
+            <!-- Order Notes Overlay -->
+            <div class="mt-12 pt-8 border-t border-primary/5">
+                <details class="group">
+                    <summary class="font-label-caps text-[11px] text-secondary tracking-widest cursor-pointer list-none flex items-center gap-2 group-open:mb-4">
+                        <span class="material-symbols-outlined text-sm transition-transform group-open:rotate-180">expand_more</span>
+                        ADD ARCHIVAL SPECIAL INSTRUCTIONS
+                    </summary>
+                    <textarea class="w-full bg-surface-container-low rounded-2xl p-4 text-sm font-body-md focus:outline-none placeholder:opacity-30" rows="3" placeholder="Sizing concerns, gift messages, or delivery notes..."></textarea>
+                </details>
+            </div>
+
+            <!-- Totals & Actions -->
+            <div class="mt-auto pt-12 space-y-8">
+                <div class="flex justify-between items-end border-t border-primary/10 pt-8">
+                    <div>
+                        <p class="font-label-caps text-secondary text-[11px] tracking-widest uppercase mb-1">Subtotal</p>
+                        <p class="text-[10px] text-secondary opacity-60">Taxes & shipping calculated at checkout</p>
+                    </div>
+                    <span class="font-headline-md text-3xl text-primary font-bold">$385.00</span>
+                </div>
+                <a href="{{ url('/checkout') }}" class="block w-full text-center bg-primary text-on-primary py-8 rounded-3xl font-label-caps tracking-[0.2em] text-[13px] font-bold hover:bg-primary-container transition-all shadow-xl">SECURE CHECKOUT</a>
+                
+                <!-- Trust Footer -->
+                <div class="grid grid-cols-3 gap-4 opacity-40 grayscale pt-4">
+                    <div class="flex flex-col items-center gap-2 text-center">
+                        <span class="material-symbols-outlined text-lg">verified_user</span>
+                        <span class="text-[8px] uppercase tracking-widest">Secure</span>
+                    </div>
+                    <div class="flex flex-col items-center gap-2 text-center">
+                        <span class="material-symbols-outlined text-lg">public</span>
+                        <span class="text-[8px] uppercase tracking-widest">Global</span>
+                    </div>
+                    <div class="flex flex-col items-center gap-2 text-center">
+                        <span class="material-symbols-outlined text-lg">history</span>
+                        <span class="text-[8px] uppercase tracking-widest">Unique</span>
+                    </div>
+                </div>
             </div>
         </div>
     </aside>
 
-    <!-- Mobile Menu -->
-    <div class="fixed inset-0 bg-primary z-[130] translate-x-full transition-transform duration-700 flex flex-col justify-center items-center gap-16 text-white" id="mobile-menu">
-        <button class="absolute top-12 right-12 text-white" id="mobile-menu-close"><span class="material-symbols-outlined text-6xl">close</span></button>
+    <!-- Mobile Menu & Search Overlay (Fixed Variable COLLISION versions from previous steps) -->
+    <div id="search-overlay" class="fixed inset-0 bg-surface z-[110] translate-y-full transition-transform duration-500 p-8 flex items-center justify-center">
+        <div class="max-w-4xl w-full p-12 md:p-20 rounded-[2.5rem] bg-white relative shadow-2xl overflow-hidden">
+            <button class="absolute top-8 right-8 w-10 h-10 flex items-center justify-center border border-primary rounded-full" id="search-close">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+            <form action="{{ url('/search') }}" method="GET">
+                <input name="q" class="w-full bg-transparent border-b-2 border-primary py-8 font-display-lg text-4xl text-primary text-center focus:outline-none placeholder:opacity-20" placeholder="Find a piece..." type="text"/>
+            </form>
+        </div>
+    </div>
+
+    <div class="fixed inset-0 bg-primary z-[130] translate-x-full transition-transform duration-700 flex flex-col justify-center items-center gap-10 text-white" id="mobile-menu">
+        <button class="absolute top-10 right-10 text-white" id="mobile-menu-close"><span class="material-symbols-outlined text-5xl">close</span></button>
         @foreach(['Home' => '/', 'About' => '/about', 'Shop' => '/shop', 'Journal' => '/journal'] as $label => $link)
-        <a class="font-display-lg text-6xl hover:italic transition-all" href="{{ url($link) }}">{{ $label }}</a>
+        <a class="font-display-lg text-5xl hover:italic transition-all" href="{{ url($link) }}">{{ $label }}</a>
         @endforeach
     </div>
 
-    <main class="pt-32 md:pt-48">
+    <main class="pt-28 md:pt-36">
         @yield('content')
     </main>
 
     <!-- Footer -->
-    <footer class="bg-surface-container-highest mt-48 py-32">
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-20 px-8 md:px-16 max-w-[1600px] mx-auto text-center md:text-left">
-            <div class="space-y-10">
-                <a class="font-headline-md text-5xl tracking-tighter text-primary" href="#">RÉUTILISER</a>
-                <p class="font-body-md text-secondary leading-relaxed italic text-xl">Crafting a circular future through radical transparency.</p>
+    <footer class="bg-surface-container-highest mt-48 py-24">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-16 px-8 md:px-16 max-w-[1440px] mx-auto text-center md:text-left">
+            <div class="space-y-8">
+                <a class="font-headline-md text-4xl tracking-tighter text-primary" href="#">RÉUTILISER</a>
+                <p class="font-body-md text-secondary leading-relaxed italic text-lg">Crafting a circular future through radical transparency.</p>
             </div>
             <div>
-                <h4 class="font-label-caps text-primary font-bold text-lg tracking-widest mb-12">EXPLORE</h4>
-                <ul class="space-y-6">
-                    <li><a class="text-secondary hover:text-primary transition-all text-lg" href="{{ url('/shop') }}">Shop Archives</a></li>
-                    <li><a class="text-secondary hover:text-primary transition-all text-lg" href="{{ url('/journal') }}">Circular Journal</a></li>
+                <h4 class="font-label-caps text-primary font-bold text-sm tracking-widest mb-10 uppercase">Explore</h4>
+                <ul class="space-y-4">
+                    <li><a class="text-secondary hover:text-primary transition-all text-sm" href="{{ url('/shop') }}">Shop Archives</a></li>
+                    <li><a class="text-secondary hover:text-primary transition-all text-sm" href="{{ url('/journal') }}">Journal</a></li>
                 </ul>
             </div>
             <div>
-                <h4 class="font-label-caps text-primary font-bold text-lg tracking-widest mb-12">SUPPORT</h4>
-                <ul class="space-y-6">
-                    <li><a class="text-secondary hover:text-primary transition-all text-lg" href="{{ url('/contact') }}">Concierge</a></li>
-                    <li><a class="text-secondary hover:text-primary transition-all text-lg" href="{{ url('/faq') }}">FAQ Center</a></li>
+                <h4 class="font-label-caps text-primary font-bold text-sm tracking-widest mb-10 uppercase">Support</h4>
+                <ul class="space-y-4">
+                    <li><a class="text-secondary hover:text-primary transition-all text-sm" href="{{ url('/contact') }}">Concierge</a></li>
+                    <li><a class="text-secondary hover:text-primary transition-all text-sm" href="{{ url('/faq') }}">FAQ Center</a></li>
                 </ul>
             </div>
             <div>
-                <h4 class="font-label-caps text-primary font-bold text-lg tracking-widest mb-12">COLLECTIVE</h4>
-                <div class="flex bg-white rounded-2xl p-3 shadow-sm border-0">
-                    <input class="bg-transparent border-none w-full focus:ring-0 text-lg text-primary placeholder:text-secondary/40 px-6" placeholder="EMAIL ADDRESS" type="email"/>
-                    <button class="bg-primary text-white w-16 h-16 flex items-center justify-center rounded-2xl"><span class="material-symbols-outlined text-2xl">east</span></button>
+                <h4 class="font-label-caps text-primary font-bold text-sm tracking-widest mb-10 uppercase">Collective</h4>
+                <div class="flex bg-white rounded-2xl p-2 shadow-sm">
+                    <input class="bg-transparent border-none w-full focus:ring-0 text-sm text-primary placeholder:text-secondary/40 px-4" placeholder="EMAIL ADDRESS" type="email"/>
+                    <button class="bg-primary text-white w-10 h-10 flex items-center justify-center rounded-xl"><span class="material-symbols-outlined text-sm">east</span></button>
                 </div>
             </div>
         </div>
-        <div class="max-w-[1600px] mx-auto px-16 mt-32 pt-12 border-t border-primary/5 text-center md:flex md:justify-between items-center opacity-30">
-            <p class="font-label-caps text-sm tracking-[0.4em]">© 2024 RÉUTILISER. ALL RIGHTS RESERVED.</p>
-            <p class="font-label-caps text-sm tracking-[0.4em] mt-4 md:mt-0 uppercase">Conscious Luxury for a Circular Future</p>
+        <div class="max-w-[1440px] mx-auto px-16 mt-20 pt-10 border-t border-primary/5 text-center md:flex md:justify-between items-center opacity-30">
+            <p class="font-label-caps text-[9px] tracking-[0.4em]">© 2024 RÉUTILISER. ALL RIGHTS RESERVED.</p>
+            <p class="font-label-caps text-[9px] tracking-[0.4em] mt-2 md:mt-0 uppercase">Conscious Luxury for a Circular Future</p>
         </div>
     </footer>
 
     <script src="{{ asset('assets_landing/js/app.js') }}"></script>
-    <script>
-        const header = document.getElementById('main-header');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 100) {
-                header.classList.add('header-scrolled');
-                header.style.paddingTop = '1rem';
-                header.style.paddingBottom = '1rem';
-            } else {
-                header.classList.remove('header-scrolled');
-                header.style.paddingTop = '';
-                header.style.paddingBottom = '';
-            }
-        });
-    </script>
     @stack('js')
 </body>
 </html>

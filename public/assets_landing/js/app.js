@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }, observerOptions);
     document.querySelectorAll('.reveal-item').forEach(el => observer.observe(el));
 
-    // Cart Drawer Logic
+    // Side Drawer Logic (Cart)
     const sideNav = document.getElementById('side-nav');
     const cartToggle = document.getElementById('cart-toggle');
     const cartClose = document.getElementById('cart-close');
@@ -54,6 +54,21 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // Quantity Adjuster Logic
+    const adjusters = document.querySelectorAll('.qty-adjust');
+    adjusters.forEach(adj => {
+        const minus = adj.querySelector('.qty-minus');
+        const plus = adj.querySelector('.qty-plus');
+        const input = adj.querySelector('input');
+
+        minus?.addEventListener('click', () => {
+            if (input.value > 1) input.value--;
+        });
+        plus?.addEventListener('click', () => {
+            input.value++;
+        });
+    });
+
     // Smooth Scroll for Anchor Links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
@@ -64,15 +79,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     behavior: 'smooth'
                 });
             }
-        });
-    });
-
-    // Parallax Effect for Hero Images
-    window.addEventListener('scroll', () => {
-        const scrolled = window.pageYOffset;
-        const parallaxImages = document.querySelectorAll('.parallax-img');
-        parallaxImages.forEach(img => {
-            img.style.transform = `translateY(${scrolled * 0.1}px)`;
         });
     });
 });
