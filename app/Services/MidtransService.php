@@ -4,13 +4,14 @@ namespace App\Services;
 
 use App\Models\Order;
 use App\Models\Payment;
+use Midtrans\Config;
 
 class MidtransService
 {
     public function __construct()
     {
         try {
-            \Midtrans\Config::$serverKey    = config('midtrans.server_key') ?: config('services.midtrans.server_key');
+            Config::$serverKey    = config('midtrans.server_key') ?: config('services.midtrans.server_key');
             \Midtrans\Config::$clientKey    = config('midtrans.client_key') ?: config('services.midtrans.client_key');
             \Midtrans\Config::$isProduction = config('midtrans.is_production') ?: config('services.midtrans.is_production');
             \Midtrans\Config::$isSanitized  = true;

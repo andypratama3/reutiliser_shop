@@ -113,10 +113,10 @@
                         </div>
                         <div class="col-md-6">
                             <label class="form-label">Tipe <span class="text-danger">*</span></label>
-                            <select name="type" class="form-select" required>
-                                <option value="percentage">Persentase</option>
-                                <option value="fixed_amount">Nominal Tetap</option>
-                                <option value="free_shipping">Gratis Ongkir</option>
+                            <select name="type" class="form-control" required>
+                                <option value="percentage" {{ old('type') == 'percentage' ? 'selected' : '' }}>Persentase</option>
+                                <option value="fixed_amount" {{ old('type') == 'fixed_amount' ? 'selected' : '' }}>Nominal Tetap</option>
+                                <option value="free_shipping" {{ old('type') == 'free_shipping' ? 'selected' : '' }}>Gratis Ongkir</option>
                             </select>
                         </div>
                         <div class="col-md-6">
@@ -154,7 +154,7 @@
                         <div class="col-12">
                             <div class="form-check">
                                 <input type="hidden" name="is_active" value="0">
-                                <input type="checkbox" name="is_active" class="form-check-input" value="1" checked>
+                                <input type="checkbox" name="is_active" class="form-check-input" value="1" {{ old('is_active', true) ? 'checked' : '' }}>
                                 <label class="form-check-label">Aktif</label>
                             </div>
                         </div>

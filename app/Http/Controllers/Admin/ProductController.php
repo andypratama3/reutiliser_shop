@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\ProductImage;
 use App\Models\Tag;
 use Illuminate\Http\Request;
 
@@ -151,5 +152,12 @@ class ProductController extends Controller
     {
         $product->delete();
         return back()->with('success', 'Produk dihapus.');
+    }
+
+    public function destroyImage(ProductImage $image)
+    {
+        \Illuminate\Support\Facades\Storage::disk('public')->delete($image->path);
+        $image->delete();
+        return back()->with('success', 'Gambar berhasil dihapus.');
     }
 }

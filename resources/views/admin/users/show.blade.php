@@ -40,7 +40,7 @@
                     @csrf @method('PATCH')
                     <div class="mb-3">
                         <label class="form-label">Ubah Role</label>
-                        <select name="role" class="form-select" required>
+                        <select name="role" class="form-control" required>
                             <option value="">Pilih Role</option>
                             @foreach($roles as $role)
                                 <option value="{{ $role->name }}" {{ $user->hasRole($role->name) ? 'selected' : '' }}>{{ ucfirst($role->name) }}</option>

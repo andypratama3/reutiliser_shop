@@ -96,9 +96,10 @@ Route::get('/legal/{type}', [LandingController::class, 'legal']);
          Route::post('/products', [AdminProductController::class, 'store'])->name('products.store');
           Route::get('/products/{product}/edit', [AdminProductController::class, 'edit'])->name('products.edit');
           Route::put('/products/{product}', [AdminProductController::class, 'update'])->name('products.update');
-          Route::delete('/products/{product}', [AdminProductController::class, 'destroy'])->name('products.destroy');
+           Route::delete('/products/{product}', [AdminProductController::class, 'destroy'])->name('products.destroy');
+           Route::delete('/products/images/{image}', [AdminProductController::class, 'destroyImage'])->name('products.images.destroy');
 
-         Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
+          Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
          Route::get('/categories/create', [CategoryController::class, 'create'])->name('categories.create');
          Route::post('/categories', [CategoryController::class, 'store'])->name('categories.store');
          Route::get('/categories/{category}/edit', [CategoryController::class, 'edit'])->name('categories.edit');

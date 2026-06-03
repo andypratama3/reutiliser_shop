@@ -58,7 +58,7 @@
                 </div>
             </div>
             <div class="col-lg-2">
-                <select name="status" class="form-select">
+                <select name="status" class="form-control">
                     <option value="">Semua Status</option>
                     <option value="pending" {{ request('status') == 'pending' ? 'selected' : '' }}>Pending</option>
                     <option value="awaiting_payment" {{ request('status') == 'awaiting_payment' ? 'selected' : '' }}>Menunggu Bayar</option>

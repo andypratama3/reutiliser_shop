@@ -38,7 +38,7 @@
                         </div>
                         <div class="col-md-6">
                             <label class="form-label">Kategori <span class="text-danger">*</span></label>
-                            <select name="category_id" class="form-select @error('category_id') is-invalid @enderror" required>
+                            <select name="category_id" class="form-control @error('category_id') is-invalid @enderror" required>
                                 <option value="">Pilih Kategori</option>
                                 @foreach($categories as $cat)
                                     <option value="{{ $cat->id }}" {{ old('category_id', $product->category_id) == $cat->id ? 'selected' : '' }}>{{ $cat->name }}</option>
@@ -111,7 +111,7 @@
                 <div class="card-body p-4">
                     <div class="mb-3">
                         <label class="form-label">Status <span class="text-danger">*</span></label>
-                        <select name="status" class="form-select @error('status') is-invalid @enderror" required>
+                        <select name="status" class="form-control @error('status') is-invalid @enderror" required>
                             <option value="draft" {{ old('status', $product->status) == 'draft' ? 'selected' : '' }}>Draft</option>
                             <option value="published" {{ old('status', $product->status) == 'published' ? 'selected' : '' }}>Published</option>
                             <option value="archived" {{ old('status', $product->status) == 'archived' ? 'selected' : '' }}>Archived</option>
@@ -141,18 +141,30 @@
                     <label class="form-label">Gambar Produk</label>
 
                     @if($product->images->count() > 0)
-                        <div class="row g-2 mb-3">
+                        <div class="row g-2 mb-3" id="existingImages">
                             @foreach($product->images as $img)
-                                <div class="col-4">
-                                    <img src="{{ Storage::url($img->path) }}" class="avatar avatar-xl rounded">
-                                    @if($img->is_primary)<small class="text-primary d-block">Primary</small>@endif
+                                <div class="col-4" id="img-{{ $img->id }}">
+                                    <div class="position-relative">
+                                        <img src="{{ Storage::url($img->path) }}" class="avatar avatar-xl rounded w-100" style="height:100px;object-fit:cover;">
+                                        @if($img->is_primary)
+                                            <small class="text-primary d-block text-center mt-1">Primary</small>
+                                        @else
+                                            <button type="button" class="btn btn-sm btn-danger position-absolute top-0 end-0 m-1 rounded-circle"
+                                                style="width:24px;height:24px;padding:0;font-size:12px;line-height:24px;"
+                                                onclick="deleteImage({{ $img->id }})"
+                                                title="Hapus gambar">
+                                                &times;
+                                            </button>
+                                        @endif
+                                    </div>
                                 </div>
                             @endforeach
                         </div>
                     @endif
 
-                    <input type="file" name="images[]" class="form-control @error('images.*') is-invalid @enderror" multiple accept="image/*">
+                    <input type="file" name="images[]" class="form-control @error('images.*') is-invalid @enderror" multiple accept="image/*" onchange="previewImages(this, 'productPreview')">
                     <small class="text-muted">Upload untuk menambah gambar baru.</small>
+                    <div class="row g-2 mt-2" id="productPreview"></div>
                     @error('images.*') <div class="invalid-feedback">{{ $message }}</div> @enderror
                 </div>
             </div>
@@ -160,12 +172,11 @@
             <div class="card mt-4">
                 <div class="card-body p-4">
                     <label class="form-label">Tags</label>
-                    <select name="tags[]" class="form-select" multiple>
+                    <select name="tags[]" class="form-control" multiple data-placeholder="Cari dan pilih tags...">
                         @foreach($tags as $tag)
                             <option value="{{ $tag->id }}" {{ in_array($tag->id, old('tags', $product->tags->pluck('id')->toArray())) ? 'selected' : '' }}>{{ $tag->name }}</option>
                         @endforeach
                     </select>
-                    <small class="text-muted">Hold Ctrl/Cmd untuk pilih banyak</small>
                 </div>
             </div>
 
@@ -189,5 +200,26 @@
     document.getElementById('productSlug')?.addEventListener('input', function () {
         this.dataset.modified = '1';
     });
+
+    function deleteImage(imageId) {
+        Swal.fire({
+            title: 'Hapus gambar?',
+            text: 'Tindakan ini tidak dapat dibatalkan.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#dc3545',
+            confirmButtonText: 'Ya, hapus!',
+            cancelButtonText: 'Batal'
+        }).then(function (result) {
+            if (result.isConfirmed) {
+                var form = document.createElement('form');
+                form.method = 'POST';
+                form.action = '{{ route("admin.products.images.destroy", "") }}/' + imageId;
+                form.innerHTML = '@csrf @method("DELETE")';
+                document.body.appendChild(form);
+                form.submit();
+            }
+        });
+    }
 </script>
 @endpush

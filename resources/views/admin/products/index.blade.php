@@ -22,7 +22,7 @@
                 </div>
             </div>
             <div class="col-lg-3">
-                <select name="status" class="form-select">
+                <select name="status" class="form-control">
                     <option value="">Semua Status</option>
                     <option value="draft" {{ request('status') == 'draft' ? 'selected' : '' }}>Draft</option>
                     <option value="published" {{ request('status') == 'published' ? 'selected' : '' }}>Published</option>
@@ -30,7 +30,7 @@
                 </select>
             </div>
             <div class="col-lg-2">
-                <select name="category_id" class="form-select">
+                <select name="category_id" class="form-control">
                     <option value="">Semua Kategori</option>
                     @foreach($categories as $cat)
                         <option value="{{ $cat->id }}" {{ request('category_id') == $cat->id ? 'selected' : '' }}>{{ $cat->name }}</option>

@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\SalesReportExport;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ReportController extends Controller
 {
@@ -65,9 +67,20 @@ class ReportController extends Controller
 
     public function export(Request $request)
     {
-        $request->validate(['period' => 'nullable|in:week,month,year']);
+        $request->validate([
+            'date_from' => 'nullable|date',
+            'date_to'   => 'nullable|date',
+            'payment_method' => 'nullable|string',
+            'status'    => 'nullable|string',
+        ]);
 
-        return redirect()->route('admin.reports.index')
-            ->with('info', 'Fitur export Excel akan segera tersedia.');
+        $dateFrom      = $request->get('date_from');
+        $dateTo        = $request->get('date_to');
+        $paymentMethod = $request->get('payment_method');
+        $status        = $request->get('status');
+
+        $export = new SalesReportExport($dateFrom, $dateTo, $paymentMethod, $status);
+
+        return Excel::download($export, 'laporan-penjualan-' . now()->format('Y-m-d') . '.xlsx');
     }
 }

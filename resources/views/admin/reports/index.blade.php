@@ -7,16 +7,16 @@
         <h1 class="fs-3 mb-1">Laporan Penjualan</h1>
         <p class="mb-0 text-muted small">Analisis penjualan toko Anda</p>
     </div>
-    <a href="{{ route('admin.reports.export', ['period' => $period]) }}" class="btn btn-outline-primary">
+    <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exportModal">
         <i class="ti ti-download me-1"></i>Export Excel
-    </a>
+    </button>
 </div>
 
 <div class="card mb-4">
     <div class="card-body p-4">
         <form method="GET" action="{{ route('admin.reports.index') }}" class="row g-2 align-items-center">
             <div class="col-lg-3">
-                <select name="period" class="form-select">
+                <select name="period" class="form-control">
                     <option value="week" {{ $period == 'week' ? 'selected' : '' }}>Minggu Ini</option>
                     <option value="month" {{ $period == 'month' ? 'selected' : '' }}>Bulan Ini</option>
                     <option value="year" {{ $period == 'year' ? 'selected' : '' }}>Tahun Ini</option>
@@ -161,4 +161,54 @@
         </div>
     </div>
 @endif
+<div class="modal fade" id="exportModal" tabindex="-1">
+    <div class="modal-dialog">
+        <form method="GET" action="{{ route('admin.reports.export') }}">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Export Laporan</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Dari Tanggal</label>
+                            <input type="date" name="date_from" class="form-control" value="{{ old('date_from', request('date_from')) }}">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Sampai Tanggal</label>
+                            <input type="date" name="date_to" class="form-control" value="{{ old('date_to', request('date_to')) }}">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Metode Pembayaran</label>
+                            <select name="payment_method" class="form-control">
+                                <option value="">Semua</option>
+                                <option value="midtrans" {{ old('payment_method', request('payment_method')) == 'midtrans' ? 'selected' : '' }}>Midtrans</option>
+                                <option value="bank_transfer" {{ old('payment_method', request('payment_method')) == 'bank_transfer' ? 'selected' : '' }}>Bank Transfer</option>
+                                <option value="cod" {{ old('payment_method', request('payment_method')) == 'cod' ? 'selected' : '' }}>COD</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Status Pesanan</label>
+                            <select name="status" class="form-control">
+                                <option value="">Semua</option>
+                                <option value="paid" {{ old('status', request('status')) == 'paid' ? 'selected' : '' }}>Paid</option>
+                                <option value="processing" {{ old('status', request('status')) == 'processing' ? 'selected' : '' }}>Processing</option>
+                                <option value="shipped" {{ old('status', request('status')) == 'shipped' ? 'selected' : '' }}>Shipped</option>
+                                <option value="delivered" {{ old('status', request('status')) == 'delivered' ? 'selected' : '' }}>Delivered</option>
+                                <option value="completed" {{ old('status', request('status')) == 'completed' ? 'selected' : '' }}>Completed</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="ti ti-download me-1"></i>Download Excel
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
 @endsection

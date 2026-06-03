@@ -19,7 +19,7 @@
                 </div>
             </div>
             <div class="col-lg-3">
-                <select name="role" class="form-select">
+                <select name="role" class="form-control">
                     <option value="">Semua Role</option>
                     @foreach($roles as $role)
                         <option value="{{ $role->name }}" {{ request('role') == $role->name ? 'selected' : '' }}>{{ ucfirst($role->name) }}</option>

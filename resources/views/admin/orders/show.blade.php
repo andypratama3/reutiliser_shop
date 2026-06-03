@@ -165,7 +165,7 @@
                     @csrf @method('PUT')
                     <div class="mb-3">
                         <label class="form-label">Status</label>
-                        <select name="status" class="form-select" required>
+                        <select name="status" id="statusOrder" class="form-control" required>
                             <option value="">Pilih Status</option>
                             <option value="processing" {{ $order->status == 'processing' ? 'disabled' : '' }}>Processing</option>
                             <option value="shipped" {{ $order->status == 'shipped' ? 'disabled' : '' }}>Shipped</option>
@@ -177,12 +177,12 @@
 
                     <div id="shippingFields" class="d-none">
                         <div class="mb-3">
-                            <label class="form-label">Kurir</label>
-                            <input type="text" name="courier" class="form-control" placeholder="JNE, J&T, SiCepat">
+                            <label class="form-label">Kurir <span class="text-danger">*</span></label>
+                            <input type="text" name="courier" id="fieldCourier" class="form-control" placeholder="JNE, J&T, SiCepat">
                         </div>
                         <div class="mb-3">
-                            <label class="form-label">No. Resi</label>
-                            <input type="text" name="tracking_number" class="form-control" placeholder="Masukkan nomor resi">
+                            <label class="form-label">No. Resi <span class="text-danger">*</span></label>
+                            <input type="text" name="tracking_number" id="fieldTracking" class="form-control" placeholder="Masukkan nomor resi">
                         </div>
                     </div>
 
@@ -198,8 +198,18 @@
 
 @push('scripts')
 <script>
-    document.querySelector('[name="status"]')?.addEventListener('change', function () {
-        document.getElementById('shippingFields').classList.toggle('d-none', this.value !== 'shipped');
+    document.getElementById('statusOrder')?.addEventListener('change', function () {
+        var shippingFields = document.getElementById('shippingFields');
+        var isShipped = this.value === 'shipped';
+        shippingFields.classList.toggle('d-none', !isShipped);
+        document.getElementById('fieldCourier').required = isShipped;
+        document.getElementById('fieldTracking').required = isShipped;
     });
+
+    if (document.getElementById('statusOrder')?.value === 'shipped') {
+        document.getElementById('shippingFields')?.classList.remove('d-none');
+        document.getElementById('fieldCourier').required = true;
+        document.getElementById('fieldTracking').required = true;
+    }
 </script>
 @endpush

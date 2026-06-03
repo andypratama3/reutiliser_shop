@@ -13,7 +13,10 @@
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" rel="stylesheet">
   <link href="{{ asset('dashboard-assets/css/dashboard.css') }}" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
   @stack('css')
 </head>
 
@@ -145,19 +148,19 @@
   <main id="content" class="content py-10">
     <div class="container-fluid">
       @if(session('success'))
-        <div class="alert alert-success alert-dismissible fade show border-0 shadow-sm" role="alert">
+        <div class="alert alert-success alert-dismissible fade show border-0 shadow-sm d-none alert-flash" role="alert" data-type="success">
           <i class="ti ti-check-circle me-1"></i> {{ session('success') }}
           <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         </div>
       @endif
       @if(session('error'))
-        <div class="alert alert-danger alert-dismissible fade show border-0 shadow-sm" role="alert">
+        <div class="alert alert-danger alert-dismissible fade show border-0 shadow-sm d-none alert-flash" role="alert" data-type="error">
           <i class="ti ti-alert-circle me-1"></i> {{ session('error') }}
           <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         </div>
       @endif
       @if(session('info'))
-        <div class="alert alert-info alert-dismissible fade show border-0 shadow-sm" role="alert">
+        <div class="alert alert-info alert-dismissible fade show border-0 shadow-sm d-none alert-flash" role="alert" data-type="info">
           <i class="ti ti-info-circle me-1"></i> {{ session('info') }}
           <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         </div>
@@ -166,9 +169,65 @@
     </div>
   </main>
 
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="{{ asset('dashboard-assets/js/dashboard.js') }}"></script>
+  <script>
+    $(document).ready(function () {
+      $('select[multiple]').select2({
+        theme: 'bootstrap-5',
+        placeholder: function () {
+          return $(this).data('placeholder') || 'Pilih opsi';
+        },
+        width: '100%'
+      });
+
+      document.querySelectorAll('.alert-flash').forEach(function (el) {
+        var type = el.dataset.type || 'info';
+        var message = el.textContent.trim();
+        if (message) {
+          Swal.fire({
+            icon: type,
+            title: message,
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 4000,
+            timerProgressBar: true
+          });
+        }
+      });
+    });
+
+    function previewImages(input, containerId) {
+      var container = document.getElementById(containerId);
+      if (!container) return;
+      container.innerHTML = '';
+      if (input.files) {
+        Array.from(input.files).forEach(function (file) {
+          var reader = new FileReader();
+          reader.onload = function (e) {
+            var wrapper = document.createElement('div');
+            wrapper.className = 'col-4';
+            wrapper.innerHTML = '<img src="' + e.target.result + '" class="img-thumbnail w-100" style="height:100px;object-fit:cover;">';
+            container.appendChild(wrapper);
+          };
+          reader.readAsDataURL(file);
+        });
+      }
+    }
+
+    function previewSingleImage(input, imgId) {
+      var img = document.getElementById(imgId);
+      if (!img || !input.files || !input.files[0]) return;
+      var reader = new FileReader();
+      reader.onload = function (e) { img.src = e.target.result; img.classList.remove('d-none'); };
+      reader.readAsDataURL(input.files[0]);
+    }
+  </script>
   @stack('scripts')
 </body>
 

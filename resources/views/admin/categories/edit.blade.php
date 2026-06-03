@@ -32,7 +32,7 @@
 
                     <div class="mb-3">
                         <label class="form-label">Induk Kategori</label>
-                        <select name="parent_id" class="form-select @error('parent_id') is-invalid @enderror">
+                        <select name="parent_id" class="form-control @error('parent_id') is-invalid @enderror">
                             <option value="">Tidak ada (induk)</option>
                             @foreach($parents as $parent)
                                 <option value="{{ $parent->id }}" {{ old('parent_id', $category->parent_id) == $parent->id ? 'selected' : '' }}>{{ $parent->name }}</option>
@@ -54,15 +54,17 @@
                         </div>
                         <div class="col-md-6">
                             <label class="form-label">Gambar</label>
-                            <input type="file" name="image" class="form-control @error('image') is-invalid @enderror" accept="image/*">
+                            <input type="file" name="image" class="form-control @error('image') is-invalid @enderror" accept="image/*" onchange="previewSingleImage(this, 'catImagePreview')">
                             @error('image') <div class="invalid-feedback">{{ $message }}</div> @enderror
                         </div>
                     </div>
 
                     @if($category->image)
                         <div class="mb-3">
-                            <img src="{{ Storage::url($category->image) }}" class="avatar avatar-xl rounded">
+                            <img id="catImagePreview" src="{{ Storage::url($category->image) }}" class="avatar avatar-xl rounded">
                         </div>
+                    @else
+                        <img id="catImagePreview" class="mt-2 d-none" style="width:100px;height:100px;object-fit:cover;border-radius:8px;">
                     @endif
 
                     <div class="mb-3">
