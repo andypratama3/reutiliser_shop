@@ -117,9 +117,9 @@
         <div class="card mb-4">
             <div class="card-header">Customer</div>
             <div class="card-body p-4">
-                <p class="mb-1"><strong>{{ $order->user->name }}</strong></p>
-                <p class="mb-1 text-muted">{{ $order->user->email }}</p>
-                <p class="mb-0 text-muted">{{ $order->user->phone ?? '-' }}</p>
+                <p class="mb-1"><strong>{{ $order->user?->name ?? 'Deleted User' }}</strong></p>
+                <p class="mb-1 text-muted">{{ $order->user?->email ?? '-' }}</p>
+                <p class="mb-0 text-muted">{{ $order->user?->phone ?? '-' }}</p>
             </div>
         </div>
 

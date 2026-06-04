@@ -128,7 +128,7 @@
                                     {{ $order->order_number }}
                                 </a>
                             </td>
-                            <td>{{ $order->user->name }}</td>
+                            <td>{{ $order->user?->name ?? 'Deleted User' }}</td>
                             <td class="fw-medium">Rp {{ number_format($order->total_amount, 0, ',', '.') }}</td>
                             <td>
                                 @php

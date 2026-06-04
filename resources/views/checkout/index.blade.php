@@ -189,12 +189,12 @@
                     @foreach($cart->items as $item)
                     <div class="flex gap-8 group">
                         <div class="w-20 h-28 bg-secondary-container rounded-2xl overflow-hidden flex-shrink-0">
-                            <img src="{{ $item->product->primaryImage?->path ?? 'https://placehold.co/200x200' }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" alt="{{ $item->product->name }}">
+                            <img src="{{ $item->product?->primaryImage?->path ?? 'https://placehold.co/200x200' }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" alt="{{ $item->product?->name ?? 'Product' }}">
                         </div>
                         <div class="flex-grow flex flex-col justify-between py-1">
                             <div>
                                 <div class="flex justify-between items-start mb-1">
-                                    <h3 class="font-body-md text-primary font-bold text-lg leading-tight">{{ $item->product->name }}</h3>
+                                    <h3 class="font-body-md text-primary font-bold text-lg leading-tight">{{ $item->product?->name ?? 'Unknown Product' }}</h3>
                                     <span class="font-body-md text-primary font-bold">Rp {{ number_format($item->line_total, 0, ',', '.') }}</span>
                                 </div>
                                 <p class="font-label-caps text-[10px] text-secondary tracking-widest uppercase">

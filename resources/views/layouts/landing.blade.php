@@ -126,11 +126,11 @@
                 @forelse($landingCart->items as $item)
                 <div class="flex gap-8 group">
                     <div class="w-24 h-32 bg-secondary-container rounded-2xl overflow-hidden shadow-sm flex-shrink-0">
-                        <img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" src="{{ $item->product->primary_image_url }}" alt="{{ $item->product->name }}"/>
+                        <img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" src="{{ $item->product?->primary_image_url ?? asset('images/placeholder.webp') }}" alt="{{ $item->product?->name ?? 'Product' }}"/>
                     </div>
                     <div class="flex-grow flex flex-col justify-center py-2">
                         <div class="flex justify-between items-start mb-2">
-                            <h3 class="font-body-md text-primary font-bold text-xl leading-tight">{{ $item->product->name }}</h3>
+                            <h3 class="font-body-md text-primary font-bold text-xl leading-tight">{{ $item->product?->name ?? 'Unknown Product' }}</h3>
                             <span class="font-body-md text-primary font-bold">Rp {{ number_format($item->price, 0, ',', '.') }}</span>
                         </div>
                         <p class="font-label-caps text-[10px] text-secondary tracking-widest uppercase opacity-40 mb-4">

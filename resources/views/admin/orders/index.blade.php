@@ -107,8 +107,8 @@
                             </a>
                         </td>
                         <td>
-                            <div>{{ $order->user->name }}</div>
-                            <small class="text-muted">{{ $order->user->email }}</small>
+                            <div>{{ $order->user?->name ?? 'Deleted User' }}</div>
+                            <small class="text-muted">{{ $order->user?->email ?? '-' }}</small>
                         </td>
                         <td class="fw-medium">Rp {{ number_format($order->total_amount, 0, ',', '.') }}</td>
                         <td>

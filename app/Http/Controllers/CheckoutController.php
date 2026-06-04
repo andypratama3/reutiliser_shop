@@ -126,7 +126,7 @@ class CheckoutController extends Controller
                         throw new \Exception('Varian produk tidak ditemukan.');
                     }
                     if ($variant->stock < $item->quantity) {
-                        throw new \Exception("Stok varian untuk {$item->product->name} tidak cukup.");
+                        throw new \Exception("Stok varian untuk " . ($item->product?->name ?? 'Unknown') . " tidak cukup.");
                     }
                 }
 
@@ -321,7 +321,7 @@ class CheckoutController extends Controller
                         ->update(['stock' => DB::raw("stock - $qty")]);
 
                     if ($affected === 0) {
-                        throw new \Exception("Stok varian untuk {$item->product->name} tidak cukup (optimistic).");
+                        throw new \Exception("Stok varian untuk " . ($item->product?->name ?? 'Unknown') . " tidak cukup (optimistic).");
                     }
                 }
 
@@ -332,15 +332,15 @@ class CheckoutController extends Controller
                     ->update(['stock' => DB::raw("stock - $qty")]);
 
                 if ($affected === 0) {
-                    throw new \Exception("Stok produk untuk {$item->product->name} tidak cukup (optimistic).");
+                    throw new \Exception("Stok produk untuk " . ($item->product?->name ?? 'Unknown') . " tidak cukup (optimistic).");
                 }
 
                 $order->items()->create([
                     'product_id'         => $item->product_id,
                     'product_variant_id' => $item->product_variant_id,
-                    'product_name'       => $item->product->name,
+                    'product_name'       => $item->product?->name,
                     'variant_info'       => $item->variant ? "{$item->variant->size} / {$item->variant->color}" : null,
-                    'product_image'      => $item->product->primaryImage?->path,
+                    'product_image'      => $item->product?->primaryImage?->path,
                     'quantity'           => $qty,
                     'unit_price'         => $item->price,
                     'total_price'        => $item->line_total,

@@ -28,8 +28,8 @@
                     <div class="flex flex-col md:flex-row gap-8 pb-12 border-b border-primary/5 group reveal-item">
                         <!-- Product Image -->
                         <div class="w-full md:w-48 h-64 bg-secondary-container rounded-3xl overflow-hidden flex-shrink-0 shadow-sm">
-                            <img src="{{ $item->product->primary_image_url }}"
-                                 alt="{{ $item->product->name }}"
+                            <img src="{{ $item->product?->primary_image_url ?? asset('images/placeholder.webp') }}"
+                                 alt="{{ $item->product?->name ?? 'Product' }}"
                                  class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000">
                         </div>
 
@@ -38,7 +38,7 @@
                             <div>
                                 <div class="flex justify-between items-start mb-4">
                                     <div>
-                                        <h3 class="font-headline-md text-3xl text-primary font-bold mb-2">{{ $item->product->name }}</h3>
+                                        <h3 class="font-headline-md text-3xl text-primary font-bold mb-2">{{ $item->product?->name ?? 'Unknown Product' }}</h3>
                                         <p class="font-label-caps text-[11px] text-secondary tracking-widest uppercase opacity-60">
                                             @if($item->variant)
                                                 {{ $item->variant->size }} / {{ $item->variant->color }}
@@ -50,7 +50,7 @@
                                     <p class="font-headline-md text-2xl text-primary">Rp {{ number_format($item->price, 0, ',', '.') }}</p>
                                 </div>
                                 <p class="font-body-md text-secondary text-sm leading-relaxed max-w-md opacity-80">
-                                    {{ $item->product->short_description ?? 'An archival piece reconstructed for a circular future.' }}
+                                    {{ $item->product?->short_description ?? 'An archival piece reconstructed for a circular future.' }}
                                 </p>
                             </div>
 

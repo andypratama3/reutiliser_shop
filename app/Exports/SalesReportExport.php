@@ -44,7 +44,7 @@ class SalesReportExport implements FromCollection, WithHeadings, WithStyles
         return $query->orderByDesc('created_at')->get()->map(function ($order) {
             return [
                 $order->order_number,
-                $order->user->name ?? '-',
+                $order->user?->name ?? '-',
                 $order->created_at->format('d/m/Y H:i'),
                 $order->status,
                 $order->payment_method ?? '-',

@@ -31,7 +31,7 @@ class MidtransService
             'customer_details' => [
                 'first_name' => $order->recipient_name,
                 'phone'      => $order->recipient_phone,
-                'email'      => $order->user->email,
+                'email'      => $order->user?->email ?? '',
             ],
             'item_details' => $order->items->map(fn($item) => [
                 'id'       => $item->product_id,
