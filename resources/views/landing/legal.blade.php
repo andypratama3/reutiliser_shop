@@ -7,7 +7,7 @@
     <div class="reveal-item">
         <h1 class="font-headline-lg text-headline-lg text-primary mb-16">{{ $title }}</h1>
         <div class="prose prose-lg prose-primary font-body-md text-secondary space-y-8">
-            <p>Last Updated: June 02, 2024</p>
+            <p>Last Updated: June 06, 2026</p>
             <p>
                 Welcome to RÉUTILISER. Your privacy and trust are paramount to our circular mission. This policy outlines how we handle your data with transparency and care.
             </p>

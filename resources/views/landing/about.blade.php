@@ -14,7 +14,7 @@
             </p>
             <div class="flex items-center gap-8">
                 <div class="h-px w-20 bg-primary/20"></div>
-                <a href="#" class="font-label-caps text-primary tracking-widest hover:italic transition-all">ESTABLISHED 2024 / PARIS</a>
+                <a href="#" class="font-label-caps text-primary tracking-widest hover:italic transition-all">ESTABLISHED 2026 / INDONESIA</a>
             </div>
         </div>
         <div class="lg:w-1/2 reveal-item">
