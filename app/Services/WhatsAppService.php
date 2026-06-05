@@ -38,7 +38,7 @@ class WhatsAppService
         $message .= "Berlaku hingga: *" . $payment->expires_at?->format('d/m/Y H:i') . "*\n\n";
         $message .= "Segera lakukan pembayaran sebelum expired. Terima kasih! 🙏";
 
-        $this->send($phone, $message, $order->id, 'payment_reminder');
+        $this->send($phone, $message, $order->id, 'payment_reminder', $order->user_id);
     }
 
     public function sendOrderConfirmation(Order $order): void
@@ -50,7 +50,7 @@ class WhatsAppService
         $message .= "Total: *Rp " . number_format($order->total_amount, 0, ',', '.') . "*\n\n";
         $message .= "Terima kasih sudah belanja! 🛍️";
 
-        $this->send($phone, $message, $order->id, 'order_confirmed');
+        $this->send($phone, $message, $order->id, 'order_confirmed', $order->user_id);
     }
 
     public function sendPaymentFailed(Order $order): void
@@ -60,7 +60,7 @@ class WhatsAppService
         $message .= "Halo *{$order->recipient_name}*, sayang sekali pembayaran untuk order *#{$order->order_number}* gagal/kadaluarsa.\n\n";
         $message .= "Silakan buat order baru atau hubungi kami jika ada pertanyaan.";
 
-        $this->send($phone, $message, $order->id, 'payment_failed');
+        $this->send($phone, $message, $order->id, 'payment_failed', $order->user_id);
     }
 
     public function sendShippingUpdate(Order $order): void
@@ -73,10 +73,10 @@ class WhatsAppService
         $message  .= "No. Resi: *{$shipment->tracking_number}*\n\n";
         $message  .= "Cek status pengiriman di website kurir ya! 📍";
 
-        $this->send($phone, $message, $order->id, 'shipping_update');
+        $this->send($phone, $message, $order->id, 'shipping_update', $order->user_id);
     }
 
-    public function send(string $phone, string $message, ?int $orderId = null, string $type = 'general'): void
+    public function send(string $phone, string $message, ?int $orderId = null, string $type = 'general', ?int $userId = null): void
     {
         try {
             $response = Http::withToken($this->token)
@@ -87,6 +87,7 @@ class WhatsAppService
                 ]);
 
             NotificationLog::create([
+                'user_id'   => $userId,
                 'order_id'  => $orderId,
                 'channel'   => 'whatsapp',
                 'recipient' => $phone,
@@ -99,6 +100,7 @@ class WhatsAppService
         } catch (\Exception $e) {
             Log::error("WhatsApp send failed: {$e->getMessage()}", compact('phone', 'type'));
             NotificationLog::create([
+                'user_id'       => $userId,
                 'order_id'      => $orderId,
                 'channel'       => 'whatsapp',
                 'recipient'     => $phone,

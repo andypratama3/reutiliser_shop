@@ -158,6 +158,17 @@
                                 <label class="form-check-label">Aktif</label>
                             </div>
                         </div>
+                        <div class="col-12">
+                            <div class="form-check">
+                                <input type="hidden" name="is_influencer_code" value="0">
+                                <input type="checkbox" name="is_influencer_code" class="form-check-input" value="1" id="isInfluencer" {{ old('is_influencer_code') ? 'checked' : '' }}>
+                                <label class="form-check-label" for="isInfluencer">Kode Influencer</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6" id="influencerField" style="{{ old('is_influencer_code') ? '' : 'display:none' }}">
+                            <label class="form-label">ID User Influencer</label>
+                            <input type="number" name="influencer_user_id" class="form-control" value="{{ old('influencer_user_id') }}" placeholder="User ID influencer">
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -169,3 +180,11 @@
     </div>
 </div>
 @endsection
+
+@push('scripts')
+<script>
+    document.getElementById('isInfluencer')?.addEventListener('change', function () {
+        document.getElementById('influencerField').style.display = this.checked ? '' : 'none';
+    });
+</script>
+@endpush

@@ -56,7 +56,19 @@ class CheckoutController extends Controller
             return response()->json(['error' => 'Kamu sudah pernah menggunakan kode ini.'], 422);
         }
 
+        // Check minimum order amount against current cart
+        $cart = Cart::where('user_id', auth()->id())->with('items')->first();
+        $subtotal = $cart ? $cart->subtotal : 0;
+
+        if ($subtotal < $promo->min_order_amount) {
+            return response()->json([
+                'error' => 'Minimum belanja Rp ' . number_format($promo->min_order_amount, 0, ',', '.') . ' untuk menggunakan kode ini.',
+            ], 422);
+        }
+
         session(['promo_code_id' => $promo->id]);
+
+        $discount = $promo->calculateDiscount($subtotal);
 
         return response()->json([
             'success'         => true,
@@ -64,6 +76,8 @@ class CheckoutController extends Controller
             'promo_code_id'   => $promo->id,
             'discount_type'   => $promo->type,
             'discount_value'  => $promo->value,
+            'discount_amount' => $discount,
+            'is_free_shipping'=> $promo->type === 'free_shipping',
         ]);
     }
 
@@ -94,11 +108,13 @@ class CheckoutController extends Controller
             $subtotal = $cart->subtotal;
             $promoCode = null;
             $discountAmount = 0;
+            $isFreeShipping = false;
 
             if (session('promo_code_id')) {
                 $promoCode = PromoCode::find(session('promo_code_id'));
                 if ($promoCode?->isValid()) {
                     $discountAmount = $promoCode->calculateDiscount($subtotal);
+                    $isFreeShipping = $promoCode->type === 'free_shipping';
                 }
             }
 
@@ -108,6 +124,11 @@ class CheckoutController extends Controller
             // Add premium for express methods
             if (str_contains(strtolower($request->shipping_method), 'express')) {
                 $shippingCost += 10000;
+            }
+
+            // Apply free shipping promo
+            if ($isFreeShipping && $promoCode && $subtotal >= $promoCode->min_order_amount) {
+                $shippingCost = 0;
             }
 
             $totalAmount  = max(0, $subtotal - $discountAmount + $shippingCost);
@@ -185,6 +206,9 @@ class CheckoutController extends Controller
                 ]);
                 session()->forget('promo_code_id');
             }
+
+            // Reload items relationship so MidtransService can access them for item_details
+            $order->load('items');
 
             $payment = $this->createPayment($order, $request->payment_method, $request->payment_channel);
 
@@ -298,6 +322,7 @@ class CheckoutController extends Controller
             'shipping_city'         => 'required|string|max:100',
             'shipping_province'     => 'required|string|max:100',
             'shipping_postal_code'  => 'required|string|max:10',
+            'shipping_method'       => 'required|string',
             'payment_method'        => 'required|in:va_bank,qris,e_wallet',
             'payment_channel'       => 'required|string',
         ]);
@@ -316,15 +341,28 @@ class CheckoutController extends Controller
             $subtotal = $cart->subtotal;
             $promoCode = null;
             $discountAmount = 0;
+            $isFreeShipping = false;
 
             if (session('promo_code_id')) {
                 $promoCode = PromoCode::find(session('promo_code_id'));
                 if ($promoCode?->isValid()) {
                     $discountAmount = $promoCode->calculateDiscount($subtotal);
+                    $isFreeShipping = $promoCode->type === 'free_shipping';
                 }
             }
 
             $shippingCost = $this->calculateShipping($request->shipping_city);
+
+            // Add premium for express methods
+            if (str_contains(strtolower($request->shipping_method), 'express')) {
+                $shippingCost += 10000;
+            }
+
+            // Apply free shipping promo
+            if ($isFreeShipping && $promoCode && $subtotal >= $promoCode->min_order_amount) {
+                $shippingCost = 0;
+            }
+
             $totalAmount  = max(0, $subtotal - $discountAmount + $shippingCost);
 
             $order = Order::create([
@@ -344,6 +382,7 @@ class CheckoutController extends Controller
                 'status'                => 'awaiting_payment',
                 'payment_method'        => $request->payment_method,
                 'payment_channel'       => $request->payment_channel,
+                'shipping_method'       => $request->shipping_method,
             ]);
 
             foreach ($cart->items as $item) {
@@ -393,6 +432,9 @@ class CheckoutController extends Controller
                 ]);
                 session()->forget('promo_code_id');
             }
+
+            // Reload items relationship so MidtransService can access them for item_details
+            $order->load('items');
 
             $payment = $this->createPayment($order, $request->payment_method, $request->payment_channel);
             $this->whatsApp->sendPaymentInstruction($order, $payment);

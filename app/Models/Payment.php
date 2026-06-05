@@ -32,12 +32,18 @@ class Payment extends Model
         return in_array($this->status, ['settlement', 'capture']);
     }
 
-    public function verifySignature(string $serverKey): bool
+    /**
+     * Verify Midtrans notification signature.
+     * Midtrans signature formula: SHA512(order_id + status_code + gross_amount + server_key)
+     * Note: status_code is the HTTP-like code (e.g., "200"), NOT the transaction_status string.
+     */
+    public function verifySignature(string $serverKey, string $statusCode = '200'): bool
     {
+        $grossFormatted = number_format((float) $this->gross_amount, 2, '.', '');
         $expected = hash('sha512',
             $this->midtrans_order_id .
-            $this->status .
-            $this->gross_amount .
+            $statusCode .
+            $grossFormatted .
             $serverKey
         );
         return hash_equals($expected, $this->signature_key ?? '');

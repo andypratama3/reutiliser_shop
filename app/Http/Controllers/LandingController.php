@@ -134,9 +134,9 @@ class LandingController extends Controller
     public function lookbook()
     {
         $collections = [
-            ['name' => 'CIRCULAR P.01', 'year' => '2024', 'image' => 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?q=80&w=1200&auto=format&fit=crop'],
-            ['name' => 'ARCHIVAL DEPOT', 'year' => '2023', 'image' => 'https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?q=80&w=1200&auto=format&fit=crop'],
-            ['name' => 'INDIGO REBIRTH', 'year' => '2022', 'image' => 'https://images.unsplash.com/photo-1523381210434-271e8be1f52b?q=80&w=1200&auto=format&fit=crop']
+            ['name' => 'CIRCULAR P.01', 'year' => '2026', 'image' => 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?q=80&w=1200&auto=format&fit=crop'],
+            ['name' => 'ARCHIVAL DEPOT', 'year' => '2025', 'image' => 'https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?q=80&w=1200&auto=format&fit=crop'],
+            ['name' => 'INDIGO REBIRTH', 'year' => '2025', 'image' => 'https://images.unsplash.com/photo-1523381210434-271e8be1f52b?q=80&w=1200&auto=format&fit=crop']
         ];
         return view('landing.lookbook', compact('collections'));
     }
@@ -144,10 +144,10 @@ class LandingController extends Controller
     public function faq()
     {
         $faqs = [
-            ['q' => 'Where do you source your materials?', 'a' => 'We source exclusively from archival textile depots, vintage industrial collections, and discarded luxury remnants in Europe and Asia.'],
-            ['q' => 'Are your pieces unique?', 'a' => 'Yes. Due to the nature of upcycling, no two items are ever identical. Each piece carries its own archival history.'],
-            ['q' => 'Do you ship globally?', 'a' => 'We offer carbon-neutral shipping to over 50 countries worldwide.'],
-            ['q' => 'What is your return policy?', 'a' => 'We offer a 14-day return policy for archival pieces, provided they are in their original reconstructed condition.']
+            ['q' => 'Dari mana kalian mendapatkan material?', 'a' => 'Kami mengumpulkan material dari depot tekstil arsip, koleksi industri vintage, dan sisa material mewah dari berbagai sumber di Indonesia dan Asia.'],
+            ['q' => 'Apakah setiap produk unik?', 'a' => 'Ya. Karena sifat upcycling, tidak ada dua item yang identik. Setiap produk membawa sejarah arsipnya sendiri.'],
+            ['q' => 'Apakah bisa kirim ke seluruh Indonesia?', 'a' => 'Kami menawarkan pengiriman ke seluruh Indonesia melalui berbagai jasa kurir terpercaya.'],
+            ['q' => 'Bagaimana kebijakan pengembalian?', 'a' => 'Kami menyediakan kebijakan pengembalian 14 hari untuk produk arsip, dengan syarat produk masih dalam kondisi asli.']
         ];
         return view('landing.faq', compact('faqs'));
     }
@@ -227,8 +227,8 @@ class LandingController extends Controller
     private function getJournalData()
     {
         return [
-            ['slug' => 'lifecycle-denim-thread', 'title' => 'The Lifecycle of a Denim Thread', 'date' => 'MAY 24, 2024', 'category' => 'PROCESS', 'excerpt' => 'Exploring the journey of repurposed indigo from archival discovery to artisan reconstruction.', 'image' => 'https://images.unsplash.com/photo-1582562124811-c09040d0a901?q=80&w=800&auto=format&fit=crop'],
-            ['slug' => 'local-artisans-circularity', 'title' => 'Local Artisans: The Heart of Circularity', 'date' => 'JUNE 02, 2024', 'category' => 'PEOPLE', 'excerpt' => 'A closer look at the craftsmen and women breathing new life into forgotten textiles.', 'image' => 'https://images.unsplash.com/photo-1556761175-5973dc0f32e7?q=80&w=800&auto=format&fit=crop']
+            ['slug' => 'lifecycle-denim-thread', 'title' => 'Siklus Hidup Sebuah Benang Denim', 'date' => 'MEI 24, 2026', 'category' => 'PROSES', 'excerpt' => 'Menelusuri perjalanan indigo yang didaur ulang dari penemuan arsip hingga rekonstruksi oleh artisan.', 'image' => 'https://images.unsplash.com/photo-1582562124811-c09040d0a901?q=80&w=800&auto=format&fit=crop'],
+            ['slug' => 'local-artisans-circularity', 'title' => 'Artisan Lokal: Jantung dari Sirkularitas', 'date' => 'JUNI 02, 2026', 'category' => 'PROFIL', 'excerpt' => 'Melihat lebih dekat para pengrajin yang menghidupkan kembali tekstil-tekstil yang terlupakan.', 'image' => 'https://images.unsplash.com/photo-1556761175-5973dc0f32e7?q=80&w=800&auto=format&fit=crop']
         ];
     }
 }

@@ -33,7 +33,7 @@
     <div class="bg-primary p-12 md:p-24 reveal-item">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-24 items-center">
             <div class="space-y-12">
-                <h2 class="font-headline-lg text-white leading-tight">The 2024 Impact Dashboard</h2>
+                <h2 class="font-headline-lg text-white leading-tight">The 2026 Impact Dashboard</h2>
                 <div class="space-y-8">
                     <div class="reveal-item">
                         <div class="flex justify-between font-label-caps text-[10px] mb-2 text-white/60">

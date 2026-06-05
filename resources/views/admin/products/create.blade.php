@@ -48,6 +48,12 @@
                         </div>
                     </div>
 
+                    <div class="mb-3">
+                        <label class="form-label">Material</label>
+                        <input type="text" name="material" class="form-control @error('material') is-invalid @enderror" value="{{ old('material') }}" placeholder="Contoh: Denim, Cotton, Silk">
+                        @error('material') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                    </div>
+
                     <div class="row mb-3">
                         <div class="col-md-4">
                             <label class="form-label">Harga <span class="text-danger">*</span></label>

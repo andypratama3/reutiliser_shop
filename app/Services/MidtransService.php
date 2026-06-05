@@ -25,6 +25,34 @@ class MidtransService
     {
         $midtransOrderId = $customOrderId ?? $order->order_number;
 
+        // Build item_details from order items
+        $itemDetails = $order->items->map(fn($item) => [
+            'id'       => (string) $item->product_id,
+            'price'    => (int) $item->unit_price,
+            'quantity' => $item->quantity,
+            'name'     => mb_substr($item->product_name, 0, 50),
+        ])->toArray();
+
+        // Add shipping cost as a line item so sum matches gross_amount
+        if ($order->shipping_cost > 0) {
+            $itemDetails[] = [
+                'id'       => 'SHIPPING',
+                'price'    => (int) $order->shipping_cost,
+                'quantity' => 1,
+                'name'     => 'Ongkos Kirim',
+            ];
+        }
+
+        // Add discount as a negative line item so sum matches gross_amount
+        if ($order->discount_amount > 0) {
+            $itemDetails[] = [
+                'id'       => 'DISCOUNT',
+                'price'    => (int) -$order->discount_amount,
+                'quantity' => 1,
+                'name'     => 'Diskon',
+            ];
+        }
+
         $params = [
             'transaction_details' => [
                 'order_id'     => $midtransOrderId,
@@ -35,12 +63,7 @@ class MidtransService
                 'phone'      => $order->recipient_phone,
                 'email'      => $order->user?->email ?? '',
             ],
-            'item_details' => $order->items->map(fn($item) => [
-                'id'       => $item->product_id,
-                'price'    => (int) $item->unit_price,
-                'quantity' => $item->quantity,
-                'name'     => $item->product_name,
-            ])->toArray(),
+            'item_details' => $itemDetails,
         ];
 
         $params['enabled_payments'] = $this->resolvePaymentChannels($paymentMethod, $paymentChannel);

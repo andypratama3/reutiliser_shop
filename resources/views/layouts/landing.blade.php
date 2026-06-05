@@ -212,7 +212,7 @@
             </div>
         </div>
         <div class="max-w-[1440px] mx-auto px-16 mt-32 pt-12 border-t border-primary/5 text-center">
-            <p class="font-label-caps text-[10px] tracking-[0.5em] text-secondary opacity-30">© 2024 RÉUTILISER. ALL RIGHTS RESERVED.</p>
+            <p class="font-label-caps text-[10px] tracking-[0.5em] text-secondary opacity-30">© 2026 RÉUTILISER. ALL RIGHTS RESERVED.</p>
         </div>
     </footer>
 

@@ -9,7 +9,7 @@
         <img alt="Hero" class="w-full h-full object-cover grayscale parallax-img" src="{{ asset('assets_landing/réutiliser.png') }}"/>
     </div>
     <div class="relative z-10 max-w-5xl">
-        <p class="font-label-caps text-primary tracking-[0.5em] mb-8 uppercase text-[12px] opacity-70">ESTABLISHED 2024 — PARIS ARCHIVES</p>
+        <p class="font-label-caps text-primary tracking-[0.5em] mb-8 uppercase text-[12px] opacity-70">ESTABLISHED 2026 — INDONESIA</p>
         <h1 class="font-display-lg text-primary leading-[0.9] mb-10 text-6xl md:text-[100px]">
             Circular Luxury<br/>
             <span class="italic text-secondary font-light">Reconstructed.</span>
@@ -140,7 +140,7 @@
         <div class="lg:col-span-4 space-y-10">
             <p class="font-label-caps text-primary tracking-[0.4em] text-[10px]">STORIES</p>
             <h2 class="font-headline-lg text-5xl md:text-7xl text-primary leading-tight">Jurnal Sirkular</h2>
-            <p class="font-body-md text-secondary leading-loose max-w-sm">Deep dives into our manufacturing process, artisan profiles, and the philosophy of reuse.</p>
+            <p class="font-body-md text-secondary leading-loose max-w-sm">Mendalami proses produksi kami, profil artisan, dan filosofi penggunaan kembali material.</p>
             <div class="pt-8">
                 <a href="{{ url('/journal') }}" class="font-label-caps text-primary border-b-2 border-primary pb-2 hover:tracking-widest transition-all">READ ALL STORIES</a>
             </div>

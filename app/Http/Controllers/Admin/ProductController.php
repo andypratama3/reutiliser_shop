@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductImage;
+use App\Models\ProductVariant;
 use App\Models\Tag;
 use App\Exports\ProductsExport;
 use Maatwebsite\Excel\Facades\Excel;
@@ -62,6 +63,7 @@ class ProductController extends Controller
             'slug'               => 'nullable|string|unique:products,slug|max:255',
             'category_id'        => 'required|exists:categories,id',
             'sku'                => 'required|string|unique:products,sku',
+            'material'           => 'nullable|string|max:255',
             'price'              => 'required|numeric|min:0',
             'compare_price'      => 'nullable|numeric|min:0',
             'cost_price'         => 'nullable|numeric|min:0',
@@ -114,6 +116,7 @@ class ProductController extends Controller
             'slug'               => 'nullable|string|unique:products,slug,' . $product->id . '|max:255',
             'category_id'        => 'required|exists:categories,id',
             'sku'                => 'required|string|unique:products,sku,' . $product->id,
+            'material'           => 'nullable|string|max:255',
             'price'              => 'required|numeric|min:0',
             'compare_price'      => 'nullable|numeric|min:0',
             'cost_price'         => 'nullable|numeric|min:0',
@@ -172,5 +175,70 @@ class ProductController extends Controller
         ProductImage::where('product_id', $image->product_id)->update(['is_primary' => false]);
         $image->update(['is_primary' => true]);
         return back()->with('success', 'Gambar utama berhasil diperbarui.');
+    }
+
+    // ─── Variant Management ─────────────────────────────────────────────
+
+    public function storeVariant(Request $request, Product $product)
+    {
+        $request->validate([
+            'sku'       => 'required|string|unique:product_variants,sku',
+            'size'      => 'nullable|string|max:50',
+            'color'     => 'nullable|string|max:50',
+            'color_hex' => 'nullable|string|max:7',
+            'price'     => 'required|numeric|min:0',
+            'stock'     => 'required|integer|min:0',
+            'image'     => 'nullable|image|max:2048',
+            'is_active' => 'boolean',
+        ]);
+
+        $data = $request->except(['_token', 'image']);
+
+        if ($request->hasFile('image')) {
+            $data['image'] = $request->file('image')->store('variants', 'public');
+        }
+
+        $product->variants()->create($data);
+
+        return back()->with('success', 'Varian berhasil ditambahkan.');
+    }
+
+    public function updateVariant(Request $request, ProductVariant $variant)
+    {
+        $request->validate([
+            'sku'       => 'required|string|unique:product_variants,sku,' . $variant->id,
+            'size'      => 'nullable|string|max:50',
+            'color'     => 'nullable|string|max:50',
+            'color_hex' => 'nullable|string|max:7',
+            'price'     => 'required|numeric|min:0',
+            'stock'     => 'required|integer|min:0',
+            'image'     => 'nullable|image|max:2048',
+            'is_active' => 'boolean',
+        ]);
+
+        $data = $request->except(['_token', '_method', 'image']);
+
+        if ($request->hasFile('image')) {
+            $data['image'] = $request->file('image')->store('variants', 'public');
+        }
+
+        $variant->update($data);
+
+        return back()->with('success', 'Varian berhasil diperbarui.');
+    }
+
+    public function destroyVariant(ProductVariant $variant)
+    {
+        // Prevent deletion if variant is in any pending/processing order
+        $hasActiveOrderItems = \App\Models\OrderItem::where('product_variant_id', $variant->id)
+            ->whereHas('order', fn($q) => $q->whereIn('status', ['pending', 'awaiting_payment', 'paid', 'processing', 'shipped']))
+            ->exists();
+
+        if ($hasActiveOrderItems) {
+            return back()->with('error', 'Varian tidak bisa dihapus karena masih ada order aktif.');
+        }
+
+        $variant->delete();
+        return back()->with('success', 'Varian berhasil dihapus.');
     }
 }
