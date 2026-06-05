@@ -101,6 +101,11 @@ Route::get('/legal/{type}', [LandingController::class, 'legal']);
            Route::delete('/products/images/{image}', [AdminProductController::class, 'destroyImage'])->name('products.images.destroy');
            Route::patch('/products/images/{image}/set-primary', [AdminProductController::class, 'setPrimaryImage'])->name('products.images.set-primary');
 
+           // Product Variants
+           Route::post('/products/{product}/variants', [AdminProductController::class, 'storeVariant'])->name('products.variants.store');
+           Route::put('/products/variants/{variant}', [AdminProductController::class, 'updateVariant'])->name('products.variants.update');
+           Route::delete('/products/variants/{variant}', [AdminProductController::class, 'destroyVariant'])->name('products.variants.destroy');
+
           Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
          Route::get('/categories/create', [CategoryController::class, 'create'])->name('categories.create');
          Route::post('/categories', [CategoryController::class, 'store'])->name('categories.store');

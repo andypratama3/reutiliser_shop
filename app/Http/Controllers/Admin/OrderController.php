@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Services\WhatsAppService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
@@ -62,13 +63,46 @@ class OrderController extends Controller
             'status' => 'required|in:processing,shipped,delivered,completed,cancelled',
         ]);
 
-        $order->update(['status' => $request->status]);
-
+        // If shipping, validate tracking fields BEFORE updating status
         if ($request->status === 'shipped') {
             $request->validate([
                 'tracking_number' => 'required|string',
                 'courier'         => 'required|string',
             ]);
+        }
+
+        // Handle cancellation: restore stock (admin can cancel orders in wider range of statuses)
+        if ($request->status === 'cancelled') {
+            $cancellableStatuses = ['pending', 'awaiting_payment', 'paid', 'processing'];
+            if (!in_array($order->status, $cancellableStatuses)) {
+                return back()->with('error', 'Order tidak bisa dibatalkan pada status ini (sudah dikirim/selesai).');
+            }
+
+            DB::transaction(function () use ($order) {
+                $wasPaid = in_array($order->status, ['paid', 'processing']);
+                $order->update(['status' => 'cancelled']);
+                $order->load('items.product', 'items.variant');
+
+                foreach ($order->items as $item) {
+                    if ($item->product) {
+                        $item->product->increment('stock', $item->quantity);
+                        // If the order was already paid, also decrement sold_count
+                        if ($wasPaid) {
+                            $item->product->decrement('sold_count', min($item->quantity, $item->product->sold_count));
+                        }
+                    }
+                    if ($item->variant) {
+                        $item->variant->increment('stock', $item->quantity);
+                    }
+                }
+            });
+
+            return back()->with('success', 'Order dibatalkan dan stok dikembalikan.');
+        }
+
+        $order->update(['status' => $request->status]);
+
+        if ($request->status === 'shipped') {
             $order->shipment()->updateOrCreate(
                 ['order_id' => $order->id],
                 [
@@ -79,6 +113,13 @@ class OrderController extends Controller
                 ]
             );
             $this->whatsApp->sendShippingUpdate($order);
+        }
+
+        if ($request->status === 'delivered') {
+            $order->shipment()->update([
+                'status'       => 'delivered',
+                'delivered_at' => now(),
+            ]);
         }
 
         return back()->with('success', 'Status order diperbarui.');

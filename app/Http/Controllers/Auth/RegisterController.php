@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Cart;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -35,6 +36,39 @@ class RegisterController extends Controller
 
         Auth::login($user);
 
+        $this->mergeGuestCart();
+
         return redirect()->route('home');
+    }
+
+    private function mergeGuestCart(): void
+    {
+        $sessionCart = Cart::where('session_id', session()->getId())->first();
+        if (!$sessionCart || $sessionCart->items->isEmpty()) {
+            return;
+        }
+
+        $userCart = Cart::firstOrCreate(['user_id' => auth()->id()]);
+
+        foreach ($sessionCart->items as $item) {
+            $existing = $userCart->items()
+                ->where('product_id', $item->product_id)
+                ->where('product_variant_id', $item->product_variant_id)
+                ->first();
+
+            if ($existing) {
+                $existing->increment('quantity', $item->quantity);
+            } else {
+                $userCart->items()->create([
+                    'product_id'         => $item->product_id,
+                    'product_variant_id' => $item->product_variant_id,
+                    'quantity'           => $item->quantity,
+                    'price'              => $item->price,
+                ]);
+            }
+        }
+
+        $sessionCart->items()->delete();
+        $sessionCart->delete();
     }
 }

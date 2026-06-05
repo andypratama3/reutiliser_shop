@@ -336,6 +336,7 @@ function checkoutApp() {
         promoCode: '',
         promoMessage: '',
         promoSuccess: false,
+        isFreeShipping: false,
         discount: 0,
         subtotal: {{ $cart->subtotal }},
         shippingCost: {{ $shippingMethods[0]['cost'] ?? config('shipping.default_cost', 20000) }},
@@ -370,6 +371,12 @@ function checkoutApp() {
             // updateShippingCost is now handled by the watcher
         },
         updateShippingCost() {
+            // If free shipping promo is active, keep cost at 0
+            if (this.isFreeShipping) {
+                this.shippingCost = 0;
+                return;
+            }
+
             const city = this.form.shipping_city || '';
             const zones = @json(config('shipping.zones', []));
             const cityLower = city.toLowerCase().trim();
@@ -436,15 +443,22 @@ function checkoutApp() {
             if (res.ok) {
                 this.promoMessage = data.message;
                 this.promoSuccess = true;
-                if (data.discount_type === 'percentage') {
-                    this.discount = this.subtotal * (data.discount_value / 100);
-                } else if (data.discount_type === 'fixed_amount') {
-                    this.discount = data.discount_value;
+                if (data.is_free_shipping) {
+                    // Free shipping promo: set shipping cost to zero and discount to 0
+                    this.discount = 0;
+                    this.shippingCost = 0;
+                    this.isFreeShipping = true;
+                } else {
+                    this.isFreeShipping = false;
+                    // Use the pre-calculated discount_amount from the server (respects max_discount_amount)
+                    this.discount = data.discount_amount || 0;
                 }
             } else {
                 this.promoMessage = data.error;
                 this.promoSuccess = false;
                 this.discount = 0;
+                this.isFreeShipping = false;
+                this.updateShippingCost();
             }
         },
         async submitCheckout() {

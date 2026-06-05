@@ -68,8 +68,12 @@ class PaymentController extends Controller
 
         $payment->update([
             'transaction_id'   => $payload['transaction_id'] ?? $payment->transaction_id,
+            'payment_type'     => $payload['payment_type'] ?? $payment->payment_type,
+            'va_number'        => $this->extractVaNumber($payload) ?? $payment->va_number,
             'status'           => $transactionStatus,
             'fraud_status'     => $fraudStatus,
+            'signature_key'    => $payload['signature_key'] ?? $payment->signature_key,
+            'transaction_time' => $payload['transaction_time'] ?? $payment->transaction_time,
             'settlement_time'  => $payload['settlement_time'] ?? $payment->settlement_time,
             'midtrans_response'=> $payload,
         ]);
@@ -154,5 +158,29 @@ class PaymentController extends Controller
             'paid_at'      => $order->paid_at,
             'payment'      => $order->payment?->only(['status', 'va_number', 'qr_code_url', 'expires_at']),
         ]);
+    }
+
+    /**
+     * Extract VA number from Midtrans notification payload.
+     * Midtrans sends VA numbers in different formats depending on bank.
+     */
+    private function extractVaNumber(array $payload): ?string
+    {
+        // Format 1: va_numbers array (BCA, BNI, BRI)
+        if (!empty($payload['va_numbers'][0]['va_number'])) {
+            return $payload['va_numbers'][0]['va_number'];
+        }
+
+        // Format 2: permata_va_number
+        if (!empty($payload['permata_va_number'])) {
+            return $payload['permata_va_number'];
+        }
+
+        // Format 3: bill_key for Mandiri Bill
+        if (!empty($payload['bill_key'])) {
+            return $payload['biller_code'] . '-' . $payload['bill_key'];
+        }
+
+        return null;
     }
 }
