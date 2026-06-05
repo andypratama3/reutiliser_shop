@@ -18,10 +18,19 @@ class PaymentController extends Controller
 
     public function webhook(Request $request)
     {
-        $payload = $request->all();
-        $midtransOrderId = $payload['order_id'] ?? 'N/A';
+        if ($request->isMethod('GET')) {
+            return response()->json(['message' => 'OK'], 200);
+        }
 
-        // Check if it's a test notification from Midtrans Dashboard first
+        $payload = $request->all();
+        $midtransOrderId = $payload['order_id'] ?? null;
+
+        // Check if order_id is missing in the payload
+        if (!$midtransOrderId) {
+            return response()->json(['message' => 'Callback received, but order_id missing'], 200);
+        }
+
+        // Check if it's a test notification from Midtrans Dashboard
         if (str_contains($midtransOrderId, 'payment_notif_test')) {
             Log::info('Midtrans test notification received and ignored: ' . $midtransOrderId);
             return response()->json(['message' => 'OK (Test)'], 200);
