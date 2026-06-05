@@ -22,20 +22,30 @@ class PaymentController extends Controller
         Log::info('Midtrans webhook received', $payload);
 
         $serverKey = config('midtrans.server_key') ?: config('services.midtrans.server_key');
+        $midtransOrderId = $payload['order_id'] ?? 'N/A';
+        
         if (!$this->midtransService->verifySignature($payload, $serverKey)) {
-            Log::warning('Midtrans invalid signature', ['order_id' => $payload['order_id'] ?? 'N/A']);
+            Log::warning('Midtrans invalid signature', ['order_id' => $midtransOrderId]);
             return response()->json(['message' => 'Invalid signature'], 403);
         }
 
-        $order = Order::where('order_number', $payload['order_id'])->first();
-        if (!$order) {
+        // Find the payment record by the Midtrans Order ID (which might have -T suffix)
+        $payment = Payment::where('midtrans_order_id', $midtransOrderId)->first();
+        
+        if (!$payment) {
+            // Fallback: try searching for original order_number if it's a direct match
+            $order = Order::where('order_number', $midtransOrderId)->first();
+            if ($order) {
+                $payment = Payment::where('order_id', $order->id)->first();
+            }
+        }
+
+        if (!$payment || !$payment->order) {
+            Log::error('Order or Payment not found for Midtrans ID: ' . $midtransOrderId);
             return response()->json(['message' => 'Order not found'], 404);
         }
 
-        $payment = Payment::where('order_id', $order->id)->first();
-        if (!$payment) {
-            return response()->json(['message' => 'Payment not found'], 404);
-        }
+        $order = $payment->order;
 
         $transactionStatus = $payload['transaction_status'];
         $fraudStatus       = $payload['fraud_status'] ?? 'accept';

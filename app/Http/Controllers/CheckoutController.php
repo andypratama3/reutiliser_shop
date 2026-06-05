@@ -238,12 +238,16 @@ class CheckoutController extends Controller
 
     private function createPayment(Order $order, string $paymentMethod, string $paymentChannel): Payment
     {
+        // Generate a unique ID for Midtrans to avoid "order_id sudah digunakan" error
+        // Format: ORD-240605-0001-T1717651200 (Original ID + T + Timestamp)
+        $midtransOrderId = $order->order_number . '-T' . time();
+
         // prefer new config/midtrans.php values with fallback to services.midtrans
         $serverKey = config('midtrans.server_key') ?: config('services.midtrans.server_key');
         if (!$serverKey) {
             return Payment::create([
                 'order_id'           => $order->id,
-                'midtrans_order_id'  => $order->order_number,
+                'midtrans_order_id'  => $midtransOrderId,
                 'payment_type'       => $this->mapPaymentType($paymentMethod),
                 'payment_channel'    => $paymentChannel,
                 'gross_amount'       => $order->total_amount,
@@ -252,7 +256,7 @@ class CheckoutController extends Controller
             ]);
         }
 
-        return $this->midtrans->createTransaction($order, $paymentMethod, $paymentChannel);
+        return $this->midtrans->createTransaction($order, $paymentMethod, $paymentChannel, $midtransOrderId);
     }
 
     private function mapPaymentType(string $method): string

@@ -21,11 +21,13 @@ class MidtransService
         }
     }
 
-    public function createTransaction(Order $order, string $paymentMethod, string $paymentChannel): Payment
+    public function createTransaction(Order $order, string $paymentMethod, string $paymentChannel, ?string $customOrderId = null): Payment
     {
+        $midtransOrderId = $customOrderId ?? $order->order_number;
+
         $params = [
             'transaction_details' => [
-                'order_id'     => $order->order_number,
+                'order_id'     => $midtransOrderId,
                 'gross_amount' => (int) $order->total_amount,
             ],
             'customer_details' => [
@@ -47,7 +49,7 @@ class MidtransService
 
         return Payment::create([
             'order_id'           => $order->id,
-            'midtrans_order_id'  => $order->order_number,
+            'midtrans_order_id'  => $midtransOrderId,
             'payment_type'       => $this->mapPaymentType($paymentMethod),
             'payment_channel'    => $paymentChannel,
             'gross_amount'       => $order->total_amount,
