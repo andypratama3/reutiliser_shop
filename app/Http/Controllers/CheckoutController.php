@@ -34,7 +34,10 @@ class CheckoutController extends Controller
         $addresses = auth()->user()->addresses;
         
         $shippingMethodsSetting = \App\Models\Setting::where('key', 'shipping_methods')->first();
-        $shippingMethods = $shippingMethodsSetting ? json_decode($shippingMethodsSetting->value, true) : [];
+        $shippingMethods = $shippingMethodsSetting ? json_decode($shippingMethodsSetting->value, true) : [
+            ['name' => 'Standard Delivery', 'cost' => 20000, 'estimated' => '3-5 Business Days'],
+            ['name' => 'Express Archive', 'cost' => 45000, 'estimated' => '1-2 Business Days'],
+        ];
 
         return view('checkout.index', compact('cart', 'addresses', 'shippingMethods'));
     }

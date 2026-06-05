@@ -23,6 +23,10 @@ class SettingSeeder extends Seeder
             ['key' => 'order_confirmation_template', 'value' => 'Hai {name}, pesanan #{order_id} telah diterima! Total: Rp {total}', 'group' => 'notifications', 'type' => 'textarea'],
             ['key' => 'payment_confirmation_template', 'value' => 'Hai {name}, pembayaran untuk pesanan #{order_id} telah dikonfirmasi!', 'group' => 'notifications', 'type' => 'textarea'],
             ['key' => 'shipping_update_template', 'value' => 'Hai {name}, pesanan #{order_id} telah dikirim! No. resi: {tracking_number}', 'group' => 'notifications', 'type' => 'textarea'],
+            ['key' => 'shipping_methods', 'value' => json_encode([
+                ['name' => 'Standard Delivery', 'cost' => 20000, 'estimated' => '3-5 Business Days'],
+                ['name' => 'Express Archive', 'cost' => 45000, 'estimated' => '1-2 Business Days'],
+            ]), 'group' => 'shipping', 'type' => 'json'],
         ];
 
         foreach ($settings as $setting) {
