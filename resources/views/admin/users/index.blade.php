@@ -7,6 +7,9 @@
         <h1 class="fs-3 mb-1">Pengguna</h1>
         <p class="mb-0 text-muted small">Kelola pengguna toko</p>
     </div>
+    <a href="{{ route('admin.users.export') }}" class="btn btn-export-excel">
+        <i data-lucide="file-spreadsheet"></i>Export Excel
+    </a>
 </div>
 
 <div class="card mb-4">
@@ -14,7 +17,7 @@
         <form method="GET" action="{{ route('admin.users.index') }}" class="row g-2">
             <div class="col-lg-5">
                 <div class="input-group">
-                    <span class="input-group-text bg-transparent"><i class="ti ti-search"></i></span>
+                    <span class="input-group-text bg-transparent"><i data-lucide="search" class="size-4"></i></span>
                     <input type="text" name="search" class="form-control" placeholder="Cari nama, email, atau no. telp..." value="{{ request('search') }}">
                 </div>
             </div>
@@ -34,7 +37,7 @@
     </div>
 </div>
 
-<div class="card">
+<div class="">
     <div class="table-responsive">
         <table class="table mb-0 text-nowrap table-hover">
             <thead class="table-light border-light">
@@ -56,7 +59,7 @@
                                 <div class="avatar avatar-sm rounded-circle bg-light d-flex align-items-center justify-content-center small fw-bold">
                                     {{ strtoupper(substr($user->name, 0, 1)) }}
                                 </div>
-                                <a href="{{ route('admin.users.show', $user) }}" class="text-decoration-none">{{ $user->name }}</a>
+                                <a href="{{ route('admin.users.show', $user) }}" class="text-decoration-none text-primary">{{ $user->name }}</a>
                             </div>
                         </td>
                         <td>{{ $user->email }}</td>
@@ -76,7 +79,7 @@
                         <td class="text-muted small">{{ $user->created_at->format('d M Y') }}</td>
                         <td>
                             <a href="{{ route('admin.users.show', $user) }}" class="btn btn-sm btn-light" title="Detail">
-                                <i class="ti ti-eye"></i>
+                                <i data-lucide="eye" class="size-4"></i>
                             </a>
                         </td>
                     </tr>
@@ -86,7 +89,7 @@
             </tbody>
         </table>
     </div>
-    <div class="card-footer bg-white">
+    <div class="mt-4">
         <div class="d-flex justify-content-between align-items-center">
             <small class="text-muted">Menampilkan {{ $users->firstItem() ?? 0 }} - {{ $users->lastItem() ?? 0 }} dari {{ $users->total() }} pengguna</small>
             {{ $users->links() }}

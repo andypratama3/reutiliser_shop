@@ -7,9 +7,14 @@
         <h1 class="fs-3 mb-1">Produk</h1>
         <p class="mb-0 text-muted small">Kelola produk toko Anda</p>
     </div>
-    <a href="{{ route('admin.products.create') }}" class="btn btn-primary">
-        <i class="ti ti-plus me-1"></i>Tambah Produk
-    </a>
+    <div class="d-flex gap-2">
+        <a href="{{ route('admin.products.export') }}" class="btn btn-export-excel">
+            <i data-lucide="file-spreadsheet"></i>Export Excel
+        </a>
+        <a href="{{ route('admin.products.create') }}" class="btn btn-primary">
+            <i data-lucide="plus" class="me-1"></i>Tambah Produk
+        </a>
+    </div>
 </div>
 
 <div class="card mb-4">
@@ -17,7 +22,7 @@
         <form method="GET" action="{{ route('admin.products.index') }}" class="row g-2">
             <div class="col-lg-5">
                 <div class="input-group">
-                    <span class="input-group-text bg-transparent"><i class="ti ti-search"></i></span>
+                    <span class="input-group-text bg-transparent"><i data-lucide="search" class="size-4"></i></span>
                     <input type="text" name="search" class="form-control" placeholder="Cari nama atau SKU..." value="{{ request('search') }}">
                 </div>
             </div>
@@ -44,7 +49,7 @@
     </div>
 </div>
 
-<div class="card">
+<div class="">
     <div class="table-responsive">
         <table class="table mb-0 text-nowrap table-hover">
             <thead class="table-light border-light">
@@ -64,13 +69,17 @@
                     <tr class="align-middle">
                         <td>
                             @if($product->primaryImage)
-                                <img src="{{ Storage::url($product->primaryImage->path) }}" alt="{{ $product->name }}" class="avatar avatar-md rounded">
+                                @php
+                                    $path = $product->primaryImage->path;
+                                    $url = str_starts_with($path, 'http') ? $path : Storage::url($path);
+                                @endphp
+                                <img src="{{ $url }}" alt="{{ $product->name }}" class="avatar avatar-md rounded">
                             @else
-                                <div class="avatar avatar-md rounded bg-light d-flex align-items-center justify-content-center">📦</div>
+                                <div class="avatar avatar-md rounded bg-light d-flex align-items-center justify-content-center small fw-bold">📦</div>
                             @endif
                         </td>
                         <td>
-                            <a href="{{ route('admin.products.edit', $product) }}" class="text-decoration-none fw-medium">{{ $product->name }}</a>
+                            <a href="{{ route('admin.products.edit', $product) }}" class="text-decoration-none fw-medium text-primary">{{ $product->name }}</a>
                             @if($product->is_featured)<span class="badge bg-warning text-dark ms-1">Featured</span>@endif
                             @if($product->is_limited_edition)<span class="badge bg-info ms-1">Limited</span>@endif
                         </td>
@@ -95,12 +104,12 @@
                         <td>
                             <div class="d-flex gap-1">
                                 <a href="{{ route('admin.products.edit', $product) }}" class="btn btn-sm btn-light" title="Edit">
-                                    <i class="ti ti-edit"></i>
+                                    <i data-lucide="edit-3" class="size-4"></i>
                                 </a>
-                                <form method="POST" action="{{ route('admin.products.destroy', $product) }}" onsubmit="return confirm('Hapus produk ini?')">
+                                <form method="POST" action="{{ route('admin.products.destroy', $product) }}" onsubmit="return confirmDelete(event, 'Hapus produk ini?')">
                                     @csrf @method('DELETE')
                                     <button class="btn btn-sm btn-light text-danger" title="Hapus">
-                                        <i class="ti ti-trash"></i>
+                                        <i data-lucide="trash-2" class="size-4"></i>
                                     </button>
                                 </form>
                             </div>
@@ -112,7 +121,7 @@
             </tbody>
         </table>
     </div>
-    <div class="card-footer bg-white">
+    <div class="mt-4">
         <div class="d-flex justify-content-between align-items-center">
             <small class="text-muted">Menampilkan {{ $products->firstItem() ?? 0 }} - {{ $products->lastItem() ?? 0 }} dari {{ $products->total() }} produk</small>
             {{ $products->links() }}

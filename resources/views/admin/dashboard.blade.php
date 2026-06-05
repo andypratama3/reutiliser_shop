@@ -14,7 +14,7 @@
         <div class="card p-4 bg-success bg-opacity-10 border border-success border-opacity-25 rounded-2">
             <div class="d-flex gap-3">
                 <div class="icon-shape icon-md bg-success text-white rounded-2">
-                    <i class="ti ti-currency-dollar fs-4"></i>
+                    <i data-lucide="banknote" class="fs-4"></i>
                 </div>
                 <div>
                     <h2 class="mb-3 fs-6">Pendapatan Hari Ini</h2>
@@ -27,7 +27,7 @@
         <div class="card p-4 bg-primary bg-opacity-10 border border-primary border-opacity-25 rounded-2">
             <div class="d-flex gap-3">
                 <div class="icon-shape icon-md bg-primary text-white rounded-2">
-                    <i class="ti ti-package fs-4"></i>
+                    <i data-lucide="package" class="fs-4"></i>
                 </div>
                 <div>
                     <h2 class="mb-3 fs-6">Order Hari Ini</h2>
@@ -40,7 +40,7 @@
         <div class="card p-4 bg-warning bg-opacity-10 border border-warning border-opacity-25 rounded-2">
             <div class="d-flex gap-3">
                 <div class="icon-shape icon-md bg-warning text-white rounded-2">
-                    <i class="ti ti-clock fs-4"></i>
+                    <i data-lucide="clock" class="fs-4"></i>
                 </div>
                 <div>
                     <h2 class="mb-3 fs-6">Menunggu Bayar</h2>
@@ -53,7 +53,7 @@
         <div class="card p-4 bg-info bg-opacity-10 border border-info border-opacity-25 rounded-2">
             <div class="d-flex gap-3">
                 <div class="icon-shape icon-md bg-info text-white rounded-2">
-                    <i class="ti ti-building-store fs-4"></i>
+                    <i data-lucide="store" class="fs-4"></i>
                 </div>
                 <div>
                     <h2 class="mb-3 fs-6">Total Produk</h2>

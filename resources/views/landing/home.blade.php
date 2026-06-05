@@ -26,14 +26,14 @@
 <section class="py-48 px-8 md:px-24 border-0">
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-24 items-center">
         <div class="lg:col-span-6 space-y-12 reveal-item">
-            <h2 class="font-headline-lg text-5xl md:text-7xl text-primary leading-tight">Our Radical<br/>Commitment.</h2>
+            <h2 class="font-headline-lg text-5xl md:text-7xl text-primary leading-tight">Our Vision</h2>
             <div class="space-y-8 border-l-2 border-primary pl-10 py-4">
                 <p class="font-body-lg text-secondary text-2xl leading-relaxed italic">
-                    "We believe the most sustainable garment is the one that already exists, reimagined into a singular artifact."
+                    “We believe the most sustainable garment is the one that already exists, reimagined into a singular artifact.”
                 </p>
             </div>
             <p class="font-body-md text-secondary max-w-lg leading-loose">
-                Réutiliser transforms archival industrial textiles into one-of-a-kind luxury items through a proprietary reconstruction process developed in our Paris atelier.
+                Réutiliser hadir sebagai solusi atas permasalahan limbah industri fashion dengan mengolah kembali material yang sudah ada menjadi produk fashion yang unik, bernilai tinggi, dan berkelanjutan. Melalui proses upcycling, kami tidak hanya mengurangi limbah tekstil, tetapi juga mendukung kreativitas serta karya para desainer lokal dalam menciptakan produk yang eksklusif dan ramah lingkungan.
             </p>
             <div class="pt-8">
                 <a href="{{ url('/about') }}" class="inline-block border border-primary px-12 py-4 rounded-full font-label-caps text-[11px] text-primary hover:bg-primary hover:text-white transition-all shadow-lg">READ THE MANIFESTO</a>
@@ -139,7 +139,7 @@
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-24">
         <div class="lg:col-span-4 space-y-10">
             <p class="font-label-caps text-primary tracking-[0.4em] text-[10px]">STORIES</p>
-            <h2 class="font-headline-lg text-5xl md:text-7xl text-primary leading-tight">The Circular Journal</h2>
+            <h2 class="font-headline-lg text-5xl md:text-7xl text-primary leading-tight">Jurnal Sirkular</h2>
             <p class="font-body-md text-secondary leading-loose max-w-sm">Deep dives into our manufacturing process, artisan profiles, and the philosophy of reuse.</p>
             <div class="pt-8">
                 <a href="{{ url('/journal') }}" class="font-label-caps text-primary border-b-2 border-primary pb-2 hover:tracking-widest transition-all">READ ALL STORIES</a>

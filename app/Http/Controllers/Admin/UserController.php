@@ -6,9 +6,15 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
+use App\Exports\UsersExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class UserController extends Controller
 {
+    public function export()
+    {
+        return Excel::download(new UsersExport, 'data-pengguna-' . now()->format('Y-m-d') . '.xlsx');
+    }
     public function __construct()
     {
         $this->middleware('permission:manage users');

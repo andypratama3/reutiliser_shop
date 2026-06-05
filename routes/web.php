@@ -92,12 +92,14 @@ Route::get('/legal/{type}', [LandingController::class, 'legal']);
  Route::middleware(['auth', 'role:superadmin|admin'])->prefix('admin')->name('admin.')->group(function () {
          Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
          Route::get('/products', [AdminProductController::class, 'index'])->name('products.index');
+         Route::get('/products/export', [AdminProductController::class, 'export'])->name('products.export');
          Route::get('/products/create', [AdminProductController::class, 'create'])->name('products.create');
          Route::post('/products', [AdminProductController::class, 'store'])->name('products.store');
           Route::get('/products/{product}/edit', [AdminProductController::class, 'edit'])->name('products.edit');
           Route::put('/products/{product}', [AdminProductController::class, 'update'])->name('products.update');
            Route::delete('/products/{product}', [AdminProductController::class, 'destroy'])->name('products.destroy');
            Route::delete('/products/images/{image}', [AdminProductController::class, 'destroyImage'])->name('products.images.destroy');
+           Route::patch('/products/images/{image}/set-primary', [AdminProductController::class, 'setPrimaryImage'])->name('products.images.set-primary');
 
           Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
          Route::get('/categories/create', [CategoryController::class, 'create'])->name('categories.create');
@@ -109,6 +111,7 @@ Route::get('/legal/{type}', [LandingController::class, 'legal']);
          Route::get('/orders/{order}', [AdminOrderController::class, 'show'])->name('orders.show');
          Route::put('/orders/{order}/status', [AdminOrderController::class, 'updateStatus'])->name('orders.status');
          Route::get('/users', [UserController::class, 'index'])->name('users.index');
+         Route::get('/users/export', [UserController::class, 'export'])->name('users.export');
          Route::get('/users/{user}', [UserController::class, 'show'])->name('users.show');
          Route::put('/users/{user}/role', [UserController::class, 'updateRole'])->name('users.role');
          Route::put('/users/{user}/toggle-status', [UserController::class, 'toggleStatus'])->name('users.toggle-status');

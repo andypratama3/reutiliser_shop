@@ -25,7 +25,7 @@
             <div class="w-full md:w-2/3 space-y-6">
                 <p class="font-label-caps text-[10px] text-primary tracking-widest opacity-60 uppercase">{{ $item['category'] }}</p>
                 <h3 class="font-headline-md text-4xl text-primary leading-tight">{{ $item['name'] }}</h3>
-                <p class="font-headline-md text-2xl text-primary">${{ number_format($item['price'], 2) }}</p>
+                <p class="font-headline-md text-2xl text-primary">Rp {{ number_format($item['price'], 0, ',', '.') }}</p>
                 <p class="font-body-md text-secondary italic">{{ $item['material'] }}</p>
                 
                 <div class="flex gap-4 pt-6">

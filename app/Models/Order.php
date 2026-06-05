@@ -14,6 +14,7 @@ class Order extends Model
         'order_number', 'user_id', 'promo_code_id',
         'recipient_name', 'recipient_phone', 'shipping_address',
         'shipping_city', 'shipping_province', 'shipping_postal_code',
+        'shipping_method',
         'subtotal', 'shipping_cost', 'discount_amount', 'total_amount',
         'status', 'payment_method', 'payment_channel', 'notes', 'paid_at',
     ];

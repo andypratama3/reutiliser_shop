@@ -41,9 +41,30 @@
                                 @break
                             @case('qris')
                                 QRIS Instant Payment
+                                @if($order->payment && isset($order->payment->midtrans_response['actions']))
+                                    @php
+                                        $qrisAction = collect($order->payment->midtrans_response['actions'])->where('name', 'generate-qr-code')->first();
+                                    @endphp
+                                    @if($qrisAction)
+                                        <div class="mt-4 p-4 bg-white rounded-2xl border border-primary/10 inline-block">
+                                            <img src="{{ $qrisAction['url'] }}" alt="QRIS" class="w-48 h-48 mx-auto">
+                                            <p class="text-[9px] text-center mt-2 opacity-50 uppercase tracking-widest">Scan with your banking app</p>
+                                        </div>
+                                    @endif
+                                @endif
                                 @break
                             @case('e_wallet')
-                                {{ $order->payment_channel }} Digital Wallet
+                                {{ strtoupper(str_replace('_', ' ', $order->payment_channel)) }}
+                                @if($order->payment && isset($order->payment->midtrans_response['actions']))
+                                    @php
+                                        $deeplink = collect($order->payment->midtrans_response['actions'])->where('name', 'deeplink-redirect')->first();
+                                    @endphp
+                                    @if($deeplink)
+                                        <div class="mt-4">
+                                            <a href="{{ $deeplink['url'] }}" class="inline-block bg-[#0081A0] text-white px-8 py-3 rounded-xl font-label-caps text-[10px] tracking-widest hover:opacity-90 transition-all uppercase">Open Payment App</a>
+                                        </div>
+                                    @endif
+                                @endif
                                 @break
                             @default
                                 {{ strtoupper($order->payment_method) }}

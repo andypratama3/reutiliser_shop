@@ -8,7 +8,7 @@
         <p class="mb-0 text-muted small">Perbarui informasi produk</p>
     </div>
     <a href="{{ route('admin.products.index') }}" class="btn btn-outline-secondary">
-        <i class="ti ti-arrow-left me-1"></i>Kembali
+        <i data-lucide="arrow-left" class="me-1"></i>Kembali
     </a>
 </div>
 
@@ -53,7 +53,7 @@
                             <label class="form-label">Harga <span class="text-danger">*</span></label>
                             <div class="input-group">
                                 <span class="input-group-text">Rp</span>
-                                <input type="number" name="price" class="form-control @error('price') is-invalid @enderror" value="{{ old('price', $product->price) }}" step="0.01" required>
+                                <input type="number" name="price" class="form-control @error('price') is-invalid @enderror" value="{{ old('price', $product->price) }}" step="1" required>
                             </div>
                             @error('price') <div class="invalid-feedback">{{ $message }}</div> @enderror
                         </div>
@@ -61,7 +61,7 @@
                             <label class="form-label">Harga Compare</label>
                             <div class="input-group">
                                 <span class="input-group-text">Rp</span>
-                                <input type="number" name="compare_price" class="form-control @error('compare_price') is-invalid @enderror" value="{{ old('compare_price', $product->compare_price) }}" step="0.01">
+                                <input type="number" name="compare_price" class="form-control @error('compare_price') is-invalid @enderror" value="{{ old('compare_price', $product->compare_price) }}" step="1">
                             </div>
                             @error('compare_price') <div class="invalid-feedback">{{ $message }}</div> @enderror
                         </div>
@@ -69,7 +69,7 @@
                             <label class="form-label">Harga Modal</label>
                             <div class="input-group">
                                 <span class="input-group-text">Rp</span>
-                                <input type="number" name="cost_price" class="form-control @error('cost_price') is-invalid @enderror" value="{{ old('cost_price', $product->cost_price) }}" step="0.01">
+                                <input type="number" name="cost_price" class="form-control @error('cost_price') is-invalid @enderror" value="{{ old('cost_price', $product->cost_price) }}" step="1">
                             </div>
                             @error('cost_price') <div class="invalid-feedback">{{ $message }}</div> @enderror
                         </div>
@@ -143,18 +143,31 @@
                     @if($product->images->count() > 0)
                         <div class="row g-2 mb-3" id="existingImages">
                             @foreach($product->images as $img)
+                                @php
+                                    $url = str_starts_with($img->path, 'http') ? $img->path : Storage::url($img->path);
+                                @endphp
                                 <div class="col-4" id="img-{{ $img->id }}">
                                     <div class="position-relative">
-                                        <img src="{{ Storage::url($img->path) }}" class="avatar avatar-xl rounded w-100" style="height:100px;object-fit:cover;">
+                                        <img src="{{ $url }}" class="avatar avatar-xl rounded w-100" style="height:100px;object-fit:cover;">
                                         @if($img->is_primary)
-                                            <small class="text-primary d-block text-center mt-1">Primary</small>
+                                            <div class="position-absolute top-0 start-0 m-1">
+                                                <span class="badge bg-primary">Primary</span>
+                                            </div>
                                         @else
-                                            <button type="button" class="btn btn-sm btn-danger position-absolute top-0 end-0 m-1 rounded-circle"
-                                                style="width:24px;height:24px;padding:0;font-size:12px;line-height:24px;"
-                                                onclick="deleteImage({{ $img->id }})"
-                                                title="Hapus gambar">
-                                                &times;
-                                            </button>
+                                            <div class="position-absolute top-0 end-0 m-1 d-flex gap-1">
+                                                <button type="button" class="btn btn-sm btn-primary rounded-circle"
+                                                    style="width:24px;height:24px;padding:0;font-size:12px;line-height:24px;"
+                                                    onclick="setPrimary({{ $img->id }})"
+                                                    title="Jadikan utama">
+                                                    <i data-lucide="star" style="width:12px;height:12px;"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-sm btn-danger rounded-circle"
+                                                    style="width:24px;height:24px;padding:0;font-size:12px;line-height:24px;"
+                                                    onclick="deleteImage({{ $img->id }})"
+                                                    title="Hapus gambar">
+                                                    &times;
+                                                </button>
+                                            </div>
                                         @endif
                                     </div>
                                 </div>
@@ -181,7 +194,7 @@
             </div>
 
             <button type="submit" class="btn btn-primary w-100 mt-4">
-                <i class="ti ti-device-floppy me-1"></i>Update Produk
+                <i data-lucide="save" class="me-1"></i>Update Produk
             </button>
         </div>
     </div>
@@ -214,12 +227,21 @@
             if (result.isConfirmed) {
                 var form = document.createElement('form');
                 form.method = 'POST';
-                form.action = '{{ route("admin.products.images.destroy", "") }}/' + imageId;
+                form.action = '{{ route("admin.products.images.destroy", ":id") }}'.replace(':id', imageId);
                 form.innerHTML = '@csrf @method("DELETE")';
                 document.body.appendChild(form);
                 form.submit();
             }
         });
+    }
+
+    function setPrimary(imageId) {
+        var form = document.createElement('form');
+        form.method = 'POST';
+        form.action = '{{ route("admin.products.images.set-primary", ":id") }}'.replace(':id', imageId);
+        form.innerHTML = '@csrf @method("PATCH")';
+        document.body.appendChild(form);
+        form.submit();
     }
 </script>
 @endpush

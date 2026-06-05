@@ -7,10 +7,16 @@ use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductImage;
 use App\Models\Tag;
+use App\Exports\ProductsExport;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
+    public function export()
+    {
+        return Excel::download(new ProductsExport, 'data-produk-' . now()->format('Y-m-d') . '.xlsx');
+    }
     public function __construct()
     {
         $this->middleware('permission:manage products');
@@ -159,5 +165,12 @@ class ProductController extends Controller
         \Illuminate\Support\Facades\Storage::disk('public')->delete($image->path);
         $image->delete();
         return back()->with('success', 'Gambar berhasil dihapus.');
+    }
+
+    public function setPrimaryImage(ProductImage $image)
+    {
+        ProductImage::where('product_id', $image->product_id)->update(['is_primary' => false]);
+        $image->update(['is_primary' => true]);
+        return back()->with('success', 'Gambar utama berhasil diperbarui.');
     }
 }

@@ -82,7 +82,7 @@ class CartTest extends TestCase
     {
         $response = $this->actingAs($this->user)->get(route('cart.index'));
         $response->assertStatus(200);
-        $response->assertSee('Keranjang belanja kamu masih kosong');
+        $response->assertSee('Your archive is currently empty.');
     }
 
     public function test_out_of_stock_product_cannot_be_added(): void

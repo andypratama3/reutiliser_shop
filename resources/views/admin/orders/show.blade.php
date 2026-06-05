@@ -8,7 +8,7 @@
         <p class="mb-0 text-muted small">{{ $order->created_at->format('d M Y H:i') }}</p>
     </div>
     <a href="{{ route('admin.orders.index') }}" class="btn btn-outline-secondary">
-        <i class="ti ti-arrow-left me-1"></i>Kembali
+        <i data-lucide="arrow-left" class="me-1"></i>Kembali
     </a>
 </div>
 
@@ -187,7 +187,7 @@
                     </div>
 
                     <button type="submit" class="btn btn-primary w-100">
-                        <i class="ti ti-refresh me-1"></i>Update Status
+                        <i data-lucide="refresh-cw" class="me-1"></i>Update Status
                     </button>
                 </form>
             </div>

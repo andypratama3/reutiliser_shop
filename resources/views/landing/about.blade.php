@@ -41,10 +41,10 @@
         </div>
     </section>
 
-    <!-- The Collective -->
+    <!-- Our Team -->
     <section class="py-32 md:py-48 reveal-item">
         <div class="flex justify-between items-end mb-32 border-b border-primary/10 pb-16">
-            <h2 class="font-display-lg text-6xl text-primary">The Collective</h2>
+            <h2 class="font-display-lg text-6xl text-primary">Our Team</h2>
             <p class="font-label-caps text-secondary tracking-widest hidden md:block">MEET THE ARTISANS</p>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-16 md:gap-24">

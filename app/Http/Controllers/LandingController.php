@@ -200,6 +200,13 @@ class LandingController extends Controller
             'diskon' => 'SALE',
         ];
 
+        $imagePath = $product->primaryImage?->path;
+        if ($imagePath) {
+            $imageUrl = str_starts_with($imagePath, 'http') ? $imagePath : \Illuminate\Support\Facades\Storage::url($imagePath);
+        } else {
+            $imageUrl = 'https://placehold.co/600x600/e2e8f0/64748b?text=No+Image';
+        }
+
         return [
             'id' => $product->id,
             'name' => $product->name,
@@ -207,7 +214,7 @@ class LandingController extends Controller
             'material' => $product->material ?? 'Mixed Materials',
             'price' => (int) $product->price,
             'compare_price' => $product->compare_price ? (int) $product->compare_price : null,
-            'image' => $product->primaryImage?->path ?? 'https://placehold.co/600x600/e2e8f0/64748b?text=No+Image',
+            'image' => $imageUrl,
             'tag' => $firstTag ? ($tagNames[$firstTag->slug] ?? strtoupper($firstTag->name)) : null,
             'category' => $product->category?->name ?? 'General',
             'category_slug' => $product->category?->slug ?? '',

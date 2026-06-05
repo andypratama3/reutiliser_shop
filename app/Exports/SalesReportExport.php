@@ -45,10 +45,16 @@ class SalesReportExport implements FromCollection, WithHeadings, WithStyles
             return [
                 $order->order_number,
                 $order->user?->name ?? '-',
+                $order->recipient_name,
+                $order->recipient_phone,
+                $order->shipping_address . ', ' . $order->shipping_city . ', ' . $order->shipping_province . ' ' . $order->shipping_postal_code,
                 $order->created_at->format('d/m/Y H:i'),
                 $order->status,
                 $order->payment_method ?? '-',
-                $order->total_amount,
+                number_format($order->subtotal, 0, ',', '.'),
+                number_format($order->discount_amount, 0, ',', '.'),
+                number_format($order->shipping_cost, 0, ',', '.'),
+                number_format($order->total_amount, 0, ',', '.'),
                 $order->items->sum('quantity'),
             ];
         });
@@ -58,10 +64,16 @@ class SalesReportExport implements FromCollection, WithHeadings, WithStyles
     {
         return [
             'Order Number',
-            'Customer',
+            'Customer Account',
+            'Recipient Name',
+            'Recipient Phone',
+            'Shipping Address',
             'Date',
             'Status',
             'Payment Method',
+            'Subtotal',
+            'Discount',
+            'Shipping Cost',
             'Total Amount',
             'Total Items',
         ];

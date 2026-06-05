@@ -1,12 +1,12 @@
 @extends('layouts.landing')
 
-@section('title', 'Circular Journal | RÉUTILISER')
+@section('title', 'Jurnal Sirkular | RÉUTILISER')
 
 @section('content')
 <main class="max-w-[1600px] mx-auto px-8 md:px-16 py-24">
     <div class="mb-32 reveal-item text-center">
         <p class="font-label-caps text-secondary mb-8 tracking-[0.6em] text-sm opacity-60">STORIES & PROCESS</p>
-        <h1 class="font-display-lg text-primary leading-tight">The Circular Journal</h1>
+        <h1 class="font-display-lg text-primary leading-tight">Jurnal Sirkular</h1>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-12 gap-24">

@@ -8,7 +8,7 @@
         <p class="mb-0 text-muted small">Informasi dan pengaturan pengguna</p>
     </div>
     <a href="{{ route('admin.users.index') }}" class="btn btn-outline-secondary">
-        <i class="ti ti-arrow-left me-1"></i>Kembali
+        <i data-lucide="arrow-left" class="me-1"></i>Kembali
     </a>
 </div>
 
@@ -55,15 +55,15 @@
         <div class="card mt-4">
             <div class="card-header">Akun</div>
             <div class="card-body p-4">
-                <form method="POST" action="{{ route('admin.users.toggle-status', $user) }}">
+                <form method="POST" action="{{ route('admin.users.toggle-status', $user) }}" onsubmit="return confirmDelete(event, '{{ $user->status === 'active' ? 'Nonaktifkan' : 'Aktifkan' }} pengguna ini?')">
                     @csrf @method('PUT')
                     @if($user->status === 'active')
-                        <button type="submit" class="btn btn-warning w-100" onclick="return confirm('Nonaktifkan pengguna ini?')">
-                            <i class="ti ti-player-pause me-1"></i>Nonaktifkan
+                        <button type="submit" class="btn btn-warning w-100">
+                            <i data-lucide="pause" class="me-1"></i>Nonaktifkan
                         </button>
                     @else
-                        <button type="submit" class="btn btn-success w-100" onclick="return confirm('Aktifkan pengguna ini?')">
-                            <i class="ti ti-player-play me-1"></i>Aktifkan
+                        <button type="submit" class="btn btn-success w-100">
+                            <i data-lucide="play" class="me-1"></i>Aktifkan
                         </button>
                     @endif
                 </form>

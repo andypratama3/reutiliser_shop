@@ -8,7 +8,7 @@
         <p class="mb-0 text-muted small">Buat produk baru untuk toko Anda</p>
     </div>
     <a href="{{ route('admin.products.index') }}" class="btn btn-outline-secondary">
-        <i class="ti ti-arrow-left me-1"></i>Kembali
+        <i data-lucide="arrow-left" class="me-1"></i>Kembali
     </a>
 </div>
 
@@ -53,7 +53,7 @@
                             <label class="form-label">Harga <span class="text-danger">*</span></label>
                             <div class="input-group">
                                 <span class="input-group-text">Rp</span>
-                                <input type="number" name="price" class="form-control @error('price') is-invalid @enderror" value="{{ old('price') }}" step="0.01" required>
+                                <input type="number" name="price" class="form-control @error('price') is-invalid @enderror" value="{{ old('price') }}" step="1" required>
                             </div>
                             @error('price') <div class="invalid-feedback">{{ $message }}</div> @enderror
                         </div>
@@ -61,7 +61,7 @@
                             <label class="form-label">Harga Compare</label>
                             <div class="input-group">
                                 <span class="input-group-text">Rp</span>
-                                <input type="number" name="compare_price" class="form-control @error('compare_price') is-invalid @enderror" value="{{ old('compare_price') }}" step="0.01">
+                                <input type="number" name="compare_price" class="form-control @error('compare_price') is-invalid @enderror" value="{{ old('compare_price') }}" step="1">
                             </div>
                             @error('compare_price') <div class="invalid-feedback">{{ $message }}</div> @enderror
                         </div>
@@ -69,7 +69,7 @@
                             <label class="form-label">Harga Modal</label>
                             <div class="input-group">
                                 <span class="input-group-text">Rp</span>
-                                <input type="number" name="cost_price" class="form-control @error('cost_price') is-invalid @enderror" value="{{ old('cost_price') }}" step="0.01">
+                                <input type="number" name="cost_price" class="form-control @error('cost_price') is-invalid @enderror" value="{{ old('cost_price') }}" step="1">
                             </div>
                             @error('cost_price') <div class="invalid-feedback">{{ $message }}</div> @enderror
                         </div>
@@ -158,7 +158,7 @@
             </div>
 
             <button type="submit" class="btn btn-primary w-100 mt-4">
-                <i class="ti ti-device-floppy me-1"></i>Simpan Produk
+                <i data-lucide="save" class="me-1"></i>Simpan Produk
             </button>
         </div>
     </div>

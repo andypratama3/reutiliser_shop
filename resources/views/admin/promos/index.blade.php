@@ -8,7 +8,7 @@
         <p class="mb-0 text-muted small">Kelola kode promo dan diskon</p>
     </div>
     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createPromoModal">
-        <i class="ti ti-plus me-1"></i>Tambah Promo
+        <i data-lucide="plus" class="me-1"></i>Tambah Promo
     </button>
 </div>
 
@@ -70,10 +70,10 @@
                             @endif
                         </td>
                         <td>
-                            <form method="POST" action="{{ route('admin.promos.destroy', $promo) }}" onsubmit="return confirm('Hapus promo ini?')">
+                            <form method="POST" action="{{ route('admin.promos.destroy', $promo) }}" onsubmit="return confirmDelete(event, 'Hapus promo ini?')">
                                 @csrf @method('DELETE')
                                 <button class="btn btn-sm btn-light text-danger" title="Hapus">
-                                    <i class="ti ti-trash"></i>
+                                    <i data-lucide="trash-2"></i>
                                 </button>
                             </form>
                         </td>

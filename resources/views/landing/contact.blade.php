@@ -10,25 +10,24 @@
             <header class="space-y-10">
                 <p class="font-label-caps text-secondary tracking-[0.5em] text-sm opacity-60">CONNECT</p>
                 <h1 class="font-display-lg text-primary leading-[0.9]">Personal Assistance<br/><span class="italic font-light"> & Inquiries</span></h1>
-                <p class="font-body-lg text-secondary max-w-xl text-2xl leading-relaxed italic">Our concierge team is available to help with size guidance, artisanal provenance, or private appointments.</p>
+                <p class="font-body-lg text-secondary max-w-xl text-2xl leading-relaxed italic">Tim kami siap membantu Anda dalam memilih produk yang tepat, memberikan informasi mengenai material dan proses upcycling, serta menjawab pertanyaan terkait koleksi eksklusif Réutiliser.</p>
             </header>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-20">
                 <div class="space-y-4">
                     <h4 class="font-label-caps text-[11px] text-primary tracking-widest opacity-40 uppercase">Email Us</h4>
-                    <a href="mailto:concierge@reutiliser.com" class="font-body-md text-2xl text-secondary hover:text-primary transition-colors underline underline-offset-8">concierge@reutiliser.com</a>
+                    <a href="mailto:hello@reutiliser.com" class="font-body-md text-2xl text-secondary hover:text-primary transition-colors underline underline-offset-8">hello@reutiliser.com</a>
                     <p class="text-sm text-secondary opacity-40">24-48h Response Time</p>
                 </div>
                 <div class="space-y-4">
                     <h4 class="font-label-caps text-[11px] text-primary tracking-widest opacity-40 uppercase">Call Us</h4>
-                    <p class="font-body-md text-2xl text-secondary">+33 (0) 1 23 45 67 89</p>
+                    <p class="font-body-md text-2xl text-secondary">+62 856-1802-2026</p>
                     <p class="text-sm text-secondary opacity-40">MON-FRI / 9AM-6PM CET</p>
                 </div>
             </div>
 
             <div class="bg-primary p-16 rounded-[3rem] reveal-item shadow-2xl">
                 <p class="font-display-lg text-4xl mb-8 italic text-white">"True luxury is found in the conversation between the piece and its new owner."</p>
-                <p class="font-label-caps text-[10px] tracking-[0.4em] opacity-80 uppercase text-white">— The Collective</p>
             </div>
         </div>
 

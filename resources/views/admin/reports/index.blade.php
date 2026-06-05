@@ -7,8 +7,8 @@
         <h1 class="fs-3 mb-1">Laporan Penjualan</h1>
         <p class="mb-0 text-muted small">Analisis penjualan toko Anda</p>
     </div>
-    <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exportModal">
-        <i class="ti ti-download me-1"></i>Export Excel
+    <button type="button" class="btn btn-export-excel" data-bs-toggle="modal" data-bs-target="#exportModal">
+        <i data-lucide="file-spreadsheet"></i>Export Excel
     </button>
 </div>
 
@@ -204,7 +204,7 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
                     <button type="submit" class="btn btn-primary">
-                        <i class="ti ti-download me-1"></i>Download Excel
+                        <i data-lucide="download" class="me-1"></i>Download Excel
                     </button>
                 </div>
             </div>

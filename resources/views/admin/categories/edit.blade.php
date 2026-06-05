@@ -8,7 +8,7 @@
         <p class="mb-0 text-muted small">Perbarui informasi kategori</p>
     </div>
     <a href="{{ route('admin.categories.index') }}" class="btn btn-outline-secondary">
-        <i class="ti ti-arrow-left me-1"></i>Kembali
+        <i data-lucide="arrow-left" class="me-1"></i>Kembali
     </a>
 </div>
 
@@ -76,7 +76,7 @@
                     </div>
 
                     <button type="submit" class="btn btn-primary">
-                        <i class="ti ti-device-floppy me-1"></i>Update
+                        <i data-lucide="save" class="me-1"></i>Update
                     </button>
                 </form>
             </div>

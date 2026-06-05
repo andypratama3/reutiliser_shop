@@ -8,7 +8,7 @@
         <p class="mb-0 text-muted small">Kelola kategori produk</p>
     </div>
     <a href="{{ route('admin.categories.create') }}" class="btn btn-primary">
-        <i class="ti ti-plus me-1"></i>Tambah Kategori
+        <i data-lucide="plus" class="me-1"></i>Tambah Kategori
     </a>
 </div>
 
@@ -42,12 +42,12 @@
                         <td>
                             <div class="d-flex gap-1">
                                 <a href="{{ route('admin.categories.edit', $cat) }}" class="btn btn-sm btn-light" title="Edit">
-                                    <i class="ti ti-edit"></i>
+                                    <i data-lucide="edit-3" class="size-4"></i>
                                 </a>
-                                <form method="POST" action="{{ route('admin.categories.destroy', $cat) }}" onsubmit="return confirm('Hapus kategori ini?')">
+                                <form method="POST" action="{{ route('admin.categories.destroy', $cat) }}" onsubmit="return confirmDelete(event, 'Hapus kategori ini?')">
                                     @csrf @method('DELETE')
                                     <button class="btn btn-sm btn-light text-danger" title="Hapus">
-                                        <i class="ti ti-trash"></i>
+                                        <i data-lucide="trash-2" class="size-4"></i>
                                     </button>
                                 </form>
                             </div>

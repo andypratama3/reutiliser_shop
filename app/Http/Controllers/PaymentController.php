@@ -7,26 +7,23 @@ use App\Models\Payment;
 use App\Services\WhatsAppService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\DB;
 
 class PaymentController extends Controller
 {
-    public function __construct(private readonly WhatsAppService $whatsApp) {}
+    public function __construct(
+        private readonly WhatsAppService $whatsApp,
+        private readonly \App\Services\MidtransService $midtransService
+    ) {}
 
     public function webhook(Request $request)
     {
         $payload = $request->all();
         Log::info('Midtrans webhook received', $payload);
 
-        $serverKey    = config('midtrans.server_key') ?: config('services.midtrans.server_key');
-        $signatureKey = hash('sha512',
-            $payload['order_id'] .
-            $payload['status_code'] .
-            $payload['gross_amount'] .
-            $serverKey
-        );
-
-        if ($signatureKey !== $payload['signature_key']) {
-            Log::warning('Midtrans invalid signature', ['order_id' => $payload['order_id']]);
+        $serverKey = config('midtrans.server_key') ?: config('services.midtrans.server_key');
+        if (!$this->midtransService->verifySignature($payload, $serverKey)) {
+            Log::warning('Midtrans invalid signature', ['order_id' => $payload['order_id'] ?? 'N/A']);
             return response()->json(['message' => 'Invalid signature'], 403);
         }
 
@@ -40,18 +37,41 @@ class PaymentController extends Controller
             return response()->json(['message' => 'Payment not found'], 404);
         }
 
+        $transactionStatus = $payload['transaction_status'];
+        $fraudStatus       = $payload['fraud_status'] ?? 'accept';
+
         $payment->update([
-            'transaction_id'   => $payload['transaction_id'] ?? null,
-            'status'           => $payload['transaction_status'],
-            'fraud_status'     => $payload['fraud_status'] ?? null,
-            'settlement_time'  => $payload['settlement_time'] ?? null,
+            'transaction_id'   => $payload['transaction_id'] ?? $payment->transaction_id,
+            'status'           => $transactionStatus,
+            'fraud_status'     => $fraudStatus,
+            'settlement_time'  => $payload['settlement_time'] ?? $payment->settlement_time,
             'midtrans_response'=> $payload,
         ]);
 
-        $isSettled = in_array($payload['transaction_status'], ['settlement', 'capture'])
-            && ($payload['fraud_status'] ?? 'accept') === 'accept';
+        if ($transactionStatus == 'capture') {
+            if ($fraudStatus == 'challenge') {
+                $order->update(['status' => 'pending']);
+            } else if ($fraudStatus == 'accept') {
+                $this->finalizePayment($order);
+            }
+        } else if ($transactionStatus == 'settlement') {
+            $this->finalizePayment($order);
+        } else if (in_array($transactionStatus, ['deny', 'expire', 'cancel'])) {
+            $this->cancelOrder($order);
+        } else if ($transactionStatus == 'pending') {
+            $order->update(['status' => 'awaiting_payment']);
+        }
 
-        if ($isSettled && !$order->isPaid()) {
+        return response()->json(['message' => 'OK'], 200);
+    }
+
+    private function finalizePayment(Order $order)
+    {
+        if ($order->isPaid()) {
+            return;
+        }
+
+        DB::transaction(function () use ($order) {
             $order->markAsPaid();
             $order->update(['status' => 'processing']);
             $order->load('items');
@@ -59,18 +79,44 @@ class PaymentController extends Controller
             foreach ($order->items as $item) {
                 $item->product?->increment('sold_count', $item->quantity);
             }
+        });
 
+        try {
             $this->whatsApp->sendOrderConfirmation($order);
-
-            Log::info('Order paid: ' . $order->order_number);
+        } catch (\Exception $e) {
+            Log::error('WhatsApp notification failed: ' . $e->getMessage());
         }
 
-        if (in_array($payload['transaction_status'], ['deny', 'cancel', 'expire', 'failure'])) {
+        Log::info('Order paid and finalized: ' . $order->order_number);
+    }
+
+    private function cancelOrder(Order $order)
+    {
+        if ($order->status === 'cancelled') {
+            return;
+        }
+
+        DB::transaction(function () use ($order) {
             $order->update(['status' => 'cancelled']);
+            $order->load('items');
+
+            foreach ($order->items as $item) {
+                if ($item->product) {
+                    $item->product->increment('stock', $item->quantity);
+                }
+                if ($item->variant) {
+                    $item->variant->increment('stock', $item->quantity);
+                }
+            }
+        });
+
+        try {
             $this->whatsApp->sendPaymentFailed($order);
+        } catch (\Exception $e) {
+            Log::error('WhatsApp notification failed: ' . $e->getMessage());
         }
 
-        return response()->json(['message' => 'OK'], 200);
+        Log::info('Order cancelled and stock restored: ' . $order->order_number);
     }
 
     public function status(Order $order)

@@ -55,7 +55,7 @@
                                 </span>
                                 <span class="font-label-caps text-[10px] text-secondary tracking-widest opacity-40">{{ $order->created_at->format('M d, Y') }}</span>
                             </div>
-                            <h2 class="font-headline-md text-3xl text-primary font-bold group-hover:italic transition-all">{{ $order->order_number }}</h2>
+                            <h2 class="font-headline-md text-3xl text-primary font-bold group-hover:italic transition-all tracking-tighter">{{ $order->order_number }}</h2>
                         </div>
 
                         <div class="flex items-center gap-12 text-right">
@@ -65,24 +65,31 @@
                             </div>
                             <div>
                                 <p class="font-label-caps text-[10px] text-secondary tracking-widest uppercase opacity-40 mb-1">Investment</p>
-                                <p class="font-headline-md text-2xl text-primary">Rp {{ number_format($order->total_amount, 0, ',', '.') }}</p>
+                                <p class="font-headline-md text-2xl text-primary font-bold">Rp {{ number_format($order->total_amount, 0, ',', '.') }}</p>
                             </div>
-                            <span class="material-symbols-outlined text-primary opacity-20 group-hover:opacity-100 group-hover:translate-x-2 transition-all">east</span>
+                            <div class="w-12 h-12 rounded-full border border-primary/10 flex items-center justify-center group-hover:bg-primary group-hover:border-primary transition-all">
+                                <span class="material-symbols-outlined text-primary opacity-40 group-hover:opacity-100 group-hover:text-white group-hover:translate-x-1 transition-all">east</span>
+                            </div>
                         </div>
                     </div>
 
                     @if($order->items->isNotEmpty())
-                        <div class="mt-8 pt-8 border-t border-primary/5 flex gap-4 overflow-hidden opacity-40 group-hover:opacity-100 transition-opacity">
-                            @foreach($order->items->take(5) as $item)
-                                <div class="w-12 h-16 rounded-lg bg-secondary-container overflow-hidden">
-                                    <img src="{{ $item->product_image ?? 'https://placehold.co/100x150' }}" class="w-full h-full object-cover" alt="{{ $item->product_name }}">
-                                </div>
-                            @endforeach
-                            @if($order->items->count() > 5)
-                                <div class="w-12 h-16 rounded-lg bg-surface-container-highest flex items-center justify-center font-label-caps text-[10px] text-primary">
-                                    +{{ $order->items->count() - 5 }}
-                                </div>
-                            @endif
+                        <div class="mt-12 pt-10 border-t border-primary/5 flex items-center justify-between">
+                            <div class="flex -space-x-4">
+                                @foreach($order->items->take(4) as $item)
+                                    <div class="w-16 h-20 rounded-xl bg-secondary-container overflow-hidden border-4 border-white shadow-lg transform group-hover:rotate-3 transition-transform duration-500">
+                                        <img src="{{ $item->product_image ?? 'https://placehold.co/100x150' }}" class="w-full h-full object-cover" alt="{{ $item->product_name }}">
+                                    </div>
+                                @endforeach
+                                @if($order->items->count() > 4)
+                                    <div class="w-16 h-20 rounded-xl bg-primary flex items-center justify-center font-label-caps text-[12px] text-white border-4 border-white shadow-lg">
+                                        +{{ $order->items->count() - 4 }}
+                                    </div>
+                                @endif
+                            </div>
+                            <div class="text-right">
+                                <span class="font-label-caps text-[10px] text-secondary tracking-[0.2em] uppercase opacity-40 group-hover:opacity-100 transition-opacity">View Details</span>
+                            </div>
                         </div>
                     @endif
                 </a>

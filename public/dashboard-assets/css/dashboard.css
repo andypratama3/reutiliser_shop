@@ -41,8 +41,11 @@
   color: #E66239;
   background-color: rgba(230, 98, 57, 0.095);
 }
-.sidebar .nav-link .ti {
+.sidebar .nav-link .ti,
+.sidebar .nav-link .lucide {
   font-size: 18px;
+  width: 18px;
+  height: 18px;
 }
 .sidebar .nav-text {
   transition: opacity 0.2s;
@@ -84,9 +87,11 @@
 }
 .content {
   margin-left: 240px;
+  padding-top: 90px;
 }
 .content.full {
   margin-left: 60px;
+  padding-top: 90px;
 }
 @media (max-width: 992px) {
   .sidebar {
@@ -235,7 +240,7 @@
 }
 .avatar-primary .avatar-initials {
   color: #fff;
-  background-color: #E66239;
+  background-color: #2a4a38;
 }
 .avatar-secondary .avatar-initials {
   color: #fff;
@@ -341,4 +346,124 @@
   min-height: 1em;
   background-color: var(--bs-border-color) !important;
   opacity: 0.25;
+}
+
+/* Modern Overrides */
+body {
+  background-color: #fcf9f8 !important;
+}
+.btn-primary {
+  background-color: #2a4a38 !important;
+  border-color: #2a4a38 !important;
+}
+.btn-primary:hover, .btn-primary:focus {
+  background-color: #1e3528 !important;
+  border-color: #1e3528 !important;
+}
+.text-primary {
+  color: #2a4a38 !important;
+}
+.btn-outline-primary {
+  color: #2a4a38 !important;
+  border-color: #2a4a38 !important;
+}
+.btn-outline-primary:hover {
+  background-color: #2a4a38 !important;
+  color: #fff !important;
+}
+.badge.bg-primary {
+  background-color: #2a4a38 !important;
+}
+.card {
+  border-radius: 12px;
+  border: 1px solid rgba(0,0,0,0.05);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+}
+.card-header {
+  background-color: #fff;
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+  font-weight: 600;
+}
+
+/* Font consistency */
+body {
+    font-family: 'Hanken Grotesk', sans-serif;
+}
+h1, h2, h3, h4, h5, h6, .logo-text {
+    font-family: 'Libre Caslon Text', serif;
+}
+.sidebar .nav-link {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-weight: 500;
+}
+
+/* Enhanced Table Styling */
+.table {
+    --bs-table-bg: transparent;
+    --bs-table-hover-bg: rgba(42, 74, 56, 0.03);
+    border-collapse: separate;
+    border-spacing: 0 8px;
+}
+.table thead th {
+    background-color: transparent !important;
+    border: none;
+    text-transform: uppercase;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    font-weight: 700;
+    color: #2a4a38;
+    padding: 12px 20px;
+    opacity: 0.6;
+}
+.table tbody tr {
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+    transition: all 0.2s ease;
+}
+.table tbody tr:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+}
+.table tbody td {
+    padding: 16px 20px;
+    border: none;
+    vertical-align: middle;
+}
+.table tbody tr td:first-child {
+    border-top-left-radius: 12px;
+    border-bottom-left-radius: 12px;
+}
+.table tbody tr td:last-child {
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
+}
+
+/* Prominent Export Button */
+.btn-export-excel {
+    background-color: #2a4a38 !important;
+    color: #ffffff !important;
+    border: none !important;
+    padding: 10px 20px !important;
+    border-radius: 50px !important;
+    font-weight: 600 !important;
+    font-size: 13px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    box-shadow: 0 4px 12px rgba(42, 74, 56, 0.2) !important;
+    transition: all 0.3s ease !important;
+}
+.btn-export-excel:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 6px 16px rgba(42, 74, 56, 0.3) !important;
+    background-color: #1e3528 !important;
+}
+
+/* Status Badges refinement */
+.badge {
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 11px;
+    letter-spacing: 0.02em;
 }

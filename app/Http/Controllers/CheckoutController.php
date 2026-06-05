@@ -32,7 +32,11 @@ class CheckoutController extends Controller
         }
 
         $addresses = auth()->user()->addresses;
-        return view('checkout.index', compact('cart', 'addresses'));
+        
+        $shippingMethodsSetting = \App\Models\Setting::where('key', 'shipping_methods')->first();
+        $shippingMethods = $shippingMethodsSetting ? json_decode($shippingMethodsSetting->value, true) : [];
+
+        return view('checkout.index', compact('cart', 'addresses', 'shippingMethods'));
     }
 
     public function applyPromo(Request $request)
@@ -69,6 +73,7 @@ class CheckoutController extends Controller
             'shipping_city'         => 'required|string|max:100',
             'shipping_province'     => 'required|string|max:100',
             'shipping_postal_code'  => 'required|string|max:10',
+            'shipping_method'       => 'required|string',
             'payment_method'        => 'required|in:va_bank,qris,e_wallet',
             'payment_channel'       => 'required|string',
         ]);
@@ -94,7 +99,14 @@ class CheckoutController extends Controller
                 }
             }
 
+            // Calculate shipping from dynamic methods but prioritize city-based zones
             $shippingCost = $this->calculateShipping($request->shipping_city);
+            
+            // Add premium for express methods
+            if (str_contains(strtolower($request->shipping_method), 'express')) {
+                $shippingCost += 10000;
+            }
+
             $totalAmount  = max(0, $subtotal - $discountAmount + $shippingCost);
 
             $order = Order::create([
@@ -114,6 +126,7 @@ class CheckoutController extends Controller
                 'status'                => 'awaiting_payment',
                 'payment_method'        => $request->payment_method,
                 'payment_channel'       => $request->payment_channel,
+                'shipping_method'       => $request->shipping_method,
             ]);
 
             // Lock product and variant rows to avoid overselling in concurrent checkouts
@@ -177,6 +190,15 @@ class CheckoutController extends Controller
             $cart->items()->delete();
 
             DB::commit();
+
+            if ($request->expectsJson()) {
+                return response()->json([
+                    'success' => true,
+                    'snap_token' => $payment->midtrans_response['token'] ?? null,
+                    'order_number' => $order->order_number,
+                    'redirect_url' => route('checkout.success', $order->order_number),
+                ]);
+            }
 
             return redirect()->route('checkout.success', $order->order_number);
 

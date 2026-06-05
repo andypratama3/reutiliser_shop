@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', 'RÉUTILISER | Conscious Luxury for a Circular Future')</title>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&family=Hanken+Grotesk:wght@300;400;600;800&display=swap" rel="stylesheet"/>
@@ -40,6 +41,8 @@
         }
     </script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="{{ asset('assets_landing/css/style.css') }}">
     <style>
         /* Modern Minimalist - Transition Utilities */
@@ -203,7 +206,7 @@
             <div>
                 <h4 class="font-label-caps text-primary font-bold text-[11px] tracking-[0.3em] mb-12 uppercase opacity-40">Newsletter</h4>
                 <div class="flex bg-white rounded-2xl p-2 shadow-sm border border-primary/5 focus-within:border-primary/20 transition-all">
-                    <input class="bg-transparent border-none w-full focus:ring-0 text-sm text-primary placeholder:text-secondary/40 px-6 font-body-md" placeholder="JOIN THE COLLECTIVE" type="email"/>
+                    <input class="bg-transparent border-none w-full focus:ring-0 text-sm text-primary placeholder:text-secondary/40 px-6 font-body-md" placeholder="JOIN OUR NEWSLETTER" type="email"/>
                     <button class="bg-primary text-white w-12 h-12 flex items-center justify-center rounded-xl hover:bg-primary-container transition-all"><span class="material-symbols-outlined text-sm">east</span></button>
                 </div>
             </div>
@@ -214,6 +217,49 @@
     </footer>
 
     <script src="{{ asset('assets_landing/js/app.js') }}"></script>
+    <script>
+        function confirmDelete(event, message = 'Are you sure?') {
+            event.preventDefault();
+            const form = event.target.closest('form');
+            Swal.fire({
+                title: 'Confirmation',
+                text: message,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#2a4a38',
+                cancelButtonColor: '#605e59',
+                confirmButtonText: 'Yes, proceed',
+                cancelButtonText: 'Cancel'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit();
+                }
+            });
+            return false;
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            @if(session('success'))
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success',
+                    text: "{{ session('success') }}",
+                    confirmButtonColor: '#2a4a38',
+                    timer: 3000,
+                    timerProgressBar: true
+                });
+            @endif
+
+            @if(session('error'))
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: "{{ session('error') }}",
+                    confirmButtonColor: '#2a4a38'
+                });
+            @endif
+        });
+    </script>
     @stack('js')
 </body>
 </html>

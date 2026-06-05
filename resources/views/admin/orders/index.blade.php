@@ -7,6 +7,9 @@
         <h1 class="fs-3 mb-1">Pesanan</h1>
         <p class="mb-0 text-muted small">Kelola pesanan pelanggan</p>
     </div>
+    <button type="button" class="btn btn-export-excel" data-bs-toggle="modal" data-bs-target="#exportModal">
+        <i data-lucide="file-spreadsheet"></i>Export Excel
+    </button>
 </div>
 
 <div class="row g-3 mb-4">
@@ -53,7 +56,7 @@
         <form method="GET" action="{{ route('admin.orders.index') }}" class="row g-2">
             <div class="col-lg-3">
                 <div class="input-group">
-                    <span class="input-group-text bg-transparent"><i class="ti ti-search"></i></span>
+                    <span class="input-group-text bg-transparent"><i data-lucide="search"></i></span>
                     <input type="text" name="search" class="form-control" placeholder="Cari order number..." value="{{ request('search') }}">
                 </div>
             </div>
@@ -85,7 +88,7 @@
     </div>
 </div>
 
-<div class="card">
+<div class="">
     <div class="table-responsive">
         <table class="table mb-0 text-nowrap table-hover">
             <thead class="table-light border-light">
@@ -127,7 +130,7 @@
                         <td class="text-muted small">{{ $order->created_at->format('d M Y H:i') }}</td>
                         <td>
                             <a href="{{ route('admin.orders.show', $order) }}" class="btn btn-sm btn-light" title="Detail">
-                                <i class="ti ti-eye"></i>
+                                <i data-lucide="eye"></i>
                             </a>
                         </td>
                     </tr>
@@ -137,7 +140,7 @@
             </tbody>
         </table>
     </div>
-    <div class="card-footer bg-white">
+    <div class="mt-4">
         <div class="d-flex justify-content-between align-items-center">
             <small class="text-muted">Menampilkan {{ $orders->firstItem() ?? 0 }} - {{ $orders->lastItem() ?? 0 }} dari {{ $orders->total() }} pesanan</small>
             {{ $orders->links() }}
@@ -145,3 +148,54 @@
     </div>
 </div>
 @endsection
+
+<div class="modal fade" id="exportModal" tabindex="-1">
+    <div class="modal-dialog">
+        <form method="GET" action="{{ route('admin.reports.export') }}">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Export Pesanan</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Dari Tanggal</label>
+                            <input type="date" name="date_from" class="form-control" value="{{ request('date_from') }}">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Sampai Tanggal</label>
+                            <input type="date" name="date_to" class="form-control" value="{{ request('date_to') }}">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Metode Pembayaran</label>
+                            <select name="payment_method" class="form-control">
+                                <option value="">Semua</option>
+                                <option value="midtrans" {{ request('payment_method') == 'midtrans' ? 'selected' : '' }}>Midtrans</option>
+                                <option value="bank_transfer" {{ request('payment_method') == 'bank_transfer' ? 'selected' : '' }}>Bank Transfer</option>
+                                <option value="cod" {{ request('payment_method') == 'cod' ? 'selected' : '' }}>COD</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Status Pesanan</label>
+                            <select name="status" class="form-control">
+                                <option value="">Semua</option>
+                                <option value="paid" {{ request('status') == 'paid' ? 'selected' : '' }}>Paid</option>
+                                <option value="processing" {{ request('status') == 'processing' ? 'selected' : '' }}>Processing</option>
+                                <option value="shipped" {{ request('status') == 'shipped' ? 'selected' : '' }}>Shipped</option>
+                                <option value="delivered" {{ request('status') == 'delivered' ? 'selected' : '' }}>Delivered</option>
+                                <option value="completed" {{ request('status') == 'completed' ? 'selected' : '' }}>Completed</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-primary">
+                        <i data-lucide="download" class="me-1"></i>Download Excel
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

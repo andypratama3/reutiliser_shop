@@ -37,7 +37,7 @@
                     <p class="font-body-md text-body-md text-on-surface-variant">{{ $address->district ? $address->district . ', ' : '' }}{{ $address->city }}, {{ $address->province }} {{ $address->postal_code }}</p>
                     <div class="flex gap-3 mt-4 pt-4 border-t border-outline-variant">
                         <a href="{{ route('account.alamat.edit', $address) }}" class="font-label-caps text-label-caps text-primary hover:underline">Edit</a>
-                        <form method="POST" action="{{ route('account.alamat.destroy', $address) }}" onsubmit="return confirm('Hapus alamat ini?')">
+                        <form method="POST" action="{{ route('account.alamat.destroy', $address) }}" onsubmit="return confirmDelete(event, 'Hapus alamat ini?')">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="font-label-caps text-label-caps text-error hover:underline">Hapus</button>

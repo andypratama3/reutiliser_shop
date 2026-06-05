@@ -10,7 +10,7 @@
         <h1 class="font-headline-lg text-headline-lg md:text-display-lg text-primary leading-tight mb-8">{{ $post['title'] }}</h1>
         <div class="flex items-center justify-center gap-4">
             <div class="w-12 h-px bg-primary"></div>
-            <p class="font-label-caps text-[10px] text-primary uppercase">Words by The Collective</p>
+            <p class="font-label-caps text-[10px] text-primary uppercase">Words by Réutiliser Team</p>
             <div class="w-12 h-px bg-primary"></div>
         </div>
     </header>

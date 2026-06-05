@@ -21,7 +21,10 @@
                 <div class="row g-3">
                     @foreach($groupSettings as $setting)
                         <div class="col-md-6">
-                            <label class="form-label">{{ ucfirst(str_replace('_', ' ', $setting->key)) }}</label>
+                            <label class="form-label fw-bold">{{ ucfirst(str_replace('_', ' ', $setting->key)) }}</label>
+                            @if($setting->key === 'shipping_methods')
+                                <p class="small text-muted mb-2">Format: JSON Array. Contoh: [{"name":"Regular","cost":15000,"estimated":"2-3 days"}]</p>
+                            @endif
                             @if($setting->type === 'boolean')
                                 <div class="form-check form-switch">
                                     <input type="hidden" name="{{ $setting->key }}" value="0">
@@ -41,7 +44,7 @@
 
     <div class="d-flex justify-content-end mb-4">
         <button type="submit" class="btn btn-primary px-5">
-            <i class="ti ti-device-floppy me-1"></i>Simpan Pengaturan
+            <i data-lucide="save" class="me-1"></i>Simpan Pengaturan
         </button>
     </div>
 </form>

@@ -137,21 +137,38 @@
             </div>
 
             <!-- Payment Info -->
-            <div class="bg-surface-container-low p-8 rounded-2xl border border-primary/5">
-                <h3 class="font-label-caps text-[10px] text-secondary tracking-widest uppercase opacity-40 mb-6">Payment Status</h3>
-                <div class="font-body-md text-primary space-y-4">
-                    <div class="flex justify-between">
-                        <span class="opacity-60 text-sm">Method</span>
-                        <span class="font-bold">{{ strtoupper($order->payment_method) }}</span>
+            <div class="bg-surface-container-low p-8 rounded-3xl border border-primary/5">
+                <div class="flex items-center gap-3 mb-8">
+                    <span class="material-symbols-outlined text-primary text-xl">payments</span>
+                    <h3 class="font-label-caps text-[11px] text-primary tracking-widest uppercase font-bold">Payment Details</h3>
+                </div>
+                
+                <div class="font-body-md text-primary space-y-5">
+                    <div class="flex justify-between items-center">
+                        <span class="opacity-40 text-[10px] uppercase tracking-widest">Method</span>
+                        <span class="font-bold text-sm">{{ strtoupper(str_replace('_', ' ', $order->payment_method)) }}</span>
                     </div>
-                    <div class="flex justify-between">
-                        <span class="opacity-60 text-sm">Channel</span>
-                        <span class="font-bold">{{ $order->payment_channel }}</span>
+                    <div class="flex justify-between items-center">
+                        <span class="opacity-40 text-[10px] uppercase tracking-widest">Channel</span>
+                        <span class="font-bold text-sm">{{ $order->payment_channel }}</span>
                     </div>
+                    
                     @if($order->payment && $order->payment->va_number)
-                        <div class="pt-4 border-t border-primary/5">
-                            <span class="opacity-60 text-xs uppercase tracking-widest block mb-1">VA Number</span>
-                            <span class="font-bold text-2xl tracking-widest">{{ $order->payment->va_number }}</span>
+                        <div class="pt-6 border-t border-primary/10">
+                            <span class="opacity-40 text-[9px] uppercase tracking-[0.2em] block mb-2">Virtual Account Number</span>
+                            <div class="flex items-center justify-between bg-white p-4 rounded-xl border border-primary/5">
+                                <span class="font-bold text-xl tracking-[0.15em]">{{ $order->payment->va_number }}</span>
+                                <button onclick="navigator.clipboard.writeText('{{ $order->payment->va_number }}')" class="material-symbols-outlined text-primary opacity-40 hover:opacity-100 transition-opacity text-lg">content_copy</button>
+                            </div>
+                        </div>
+                    @endif
+
+                    @if($order->status === 'awaiting_payment')
+                        <div class="mt-6 p-4 rounded-xl bg-amber-50 border border-amber-100">
+                            <p class="text-[10px] text-amber-800 leading-relaxed font-medium">
+                                <span class="font-bold uppercase tracking-tight">Pending Approval</span><br>
+                                Please complete your payment using the details above. Your archival selection is reserved for 24 hours.
+                            </p>
                         </div>
                     @endif
                 </div>

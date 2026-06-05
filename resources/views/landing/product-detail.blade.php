@@ -13,8 +13,8 @@
             @if($productModel->images->count() > 1)
             <div class="grid grid-cols-2 gap-8">
                 @foreach($productModel->images as $img)
-                <div class="aspect-square bg-surface-container-low rounded-[1.5rem] overflow-hidden border border-primary/20 p-2 cursor-pointer" @click="$refs.mainImage.src = '{{ $img->path }}'">
-                    <img src="{{ $img->path }}" class="w-full h-full object-cover rounded-[1rem] hover:grayscale-0 transition-all duration-500 {{ $img->is_primary ? '' : 'grayscale opacity-60 hover:opacity-100' }}" alt="Detail">
+                <div class="aspect-square bg-surface-container-low rounded-[1.5rem] overflow-hidden border border-primary/20 p-2 cursor-pointer" @click="$refs.mainImage.src = '{{ $img->url }}'">
+                    <img src="{{ $img->url }}" class="w-full h-full object-cover rounded-[1rem] hover:grayscale-0 transition-all duration-500 {{ $img->is_primary ? '' : 'grayscale opacity-60 hover:opacity-100' }}" alt="Detail">
                 </div>
                 @endforeach
             </div>
