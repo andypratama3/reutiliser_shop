@@ -41,6 +41,12 @@ class PaymentController extends Controller
         }
 
         if (!$payment || !$payment->order) {
+            // Check if it's a test notification from Midtrans Dashboard
+            if (str_contains($midtransOrderId, 'payment_notif_test')) {
+                Log::info('Midtrans test notification received and ignored: ' . $midtransOrderId);
+                return response()->json(['message' => 'OK (Test)'], 200);
+            }
+
             Log::error('Order or Payment not found for Midtrans ID: ' . $midtransOrderId);
             return response()->json(['message' => 'Order not found'], 404);
         }

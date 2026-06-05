@@ -61,13 +61,18 @@ class MidtransService
 
     public function verifySignature(array $payload, string $serverKey): bool
     {
-        $expected = hash('sha512',
-            $payload['order_id'] .
-            $payload['status_code'] .
-            $payload['gross_amount'] .
-            $serverKey
-        );
-        return hash_equals($expected, $payload['signature_key'] ?? '');
+        $orderId    = $payload['order_id'] ?? '';
+        $statusCode = $payload['status_code'] ?? '';
+        $grossAmount = $payload['gross_amount'] ?? '';
+        $signature  = $payload['signature_key'] ?? '';
+
+        if (!$orderId || !$statusCode || !$grossAmount || !$signature) {
+            return false;
+        }
+
+        $expected = hash('sha512', $orderId . $statusCode . $grossAmount . $serverKey);
+        
+        return hash_equals($expected, $signature);
     }
 
     private function resolvePaymentChannels(string $method, string $channel): array
