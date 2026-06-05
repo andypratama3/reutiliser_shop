@@ -464,6 +464,11 @@ function checkoutApp() {
                     }),
                 });
 
+                const contentType = res.headers.get('content-type');
+                if (!contentType || !contentType.includes('application/json')) {
+                    throw new Error('Server returned non-JSON response');
+                }
+
                 const data = await res.json();
 
                 if (res.ok && data.snap_token) {
