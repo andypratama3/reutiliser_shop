@@ -209,8 +209,15 @@ class CheckoutController extends Controller
             DB::rollBack();
             logger()->error('Checkout failed: ' . $e->getMessage());
 
-            // If the exception indicates stock issues, return a validation-like error to the user
             $msg = $e->getMessage();
+            
+            if ($request->expectsJson()) {
+                return response()->json([
+                    'success' => false,
+                    'error' => str_contains(strtolower($msg), 'stok') ? $msg : 'Terjadi kesalahan. Silakan coba lagi.'
+                ], 422);
+            }
+
             if (str_contains(strtolower($msg), 'stok')) {
                 return back()->withErrors(['stock' => $msg])->withInput();
             }

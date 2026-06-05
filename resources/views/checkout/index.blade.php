@@ -142,7 +142,7 @@
                                         <p class="font-label-caps text-[10px] text-secondary tracking-widest opacity-60 uppercase">{{ $method['estimated'] }}</p>
                                     </div>
                                 </div>
-                                <span class="font-body-md text-primary font-bold">Rp <span x-text="formatCurrency(getMethodCost(@json($method)))"></span></span>
+                                <span class="font-body-md text-primary font-bold">Rp <span x-text='formatCurrency(getMethodCost(@json($method)))'></span></span>
                             </label>
                         @endforeach
                     </div>
