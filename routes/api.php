@@ -8,6 +8,7 @@ Route::post('/webhook/midtrans', [PaymentController::class, 'webhook'])
     ->name('webhook.midtrans');
 
 Route::get('/webhook/midtrans', function () {
+    \Illuminate\Support\Facades\Log::info('Webhook GET request received from: ' . request()->ip());
     return response()->json([
         'message' => 'The GET method is not supported for route api/webhook/midtrans. Supported methods: POST.'
     ], 200);
