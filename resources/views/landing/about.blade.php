@@ -47,11 +47,11 @@
             <h2 class="font-display-lg text-6xl text-primary">Our Team</h2>
             <p class="font-label-caps text-secondary tracking-widest hidden md:block">MEET THE ARTISANS</p>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-16 md:gap-24">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16 md:gap-24">
             @foreach($teamMembers as $member)
             <div class="reveal-item group">
                 <div class="aspect-[3/4] rounded-[2.5rem] overflow-hidden mb-10 shadow-2xl">
-                    <img src="{{ $member['image'] }}" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000" alt="{{ $member['name'] }}">
+                    <img src="{{ asset($member['image']) }}" class="w-full h-full object-cover" alt="{{ $member['name'] }}">
                 </div>
                 <p class="font-label-caps text-primary tracking-widest text-[11px] mb-4">{{ $member['role'] }}</p>
                 <h3 class="font-headline-md text-4xl text-primary">{{ $member['name'] }}</h3>

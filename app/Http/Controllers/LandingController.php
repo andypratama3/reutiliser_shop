@@ -25,9 +25,10 @@ class LandingController extends Controller
     public function about()
     {
         $teamMembers = [
-            ['name' => 'Julian Vause', 'role' => 'CREATIVE DIRECTOR', 'image' => 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=800&auto=format&fit=crop'],
-            ['name' => 'Serafine Koh', 'role' => 'HEAD DESIGNER', 'image' => 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=800&auto=format&fit=crop'],
-            ['name' => 'Marcus Chen', 'role' => 'SUSTAINABILITY LEAD', 'image' => 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=800&auto=format&fit=crop']
+            ['name' => 'Sofyan Hadi', 'role' => 'CHIEF EXECUTIVE OFFICER (CEO)', 'image' => 'assets_landing/team/Sofyan H.png'],
+            ['name' => 'Chelsea L', 'role' => 'HEAD OF DESIGN', 'image' => 'assets_landing/team/Chelsea laurent T. b..png'],
+            ['name' => 'Ismi Maulidia', 'role' => 'CHIEF OPERATING OFFICER (COO)', 'image' => 'assets_landing/team/ISMI MAULIDIA.png'],
+            ['name' => 'Hanny Erviana', 'role' => 'CHIEF MARKETING OFFICER (CMO)', 'image' => 'assets_landing/team/Hanny erviana zahra.png']
         ];
         return view('landing.about', compact('teamMembers'));
     }
