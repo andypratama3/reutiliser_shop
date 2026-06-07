@@ -13,12 +13,16 @@ class ProductSeeder extends Seeder
 {
     public function run(): void
     {
-        Tag::insert([
+        // Tags - use firstOrCreate to avoid duplicates
+        $tagData = [
             ['name' => 'baru', 'slug' => 'baru'],
             ['name' => 'best seller', 'slug' => 'best-seller'],
             ['name' => 'limited edition', 'slug' => 'limited-edition'],
             ['name' => 'diskon', 'slug' => 'diskon'],
-        ]);
+        ];
+        foreach ($tagData as $t) {
+            Tag::firstOrCreate(['slug' => $t['slug']], $t);
+        }
 
         $jackets = Category::where('name', 'Jackets')->first()->id;
         $trousers = Category::where('name', 'Trousers')->first()->id;
@@ -100,46 +104,56 @@ class ProductSeeder extends Seeder
             $tag = $data['tag'] ?? null;
             unset($data['tag']);
 
-            $product = Product::create($data);
+            $product = Product::firstOrCreate(
+                ['sku' => $data['sku']],
+                $data
+            );
 
-            if ($i < 4) {
-                $product->tags()->attach($tagIds[0]);
-            }
-            if (in_array($i, [0, 1, 5])) {
-                $product->tags()->attach($tagIds[1]);
-            }
-            if (in_array($i, [7])) {
-                $product->tags()->attach($tagIds[2]);
-            }
-            if ($data['compare_price'] ?? false) {
-                $product->tags()->attach($tagIds[3]);
-            }
+            // Only attach tags and create images/variants if product was just created
+            if ($product->wasRecentlyCreated) {
+                if ($i < 4) {
+                    $product->tags()->attach($tagIds[0]);
+                }
+                if (in_array($i, [0, 1, 5])) {
+                    $product->tags()->attach($tagIds[1]);
+                }
+                if (in_array($i, [7])) {
+                    $product->tags()->attach($tagIds[2]);
+                }
+                if ($data['compare_price'] ?? false) {
+                    $product->tags()->attach($tagIds[3]);
+                }
 
-            ProductImage::create([
-                'product_id' => $product->id,
-                'path'       => "https://placehold.co/600x600/e2e8f0/64748b?text=" . urlencode($data['name']),
-                'is_primary' => true,
-                'sort_order' => 1,
-            ]);
-
-            if (in_array($i, [0, 1, 2])) {
-                $skuBase = $data['sku'];
-                ProductVariant::create([
+                ProductImage::create([
                     'product_id' => $product->id,
-                    'sku'        => $skuBase . '-BLK',
-                    'color'      => 'Hitam',
-                    'color_hex'  => '#000000',
-                    'price'      => $data['price'],
-                    'stock'      => (int)($data['stock'] / 2),
+                    'path'       => "https://placehold.co/600x600/e2e8f0/64748b?text=" . urlencode($data['name']),
+                    'is_primary' => true,
+                    'sort_order' => 1,
                 ]);
-                ProductVariant::create([
-                    'product_id' => $product->id,
-                    'sku'        => $skuBase . '-WHT',
-                    'color'      => 'Putih',
-                    'color_hex'  => '#FFFFFF',
-                    'price'      => $data['price'],
-                    'stock'      => (int)($data['stock'] / 2),
-                ]);
+
+                if (in_array($i, [0, 1, 2])) {
+                    $skuBase = $data['sku'];
+                    ProductVariant::firstOrCreate(
+                        ['sku' => $skuBase . '-BLK'],
+                        [
+                            'product_id' => $product->id,
+                            'color'      => 'Hitam',
+                            'color_hex'  => '#000000',
+                            'price'      => $data['price'],
+                            'stock'      => (int)($data['stock'] / 2),
+                        ]
+                    );
+                    ProductVariant::firstOrCreate(
+                        ['sku' => $skuBase . '-WHT'],
+                        [
+                            'product_id' => $product->id,
+                            'color'      => 'Putih',
+                            'color_hex'  => '#FFFFFF',
+                            'price'      => $data['price'],
+                            'stock'      => (int)($data['stock'] / 2),
+                        ]
+                    );
+                }
             }
         }
     }

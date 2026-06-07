@@ -9,6 +9,27 @@
     --font-sans: 'Hanken Grotesk', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
     --font-headline: 'Libre Caslon Text', serif;
+    --font-headline-md: 'Libre Caslon Text', serif;
+    --font-body-md: 'Hanken Grotesk', sans-serif;
+    --font-label-caps: 'Hanken Grotesk', sans-serif;
+
+    --text-headline-md: 1.75rem;
+    --text-body-md: 1rem;
+    --text-label-caps: 0.75rem;
+
+    --leading-headline-md: 1.2;
+    --leading-body-md: 1.7;
+    --leading-label-caps: 1.2;
+
+    --letter-spacing-label-caps: 0.1em;
+
+    --font-weight-headline-md: 700;
+    --font-weight-body-md: 400;
+    --font-weight-label-caps: 700;
+
+    --max-width-container-max: 1280px;
+    --padding-margin-mobile: 1rem;
+    --padding-margin-desktop: 4rem;
 
     --color-primary: #2a4a38;
     --color-on-primary: #ffffff;
