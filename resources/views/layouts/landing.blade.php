@@ -108,6 +108,41 @@
                         <span class="absolute top-0 right-0 bg-primary text-white text-[9px] w-5 h-5 flex items-center justify-center rounded-full shadow-lg border border-white">{{ $landingCart->total_items }}</span>
                     @endif
                 </button>
+                @auth
+                <div class="relative group hidden lg:block">
+                    <button class="p-2 text-primary hover:scale-110 transition-transform">
+                        <span class="material-symbols-outlined text-2xl">person</span>
+                    </button>
+                    <div class="absolute right-0 top-full mt-2 w-56 bg-white rounded-2xl shadow-2xl border border-primary/10 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 py-4 z-50">
+                        <p class="px-6 py-2 font-label-caps text-[9px] text-secondary tracking-widest uppercase opacity-40">{{ auth()->user()->name }}</p>
+                        <a href="{{ route('account.orders.index') }}" class="flex items-center gap-3 px-6 py-3 text-sm text-primary hover:bg-primary/5 transition-all font-bold tracking-wide">
+                            <span class="material-symbols-outlined text-lg">receipt_long</span>
+                            Pesanan Saya
+                        </a>
+                        <a href="{{ route('account.profile.edit') }}" class="flex items-center gap-3 px-6 py-3 text-sm text-primary hover:bg-primary/5 transition-all font-bold tracking-wide">
+                            <span class="material-symbols-outlined text-lg">settings</span>
+                            Profil
+                        </a>
+                        <a href="{{ route('account.alamat.index') }}" class="flex items-center gap-3 px-6 py-3 text-sm text-primary hover:bg-primary/5 transition-all font-bold tracking-wide">
+                            <span class="material-symbols-outlined text-lg">location_on</span>
+                            Alamat
+                        </a>
+                        <div class="border-t border-primary/5 mt-2 pt-2">
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <button type="submit" class="flex items-center gap-3 px-6 py-3 text-sm text-red-600 hover:bg-red-50 transition-all font-bold tracking-wide w-full text-left">
+                                    <span class="material-symbols-outlined text-lg">logout</span>
+                                    Keluar
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                @else
+                <a href="{{ route('login') }}" class="p-2 text-primary hover:scale-110 transition-transform hidden lg:block">
+                    <span class="material-symbols-outlined text-2xl">person</span>
+                </a>
+                @endauth
                 <button class="lg:hidden text-primary p-2 flex items-center justify-center" id="mobile-menu-toggle">
                     <span class="material-symbols-outlined text-3xl">menu</span>
                 </button>
@@ -175,6 +210,20 @@
         @foreach(['Home' => '/', 'About' => '/about', 'Shop' => '/shop', 'Journal' => '/journal', 'Contact' => '/contact'] as $label => $link)
         <a class="font-display-lg text-6xl hover:italic transition-all uppercase tracking-tighter" href="{{ url($link) }}">{{ $label }}</a>
         @endforeach
+        @auth
+        <div class="border-t border-white/20 pt-8 mt-4 flex flex-col items-center gap-6">
+            <a class="font-label-caps text-lg tracking-widest hover:italic transition-all" href="{{ route('account.orders.index') }}">Pesanan Saya</a>
+            <a class="font-label-caps text-lg tracking-widest hover:italic transition-all" href="{{ route('account.profile.edit') }}">Profil</a>
+            <form method="POST" action="{{ route('logout') }}">
+                @csrf
+                <button type="submit" class="font-label-caps text-lg tracking-widest hover:italic transition-all text-red-300">Keluar</button>
+            </form>
+        </div>
+        @else
+        <div class="border-t border-white/20 pt-8 mt-4">
+            <a class="font-label-caps text-lg tracking-widest hover:italic transition-all" href="{{ route('login') }}">Login</a>
+        </div>
+        @endauth
     </div>
 
     <main class="pt-36 md:pt-48">

@@ -79,7 +79,7 @@ class PromoCodeSeeder extends Seeder
             'usage_limit'       => 500,
             'per_user_limit'    => 1,
             'is_influencer_code' => true,
-            'influencer_user_id' => 1,
+            'influencer_user_id' => \App\Models\User::first()?->id,
             'is_active'         => true,
             'starts_at'         => now()->subDay(),
             'expires_at'        => now()->addDays(90),
