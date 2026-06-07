@@ -26,6 +26,13 @@
                 </div>
             </div>
 
+            <div class="space-y-4">
+                <h4 class="font-label-caps text-[11px] text-primary tracking-widest opacity-40 uppercase">Visit Us</h4>
+                <p class="font-body-md text-2xl text-secondary">Réutiliser Studio</p>
+                <p class="text-lg text-secondary/70">Bintaro, Tangerang Selatan</p>
+                <p class="text-lg text-secondary/70">Banten, Indonesia</p>
+            </div>
+
             <div class="bg-primary p-16 rounded-[3rem] reveal-item shadow-2xl">
                 <p class="font-display-lg text-4xl mb-8 italic text-white">"True luxury is found in the conversation between the piece and its new owner."</p>
             </div>

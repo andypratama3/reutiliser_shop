@@ -24,16 +24,16 @@
     <div class="max-w-3xl mx-auto reveal-item">
         <div class="prose prose-lg prose-primary max-w-none font-body-lg text-secondary leading-relaxed space-y-12">
             <p class="first-letter:text-7xl first-letter:font-display-lg first-letter:text-primary first-letter:mr-4 first-letter:float-left">
-                {{ $post['excerpt'] }} Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                {{ $post['excerpt'] }} Setiap helai kain menyimpan cerita panjang sebelum akhirnya tiba di tangan kita. Di Réutiliser, kami percaya bahwa mode sirkular bukan sekadar tren, melainkan sebuah gerakan untuk menghargai kembali setiap serat yang telah dihasilkan bumi.
             </p>
 
-            <h2 class="font-headline-md text-headline-md text-primary">Reimagining the Forgotten</h2>
+            <h2 class="font-headline-md text-headline-md text-primary">Menghidupkan Kembali yang Terlupakan</h2>
             <p>
-                Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                Proses upcycling yang kami lakukan dimulai dari penelusuran arsip tekstil, pemilihan material berkualitas, hingga rekonstruksi ulang oleh tangan-tangan artisan lokal. Setiap produk adalah hasil dari dialog antara masa lalu dan masa depan.
             </p>
 
             <blockquote class="border-l-4 border-primary pl-8 py-4 italic text-2xl text-primary font-headline-md">
-                "Our mission is to prove that high-end luxury doesn't have to come at the cost of our environment."
+                "Misi kami adalah membuktikan bahwa kemewahan tidak harus datang dengan mengorbankan lingkungan."
             </blockquote>
 
             <div class="grid grid-cols-2 gap-8 my-16">
@@ -42,7 +42,7 @@
             </div>
 
             <p>
-                Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
+                Dengan memilih produk upcycling, Anda turut serta dalam gerakan mode berkelanjutan yang mengurangi limbah tekstil dan mendukung perekonomian lokal. Setiap pembelian adalah investasi untuk masa depan yang lebih hijau.
             </p>
         </div>
 
